@@ -13,8 +13,6 @@ public class Main
 {
 	public static void main(String[] args) throws LifecycleException
 	{
-		System.out.println("Hello Kvissen!");
-		
 		Tomcat tomcat = new Tomcat();
 		tomcat.setBaseDir("temp");
 		String port = Optional.ofNullable(System.getenv("PORT")).orElse("8080"); //Til Heroku //Til Heroku
