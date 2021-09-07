@@ -20,7 +20,7 @@ public class Main
 		tomcat.setPort(Integer.parseInt(port));
 		tomcat.getConnector(); //Creates a default HTTP connector
 		
-		tomcat.addWebapp("/", new File("src/main/webapp").getAbsolutePath());
+		tomcat.addWebapp("/", new File("src/main/webapp/build").getAbsolutePath());
 		
 		tomcat.start();
 		tomcat.getServer().await();
