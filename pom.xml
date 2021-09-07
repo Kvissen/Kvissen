@@ -24,8 +24,8 @@
                 <configuration>
                     <nodeVersion>v14.17.6</nodeVersion>
                     <yarnVersion>v1.22.10</yarnVersion>
-                    <workingDirectory>${basedir}/web</workingDirectory>
-                    <installDirectory>${basedir}/web</installDirectory>
+                    <workingDirectory>${basedir}/ReactApp</workingDirectory>
+                    <installDirectory>${basedir}/ReactApp</installDirectory>
                 </configuration>
 
                 <executions>
@@ -98,13 +98,13 @@
                     <transformers>
                         <!--Makes a manifest file - necessary for launch -->
                         <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                            <mainClass>launch.Main</mainClass>
+                            <mainClass>Main</mainClass>
                         </transformer>
                         <!-- includes Services in jar-->
                         <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
 
                     </transformers>
-                    <finalName>Heroku01</finalName>
+                    <finalName>Kvissen</finalName>
                 </configuration>
                 <executions>
                     <execution>
