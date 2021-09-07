@@ -2,3 +2,7 @@
 /target/
 .idea
 temp
+node_modules
+build
+*.iml
+*.DS_Store
