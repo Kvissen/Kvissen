@@ -1,7 +1,7 @@
 # Project exclude paths
 /target/
-webapp/*
-node/*
+webapp
+ReactApp/node
 yarn.lock
 .idea
 temp
