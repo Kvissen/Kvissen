@@ -17,13 +17,16 @@ import {
 import Header from "./Header";
 import EnterCode from "./EnterCode";
 import Kvis from "./Kvis";
+import KvisStore from "./stores/KvisStore";
+
+const kvisStore = new KvisStore();
 
 function App() {
     return (
         <Router>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} id={"maingrid"}>
                 <Grid item xs={12}>
-                    <Header/>
+                    <Header />
                 </Grid>
                 <Grid item xs={12}>
                     <Switch>
@@ -35,10 +38,10 @@ function App() {
                         </Route>
                     </Switch>
                 </Grid>
-
             </Grid>
         </Router>
     )
 }
+
 
 export default App;

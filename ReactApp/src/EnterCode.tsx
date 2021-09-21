@@ -1,45 +1,44 @@
 import React, {Component} from 'react';
-import {Box, TextField, Typography, Button, Link} from "@mui/material";
+import {Box, TextField, Typography, Button, Link, Grid} from "@mui/material";
 import {Redirect} from 'react-router-dom'
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
+import {kvisStore} from './stores/KvisStore'
 
 export default class EnterCode extends Component {
 
-    // Set initial state
-    state = {
-        checkedIn: false
-    }
-
     render() {
-        if (this.state.checkedIn) {
-            return <Redirect to='/Kvis'/>
-        }
         return (
-            <Box m="auto" width={400}>
-                <Typography align={"center"}>ENTER CODE</Typography>
-                <TextField
-                    margin="normal"
-                    required
-                    id="code"
-                    label="Kvis Code"
-                    fullWidth
-                    name="code"
-                    autoComplete="code123"
-                    autoFocus
-                />
-                <StartQuizComponent />
-            </Box>
+            <Grid container spacing={2} alignContent={"center"} className={"entercodebg"}>
+                <Grid item xs={6} md={4} margin={"128px auto"} className={"entercodebox"}>
+                    <Typography align={"center"}>ENTER CODE</Typography>
+                    <TextField
+                        margin="normal"
+                        required
+                        id="code"
+                        label="Kvis Code"
+                        fullWidth
+                        name="code"
+                        autoComplete="code123"
+                        autoFocus
+                    />
+                    <StartQuizComponent/>
+                </Grid>
+            </Grid>
         );
     }
 }
 
 const StartQuizComponent = () => {
     const history = useHistory();
-    const handleClick = () => history.push('/kvis');
+
+    const handleClick = () => {
+        history.push('/kvis');
+        kvisStore.checkIn("1234")
+    }
 
     return (
-        <Button type="button" onClick={handleClick}>
-            Navigate to another route
+        <Button onClick={handleClick}>
+            Start Kvis!
         </Button>
     );
 };
