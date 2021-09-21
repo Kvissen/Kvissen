@@ -22,11 +22,11 @@ export default function AnswerBox(options: AnswerOption)
                 color: "black",
             }}
             raised={true}
-            onClick={() => options.onClick()}
+            onClick={ () => options.onClick() }
         >
             <CardHeader title={options.number}/>
             <CardContent>
-                <Typography variant={"h6"} align={"center"}>{options.text}</Typography>
+                <Typography variant={"h6"} align={"center"}>{options.text} </Typography>
             </CardContent>
         </Card>
     );
