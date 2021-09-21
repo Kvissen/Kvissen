@@ -1,9 +1,10 @@
 import React from "react";
 import {Card, CardContent, CardHeader, Typography} from "@mui/material";
 
-type AnswerOption = {
+export interface AnswerOption {
     text: string,
-    number: number
+    number: number,
+    onClick: () => void
 }
 
 /**
@@ -20,7 +21,8 @@ export default function AnswerBox(options: AnswerOption)
                 backgroundColor: "lightgray",
                 color: "black",
             }}
-              raised={true}
+            raised={true}
+            onClick={() => options.onClick()}
         >
             <CardHeader title={options.number}/>
             <CardContent>
