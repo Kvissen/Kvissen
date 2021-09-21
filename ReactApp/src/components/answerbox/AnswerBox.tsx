@@ -1,22 +1,31 @@
 import React from "react";
-import {Paper} from "@mui/material";
+import {Card, CardContent, CardHeader, Typography} from "@mui/material";
 
 type AnswerOption = {
     text: string,
     number: number
 }
 
+/**
+ *
+ *
+ * @param options
+ * @constructor
+ */
 export default function AnswerBox(options: AnswerOption)
 {
-    const mStyle = {
-        backgroundColor: "grey",
-        color: "blue"
-    }
-
     return (
-        <Paper style={mStyle} elevation={5} variant={"elevation"}>
-            <h2>{options.number}</h2>
-            <p>{options.text}</p>
-        </Paper>
+        <Card
+            sx={{
+                backgroundColor: "lightgray",
+                color: "black",
+            }}
+              raised={true}
+        >
+            <CardHeader title={options.number}/>
+            <CardContent>
+                <Typography variant={"h6"} align={"center"}>{options.text}</Typography>
+            </CardContent>
+        </Card>
     );
 }
