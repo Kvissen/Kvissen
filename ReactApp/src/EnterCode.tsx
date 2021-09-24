@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
 import {Box, TextField, Typography, Button, Link, Grid} from "@mui/material";
-import {Redirect} from 'react-router-dom'
-import {useHistory} from 'react-router-dom';
-import {kvisStore} from './stores/KvisStore'
+import {inject, Observer, observer, Provider} from "mobx-react";
+import {IKvisStore} from "./stores/kStore";
+import {stores} from "./stores";
 
-export default class EnterCode extends Component {
+interface storeProps {
+    kStore?: IKvisStore;
+}
 
+@inject('kStore')
+@observer
+export default class EnterCode extends Component<storeProps> {
     render() {
         return (
             <Grid container spacing={2} alignContent={"center"} className={"entercodebg"}>
@@ -21,25 +26,41 @@ export default class EnterCode extends Component {
                         autoComplete="code123"
                         autoFocus
                     />
-                    <StartQuizComponent/>
+                    <Link>
+                        <Button onClick={this.handleClick}>
+                            Start Kvis!
+                        </Button>
+                    </Link>
                 </Grid>
             </Grid>
         );
     }
+
+    handleClick = () => {
+        const {setQuizId} = this.props.kStore!;
+        setQuizId("1234");
+    }
 }
 
-const StartQuizComponent = () => {
+/*
+@Observer
+function StartQuiz() {
     const history = useHistory();
+    const store = useStore()
 
     const handleClick = () => {
         history.push('/kvis');
-        kvisStore.checkIn("1234")
+        const {setQuizId} = kStore!;
+        setQuizId("1234");
     }
-
     return (
         <Button onClick={handleClick}>
             Start Kvis!
         </Button>
     );
-};
+}
+
+ */
+
+
 

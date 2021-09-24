@@ -1,7 +1,7 @@
 import {action, autorun, computed, makeObservable, observable} from "mobx";
+import React from "react";
 
 export default class KvisStore {
-    quizId: String = ""
 
     constructor() {
         makeObservable(this, {
@@ -12,13 +12,18 @@ export default class KvisStore {
         autorun(() => console.log("KvisStore ID: " + this.quizId));
     }
 
+    @observable quizId: String = ""
+
     get checkedIn() {
-        return this.quizId != ""
+        console.log("KvisStore checkedin asked")
+        return this.quizId !== ""
     }
 
     checkIn(quizId: String) {
+        console.log("KvisStore Checked into quiz: " + quizId)
         this.quizId = quizId
     }
 }
 
-export const kvisStore = new KvisStore();
+const StoreContext = React.createContext(new KvisStore());
+export const useStore = () => React.useContext(StoreContext);

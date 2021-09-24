@@ -17,31 +17,37 @@ import {
 import Header from "./Header";
 import EnterCode from "./EnterCode";
 import Kvis from "./Kvis";
-import KvisStore from "./stores/KvisStore";
-
-const kvisStore = new KvisStore();
+import {observer} from "mobx-react-lite";
+import KvisStore, {useStore} from "./stores/KvisStore";
+import {stores} from "./stores";
+import {Provider} from "mobx-react";
 
 function App() {
     return (
         <Router>
             <Grid container spacing={2} id={"maingrid"}>
                 <Grid item xs={12}>
-                    <Header />
+                    <Provider {...stores}>
+                        <Header/>
+                    </Provider>
                 </Grid>
                 <Grid item xs={12}>
                     <Switch>
                         <Route exact path="/">
-                            <EnterCode/>
+                                <EnterCode />
                         </Route>
                         <Route exact path="/kvis">
                             <Kvis/>
                         </Route>
+                        <Route render={()=><h1>404</h1>}/>
                     </Switch>
                 </Grid>
             </Grid>
         </Router>
     )
+
+
 }
 
+export default observer(App);
 
-export default App;
