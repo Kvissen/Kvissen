@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
-import {Box, TextField, Typography, Button, Link, Grid} from "@mui/material";
-import {inject, Observer, observer, Provider} from "mobx-react";
-import {IKvisStore} from "./stores/kStore";
-import {stores} from "./stores";
+import {TextField, Typography, Button, Link, Grid} from "@mui/material";
+import {inject, observer} from "mobx-react";
+import {IMobxStore} from "./stores/mobxStore";
+import {useHistory} from "react-router-dom";
+
 
 interface storeProps {
-    kStore?: IKvisStore;
+    mobxStore?: IMobxStore;
 }
 
-@inject('kStore')
+@inject('mobxStore')
 @observer
 export default class EnterCode extends Component<storeProps> {
     render() {
@@ -26,7 +27,7 @@ export default class EnterCode extends Component<storeProps> {
                         autoComplete="code123"
                         autoFocus
                     />
-                    <Link>
+                    <Link href="/Kvis">
                         <Button onClick={this.handleClick}>
                             Start Kvis!
                         </Button>
@@ -37,30 +38,11 @@ export default class EnterCode extends Component<storeProps> {
     }
 
     handleClick = () => {
-        const {setQuizId} = this.props.kStore!;
+        //useHistory().push("/kvis")
+        const {setQuizId} = this.props.mobxStore!;
         setQuizId("1234");
     }
 }
-
-/*
-@Observer
-function StartQuiz() {
-    const history = useHistory();
-    const store = useStore()
-
-    const handleClick = () => {
-        history.push('/kvis');
-        const {setQuizId} = kStore!;
-        setQuizId("1234");
-    }
-    return (
-        <Button onClick={handleClick}>
-            Start Kvis!
-        </Button>
-    );
-}
-
- */
 
 
 

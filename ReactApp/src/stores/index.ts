@@ -1,6 +1,4 @@
-// Erlend
-
-import { kStore } from "./kStore";
+import { MobxStore } from "./mobxStore";
 import { create } from "mobx-persist";
 
 interface Stores {
@@ -8,10 +6,9 @@ interface Stores {
 }
 
 export const stores: Stores = {
-  kStore: new kStore(),
+  mobxStore: new MobxStore(),
 };
 
-// Persist mobx
 const hydrate = create({
   storage: localStorage,
   jsonify: true,
