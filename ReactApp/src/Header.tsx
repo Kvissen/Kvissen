@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Typography} from "@material-ui/core"
-import Grid from '@material-ui/core/Grid';
+import {Typography} from "@mui/material"
+import Grid from '@mui/material/Grid';
 import logo from './ImageAssets/kvislogo.png';
-import Box from '@material-ui/core/Box';
+import Box from '@mui/material/Box';
 import {inject, observer} from "mobx-react";
 import {IMobxStore} from "./stores/mobxStore";
 

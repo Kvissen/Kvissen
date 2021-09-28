@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import AnswerBox from './components/answerbox/AnswerBox'
 import QuestionBox from "./QuestionBox";
-import Grid from "@material-ui/core/Grid";
+import Grid from '@mui/material/Grid';
 import {TextField} from "@mui/material";
 
 

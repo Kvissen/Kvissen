@@ -27,11 +27,11 @@ export default class EnterCode extends Component<storeProps> {
                         autoComplete="code123"
                         autoFocus
                     />
-                    <Link href="/Kvis">
-                        <Button onClick={this.handleClick}>
+                  
+                        <Button href="/Kvis" onClick={this.handleClick}>
                             Start Kvis!
                         </Button>
-                    </Link>
+             
                 </Grid>
             </Grid>
         );
@@ -39,8 +39,9 @@ export default class EnterCode extends Component<storeProps> {
 
     handleClick = () => {
         //useHistory().push("/kvis")
-        const {setQuizId} = this.props.mobxStore!;
-        setQuizId("1234");
+        // const {setQuizId} = this.props.mobxStore!;
+        // setQuizId("1234");
+        console.log("clicked")
     }
 }
 

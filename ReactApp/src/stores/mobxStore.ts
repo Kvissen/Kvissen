@@ -17,6 +17,6 @@ export class MobxStore implements IMobxStore {
 
     @action.bound
     public setQuizId(id: string): void {
-        this.quizId = id;
+       this.quizId = id;
     }
 }
