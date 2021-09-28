@@ -2,16 +2,11 @@ import React from 'react';
 import './App.css';
 import Grid from '@mui/material/Grid';
 
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
-import Header from "./Header";
-import EnterCode from "./EnterCode";
-import Kvis from "./Kvis";
+import Header from "./components/header/Header";
+import EnterCode from "./components/enterCode/EnterCode";
+import KvisBox from "./components/kvisBox/KvisBox";
 import {observer} from "mobx-react-lite";
 import {stores} from "./stores";
 import {Provider} from "mobx-react";
@@ -33,7 +28,7 @@ function App() {
                             </Provider>
                         </Route>
                         <Route exact path="/kvis">
-                            <Kvis/>
+                            <KvisBox/>
                         </Route>
                         <Route render={() => <h1>404</h1>}/>
                     </Switch>
