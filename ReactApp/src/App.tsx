@@ -26,12 +26,12 @@ function App() {
                 </Grid>
                 <Grid item xs={12}>
                     <Switch>
-                        <Route exact path="/">
+                        <Route exact path="/kvis">
                             <Provider {...stores}>
                                 <EnterCode/>
                             </Provider>
                         </Route>
-                        <Route exact path="/kvis">
+                        <Route exact path="/">
                             <KvisBox/>
                         </Route>
                         <Route render={() => <h1>404</h1>}/>
