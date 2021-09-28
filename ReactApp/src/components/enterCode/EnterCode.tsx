@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {TextField, Typography, Button, Grid} from "@mui/material";
 import {inject, observer} from "mobx-react";
-import {IMobxStore} from "./stores/mobxStore";
+import {IMobxStore} from "../../stores/mobxStore";
 
 
 interface storeProps {
@@ -27,7 +27,7 @@ export default class EnterCode extends Component<storeProps> {
                         autoFocus
                     />
                   
-                        <Button href="/Kvis" onClick={this.handleClick}>
+                        <Button href="/kvis" onClick={this.handleClick}>
                             Start Kvis!
                         </Button>
              
@@ -37,7 +37,7 @@ export default class EnterCode extends Component<storeProps> {
     }
 
     handleClick = () => {
-        //useHistory().push("/kvis")
+        // useHistory().push("/kvis")
         // const {setQuizId} = this.props.mobxStore!;
         // setQuizId("1234");
         console.log("clicked")

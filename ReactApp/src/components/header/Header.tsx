@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Typography} from "@mui/material"
 import Grid from '@mui/material/Grid';
-import logo from './ImageAssets/kvislogo.png';
+import logo from '../../ImageAssets/kvislogo.png';
 import Box from '@mui/material/Box';
 import {inject, observer} from "mobx-react";
-import {IMobxStore} from "./stores/mobxStore";
+import {IMobxStore} from "../../stores/mobxStore";
 
 interface StoreProps {
     mobxStore?: IMobxStore;
