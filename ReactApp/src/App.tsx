@@ -2,7 +2,11 @@ import React from 'react';
 import './App.css';
 import Grid from '@mui/material/Grid';
 
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+} from "react-router-dom";
 
 import Header from "./components/header/Header";
 import EnterCode from "./components/enterCode/EnterCode";

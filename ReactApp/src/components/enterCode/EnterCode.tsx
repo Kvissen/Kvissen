@@ -20,7 +20,7 @@ export default class EnterCode extends Component<storeProps> {
                         margin="normal"
                         required
                         id="code"
-                        label="KvisBox Code"
+                        label="Kvis Code"
                         fullWidth
                         name="code"
                         autoComplete="code123"
