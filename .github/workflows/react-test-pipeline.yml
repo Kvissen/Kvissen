@@ -28,7 +28,7 @@ jobs:
     - name: Run clean install
       run: |
         cd ReactApp
-        npm ci
+        npm install
     - name: Run build
       run: |
         cd ReactApp
