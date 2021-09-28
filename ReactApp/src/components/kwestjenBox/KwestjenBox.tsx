@@ -12,7 +12,7 @@ export interface Kwestjen {
 
 export default function Kwestjen (kwestjen: Kwestjen) {
     return (
-        <Card sx={{minWidth: 500, backgroundColor: "lightgray"}} raised={true} >
+        <Card sx={{minWidth:300, maxWidth:500 , backgroundColor: "lightgray"}} raised={false} >
             <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
                     Kwestjen No. {kwestjen.number}
