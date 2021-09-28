@@ -1,101 +1,48 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import GiraffeStore from './stores/GiraffeStore.js'
+import Grid from '@mui/material/Grid';
 
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
+    BrowserRouter as Router,
+    Switch,
+    Route,
 } from "react-router-dom";
 
-const giraffeStore = new GiraffeStore();
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-}));
+import Header from "./components/header/Header";
+import EnterCode from "./components/enterCode/EnterCode";
+import KvisBox from "./components/kvisBox/KvisBox";
+import {observer} from "mobx-react-lite";
+import {stores} from "./stores";
+import {Provider} from "mobx-react";
 
 function App() {
-  return (
-  <Router>
-        <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/about">About</Link>
-              </li>
-              <li>
-                <Link to="/users">Users</Link>
-              </li>
-            </ul>
-          </nav>
-
-          <div className="App">
-                <TextField id="filled-basic" label="Filled" variant="filled" /><br/>
-                <Button variant="contained" color="primary">
-                  Commit
-                </Button>
-              </div>
-
-<ul>
-     {giraffeStore.giraffes.map((giraffeName,key)=>
-        <li key={key}>{giraffeName}</li>
-      )}
-  </ul>
+    return (
+        <Router>
+            <Grid container spacing={2} id={"maingrid"}>
+                <Grid item xs={12}>
+                    <Provider {...stores}>
+                        <Header/>
+                    </Provider>
+                </Grid>
+                <Grid item xs={12}>
+                    <Switch>
+                        <Route exact path="/">
+                            <Provider {...stores}>
+                                <EnterCode/>
+                            </Provider>
+                        </Route>
+                        <Route exact path="/kvis">
+                            <KvisBox/>
+                        </Route>
+                        <Route render={() => <h1>404</h1>}/>
+                    </Switch>
+                </Grid>
+            </Grid>
+        </Router>
+    )
 
 
-<Button onClick={()=>giraffeStore.giraffes.push("Elmer")}>Tilføj giraf</Button>
-
-
-
-
-
-
-
-          {/* A <Switch> looks through its children <Route>s and
-              renders the first one that matches the current URL. */}
-          <Switch>
-            <Route path="/about">
-              <About />
-            </Route>
-            <Route path="/users">
-              <Users />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
-  );
 }
 
-function Home() {
-  return <h2>Home</h2>;
-}
+export default observer(App);
 
-function About() {
-  return <h2>About</h2>;
-}
-
-function Users() {
-  return <h2>Users</h2>;
-}
-
-export default App;
