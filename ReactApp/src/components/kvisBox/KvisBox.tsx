@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import Grid from '@mui/material/Grid';
-import AnswerList from "./components/answerList/AnswerList";
-import KwestjenBox from './components/kwestjenBox/KwestjenBox';
+import AnswerList from "../answerList/AnswerList";
+import KwestjenBox from '../kwestjenBox/KwestjenBox';
 
-export default class Kvis extends Component {
+export default class KvisBox extends Component {
 
     render() {
         return (
