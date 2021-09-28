@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import AnswerBox from './components/answerBox/AnswerBox'
 import QuestionBox from "./QuestionBox";
 import Grid from '@mui/material/Grid';
 import {TextField} from "@mui/material";
-
+import AnswerList from "./components/answerList/AnswerList";
 
 export default class Kvis extends Component {
 
@@ -14,7 +13,17 @@ export default class Kvis extends Component {
                     <QuestionBox />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <AnswerBox number={0} text={"example text"}/>
+                    <AnswerList answerOptions={
+                        [
+                            {text: "yes", correct: false},
+                            {text: "no", correct: false},
+                            {text: "both no and yes", correct: true}
+                        ]
+                    }
+                                onCorrect={()=>console.log("true dat")}
+                                onWrong={()=>console.log("false dat")}
+                    />
+
                 </Grid>
             </Grid>
 
