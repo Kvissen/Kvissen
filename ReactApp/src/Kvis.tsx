@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import QuestionBox from "./QuestionBox";
 import Grid from '@mui/material/Grid';
-import {TextField} from "@mui/material";
 import AnswerList from "./components/answerList/AnswerList";
 
 export default class Kvis extends Component {
