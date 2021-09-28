@@ -36,7 +36,7 @@ class AnswerList extends React.Component<ListOfAnswers>
                        onClick={
                            option.correct ?
                                () => this.correctClick() : () => this.wrongClick()
-            }/>
+                       }/>
         );
     }
 
