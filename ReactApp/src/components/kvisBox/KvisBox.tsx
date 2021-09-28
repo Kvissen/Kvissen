@@ -19,8 +19,15 @@ export default class KvisBox extends Component {
                             {text: "both no and yes", correct: true}
                         ]
                     }
-                                onCorrect={()=>console.log("true dat")}
-                                onWrong={()=>console.log("false dat")}
+                                onCorrect={()=>{
+                                    console.log("true dat")
+                                    alert("The answer is correct. Wow.")
+                                }
+                                }
+                                onWrong={()=>{
+                                    console.log("false dat")
+                                    alert("No")
+                                }}
                     />
 
                 </Grid>
