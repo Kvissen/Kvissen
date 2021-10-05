@@ -1,16 +1,7 @@
 import React, {Component} from 'react';
-import {TextField, Typography, Button, Grid} from "@mui/material";
-import {inject, observer} from "mobx-react";
-import {IMobxStore} from "../../stores/mobxStore";
+import {Button, Grid, TextField, Typography} from "@mui/material";
 
-
-interface storeProps {
-    mobxStore?: IMobxStore;
-}
-
-@inject('mobxStore')
-@observer
-export default class EnterCode extends Component<storeProps> {
+export default class EnterCode extends Component {
     render() {
         return (
             <Grid container spacing={2} alignContent={"center"} className={"entercodebg"}>
