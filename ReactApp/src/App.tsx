@@ -1,11 +1,9 @@
 import React from 'react';
 import './App.css';
 import Grid from '@mui/material/Grid';
-
 import {BrowserRouter as Router, Route, Switch,} from "react-router-dom";
-
 import Header from "./components/header/Header";
-import EnterCode from "./components/enterCode/EnterCode";
+import EnterCodeObserver from "./components/enterCode/EnterCode";
 import KvisBox from "./components/kvisBox/KvisBox";
 
 function App() {
@@ -13,12 +11,12 @@ function App() {
         <Router>
             <Grid container spacing={2} id={"maingrid"}>
                 <Grid item xs={12}>
-                        <Header/>
+                    <Header/>
                 </Grid>
                 <Grid item xs={12}>
                     <Switch>
                         <Route exact path="/">
-                                <EnterCode />
+                            <EnterCodeObserver/>
                         </Route>
                         <Route exact path="/kvis">
                             <KvisBox/>
@@ -29,8 +27,6 @@ function App() {
             </Grid>
         </Router>
     )
-
-
 }
 
 export default App;
