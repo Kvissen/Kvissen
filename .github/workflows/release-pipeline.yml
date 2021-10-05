@@ -38,5 +38,5 @@ jobs:
     - name: Deploy to Docker on VM
       run: |
         cd ../../
-        chmox +x deploy.sh
+        chmod +x deploy.sh
         ./deploy.sh
