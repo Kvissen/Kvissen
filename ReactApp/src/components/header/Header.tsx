@@ -19,8 +19,8 @@ class Header extends Component<StoreProps> {
         return (
             <Box className={"headerbox"}>
                 <Grid container spacing={2}>
-                    <Grid item xs={4}> <img src={logo} width="64.dp" alt="Logo"/> </Grid>
-                    <Grid item xs={4}> <Box pt={3}> {HeaderText(quizIdText) } </Box> </Grid>
+                    <Grid item xs={4}> <img src={logo} width="64" alt="Logo"/> </Grid>
+                    <Grid item xs={4}> <Box pt={3} > {HeaderText(quizIdText) } </Box> </Grid>
                 </Grid>
             </Box>
         )

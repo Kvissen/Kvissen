@@ -14,6 +14,7 @@ import KvisBox from "./components/kvisBox/KvisBox";
 import {observer} from "mobx-react-lite";
 import {stores} from "./stores";
 import {Provider} from "mobx-react";
+// import { MobxStore } from './stores/mobxStore';
 
 function App() {
     return (
@@ -26,12 +27,12 @@ function App() {
                 </Grid>
                 <Grid item xs={12}>
                     <Switch>
-                        <Route exact path="/kvis">
+                        <Route exact path="/">
                             <Provider {...stores}>
-                                <EnterCode/>
+                                <EnterCode />
                             </Provider>
                         </Route>
-                        <Route exact path="/">
+                        <Route exact path="/kvis">
                             <KvisBox/>
                         </Route>
                         <Route render={() => <h1>404</h1>}/>

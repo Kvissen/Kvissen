@@ -38,7 +38,7 @@ export default class EnterCode extends Component<storeProps> {
 
     handleClick = () => {
         // useHistory().push("/kvis")
-        // const {setQuizId} = this.props.mobxStore!;
+        // const {setQuizId} = this.props.mobxStore!!;
         // setQuizId("1234");
         console.log("clicked")
     }
