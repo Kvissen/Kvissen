@@ -4,15 +4,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {HashRouter} from "react-router-dom";
-import {Provider} from "mobx-react";
-import {stores} from "./stores";
+
 
 ReactDOM.render(
     <React.StrictMode>
         <HashRouter>
-            <Provider {...stores}>
-                <App/>
-            </Provider>
+            <App/>
         </HashRouter>
     </React.StrictMode>,
     document.getElementById('root')
