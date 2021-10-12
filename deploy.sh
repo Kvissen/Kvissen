@@ -13,6 +13,10 @@ DOCKERPORT="8080"
 # Mark file as readable
 chmod 400 id_rsa
 
+ping6 ipv6.google.com
+
+ping -6 ipv6.google.com
+
 ssh -t -p $PORT -i id_rsa -o "StrictHostKeyChecking=no" $USER@$HOST "rm -rf $BASEDIRECTORY ; mkdir -p $WEBAPPDIRECTORY"
 
 # Transfer webapp project
