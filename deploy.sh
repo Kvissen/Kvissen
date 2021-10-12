@@ -16,13 +16,13 @@ chmod 400 id_rsa
 ssh -t -p $PORT -i id_rsa -o "StrictHostKeyChecking=no" $USER@$HOST "rm -rf $BASEDIRECTORY ; mkdir -p $WEBAPPDIRECTORY"
 
 # Transfer webapp project
-scp -v -r -P $PORT -i id_rsa src/main/webapp/* $USER@$HOST:$WEBAPPDIRECTORY
+scp -6 -v -r -P $PORT -i id_rsa src/main/webapp/* $USER@\[$HOST\]:$WEBAPPDIRECTORY
 
 # Transfer Jar file
-scp -v -r -P $PORT -i id_rsa target/Kvissen.jar $USER@$HOST:$BASEDIRECTORY
+scp -6 -v -r -P $PORT -i id_rsa target/Kvissen.jar $USER@\[$HOST\]:$BASEDIRECTORY
 
 # Transfer Dockerfile
-scp -v -r -P $PORT -i id_rsa Dockerfile $USER@$HOST:$BASEDIRECTORY
+scp -6 -v -r -P $PORT -i id_rsa Dockerfile $USER@\[$HOST\]:$BASEDIRECTORY
 
 
 # SSH to VM, Docker build and run
