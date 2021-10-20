@@ -52,6 +52,14 @@ export default class CreateKvisBox extends Component {
                         />
                     </Grid>
                 </Grid>
+                <Button
+                    variant="contained"
+                    onClick={() => {
+
+                    }}
+                >
+                    Add another question
+                </Button>
             </Card>
         )
     }
