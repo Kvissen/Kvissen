@@ -12,7 +12,7 @@ export default function CreateKvisBox({kvis}) {
 
     return (
         <Card className="create-kvis-box">
-            <h2 className="create-kvis-question-header">Question 1</h2>
+            <h2 className="create-kvis-question-header">{kvis.name}</h2>
             <TextField
                 margin="normal"
                 required
