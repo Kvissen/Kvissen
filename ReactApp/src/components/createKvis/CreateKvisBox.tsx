@@ -1,6 +1,7 @@
 import React, {Component} from "react";
-import {Card, Button, TextField, Grid} from "@mui/material";
+import {Card, Button, TextField, Grid, Box} from "@mui/material";
 import './CreateKvisStyleSheet.css'
+import AddIcon from '@mui/icons-material/Add';
 import {store} from "../../stores/QuizStore";
 
 export default class CreateKvisBox extends Component {
@@ -52,14 +53,20 @@ export default class CreateKvisBox extends Component {
                         />
                     </Grid>
                 </Grid>
-                <Button
-                    variant="contained"
-                    onClick={() => {
+                <Box mt={4} mb={4} display="flex"
+                     justifyContent="center"
+                     alignItems="center">
+                    <Button
+                        className="add-new-question"
+                        variant="contained"
+                        startIcon={<AddIcon/>}
+                        onClick={() => {
 
-                    }}
-                >
-                    Add another question
-                </Button>
+                        }}
+                    >
+                        Add another question
+                    </Button>
+                </Box>
             </Card>
         )
     }

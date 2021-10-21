@@ -10,10 +10,14 @@
 }
 
 .create-kvis-button {
-    height: 50px;
+    height: 40px;
 }
 
 .create-kvis-box {
     padding: 8px;
+}
+
+.add-new-question {
+    height: 40px;
 }
 
