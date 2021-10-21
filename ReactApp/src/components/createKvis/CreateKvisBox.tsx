@@ -8,7 +8,7 @@ import {Kvis} from "../../models/Kvis";
 import {Question} from "../../models/Question";
 
 // @ts-ignore
-export default function CreateKvisBox() {
+export default function CreateKvisBox({kvis}) {
 
     return (
         <Card className="create-kvis-box">
