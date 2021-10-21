@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {observer} from "mobx-react";
 import {Button, Grid} from "@mui/material";
 import './CreateKvisStyleSheet.css'
 import CreateKvisBox from "./CreateKvisBox";
 
-function CreateKvis() {
-    return (
+export function CreateKvis() {
+        return (
         <div className="main-container">
             <div className="flex-container">
                 <h1>
@@ -15,12 +15,10 @@ function CreateKvis() {
                     variant="contained"
                     className="create-kvis-button"
                     onClick={() => {
-
                 }}>
                     Create Kvis
                 </Button>
             </div>
-
             <CreateKvisBox/>
         </div>
     )
