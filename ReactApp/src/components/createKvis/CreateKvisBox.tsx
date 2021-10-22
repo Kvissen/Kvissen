@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Card, Button, TextField, Grid, Box} from "@mui/material";
+import {Card, Button, TextField, Grid, Box, Checkbox} from "@mui/material";
 import './CreateKvisStyleSheet.css'
 import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
@@ -10,7 +10,8 @@ import { v4 as uuidv4 } from 'uuid';
 export default function CreateKvisBox({kvis}) {
 
     function saveKvis() {
-        console.log(questions)
+        kvis.questions = questions
+        console.log(kvis)
     }
 
     function ShowDoneButton() {
@@ -59,11 +60,11 @@ export default function CreateKvisBox({kvis}) {
 
     function addQuestion() {
         setQuestions(prevState => {
-            return [...prevState, new Question(uuidv4(), "", [])]
+            return [...prevState, new Question(uuidv4(),[])]
         })
     }
 
-    const [questions, setQuestions] = useState<Question[]>([new Question(uuidv4(), "", [])])
+    const [questions, setQuestions] = useState<Question[]>([new Question(uuidv4(),[])])
 
     return (
         <div>
@@ -126,6 +127,7 @@ export default function CreateKvisBox({kvis}) {
                                                 question.answers[3] = e.target.value
                                             }}
                                         />
+                                        <Checkbox/>
                                     </Grid>
                                 </Grid>
                                 <Box mt={4} mb={4} display="flex"

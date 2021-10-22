@@ -11,7 +11,7 @@ export function CreateKvis() {
     const [kvis, setKvis] = useState<Kvis>()
 
     function OnClickAddKvis() {
-        setKvis(new Kvis(uuidv4(),'Test',[]))
+        setKvis(new Kvis(uuidv4()))
     }
 
     function ShowKvisBox() {
