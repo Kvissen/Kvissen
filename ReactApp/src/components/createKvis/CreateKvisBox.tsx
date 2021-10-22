@@ -2,6 +2,7 @@ import React, {Component, useState} from "react";
 import {Card, Button, TextField, Grid, Box} from "@mui/material";
 import './CreateKvisStyleSheet.css'
 import AddIcon from '@mui/icons-material/Add';
+import SaveIcon from '@mui/icons-material/Save';
 import {IQuiz} from "../../stores/QuizStore";
 import {store} from "../../stores/QuizStore";
 import {Kvis} from "../../models/Kvis";
@@ -10,6 +11,32 @@ import { v4 as uuidv4 } from 'uuid';
 
 // @ts-ignore
 export default function CreateKvisBox({kvis}) {
+
+    function saveKvis() {
+
+    }
+
+    function ShowDoneButton() {
+        if (questions.length>0){
+            return(
+                <Box mt={2} mb={2} display="flex"
+                     justifyContent="end"
+                     alignItems="end">
+                <Button
+                    className="add-new-question"
+                    variant="contained"
+                    startIcon={<SaveIcon/>}
+                    onClick={() => {
+                        saveKvis();
+                    }}
+                >
+                    Save Kvis
+                </Button>
+                </Box>
+            )
+        }
+        return null;
+    }
 
     function addQuestion() {
         setQuestions(prevState => {
@@ -22,11 +49,11 @@ export default function CreateKvisBox({kvis}) {
     return (
         <div>
             {
-                questions.map((question) => {
+                questions.map((question, i) => {
                     return (
                         <Box key={question.id} mb={2} mt={2}>
                             <Card className="create-kvis-box">
-                                <h2 className="create-kvis-question-header">{kvis.name}</h2>
+                                <h2 className="create-kvis-question-header">Question {i+1}</h2>
                                 <TextField
                                     margin="normal"
                                     required
@@ -92,6 +119,7 @@ export default function CreateKvisBox({kvis}) {
                     )
                 })
             }
+            <ShowDoneButton/>
         </div>
     )
 }
