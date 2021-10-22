@@ -4,18 +4,19 @@ import {Button, Grid} from "@mui/material";
 import './CreateKvisStyleSheet.css'
 import CreateKvisBox from "./CreateKvisBox";
 import {Kvis} from "../../models/Kvis";
+import { v4 as uuidv4 } from 'uuid';
 
 export function CreateKvis() {
 
     const [kvis, setKvis] = useState<Kvis>()
 
     function OnClickAddKvis() {
-        setKvis(new Kvis('Test','Test',[]))
+        setKvis(new Kvis(uuidv4(),'Test',[]))
     }
 
     function ShowKvisBox() {
         if (kvis!=undefined){
-            return <CreateKvisBox kvis={kvis}/>
+            return <CreateKvisBox key={kvis.id} kvis={kvis}/>
         }
         return null
     }

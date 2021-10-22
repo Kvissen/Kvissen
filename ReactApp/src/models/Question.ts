@@ -1,8 +1,8 @@
 export class Question {
     constructor(
-        question: string,
-        answers: string[],
-
+        public id: string,
+        public question: string,
+        public answers: string[],
         ) {
     }
 
