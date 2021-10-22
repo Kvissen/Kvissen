@@ -4,7 +4,7 @@ import './CreateKvisStyleSheet.css'
 import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
 import {Question} from "../../models/Question";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 // @ts-ignore
 export default function CreateKvisBox({kvis}) {
@@ -15,21 +15,21 @@ export default function CreateKvisBox({kvis}) {
     }
 
     function ShowDoneButton() {
-        if (questions.length>0){
-            return(
+        if (questions.length > 0) {
+            return (
                 <Box mt={2} mb={2} display="flex"
                      justifyContent="end"
                      alignItems="end">
-                <Button
-                    className="add-new-question"
-                    variant="contained"
-                    startIcon={<CheckIcon/>}
-                    onClick={() => {
-                        saveKvis();
-                    }}
-                >
-                    Save Kvis
-                </Button>
+                    <Button
+                        className="add-new-question"
+                        variant="contained"
+                        startIcon={<CheckIcon/>}
+                        onClick={() => {
+                            saveKvis();
+                        }}
+                    >
+                        Save Kvis
+                    </Button>
                 </Box>
             )
         }
@@ -37,22 +37,22 @@ export default function CreateKvisBox({kvis}) {
     }
 
     function ShowQuestionName() {
-        if (questions.length>0){
-            return(
-            <Box mt={2} mb={2} display="flex"
-                 justifyContent="end"
-                 alignItems="end">
-                <TextField
-                    margin="normal"
-                    required
-                    label="Enter Kvis name"
-                    fullWidth
-                    autoFocus
-                    onChange={(e) => {
-                        kvis.name = e.target.value;
-                    }}
+        if (questions.length > 0) {
+            return (
+                <Box mt={2} mb={2} display="flex"
+                     justifyContent="end"
+                     alignItems="end">
+                    <TextField
+                        margin="normal"
+                        required
+                        label="Enter Kvis name"
+                        fullWidth
+                        autoFocus
+                        onChange={(e) => {
+                            kvis.name = e.target.value;
+                        }}
                     />
-            </Box>
+                </Box>
             )
         }
         return null;
@@ -60,11 +60,12 @@ export default function CreateKvisBox({kvis}) {
 
     function addQuestion() {
         setQuestions(prevState => {
-            return [...prevState, new Question(uuidv4(),[])]
+            return [...prevState, new Question(uuidv4(), [])]
         })
     }
 
-    const [questions, setQuestions] = useState<Question[]>([new Question(uuidv4(),[])])
+    const [questions, setQuestions] = useState<Question[]>([new Question(uuidv4(), [])]);
+    const [correct, setCorrect] = useState<number>(0);
 
     return (
         <div>
@@ -74,7 +75,7 @@ export default function CreateKvisBox({kvis}) {
                     return (
                         <Box key={question.id} mb={2} mt={2}>
                             <Card className="create-kvis-box">
-                                <h2 className="create-kvis-question-header">Question {i+1}</h2>
+                                <h2 className="create-kvis-question-header">Question {i + 1}</h2>
                                 <TextField
                                     margin="normal"
                                     required
@@ -96,6 +97,7 @@ export default function CreateKvisBox({kvis}) {
                                                 question.answers[0] = e.target.value
                                             }}
                                         />
+                                        <Checkbox/>
                                     </Grid>
                                     <Grid container item sm={6}>
                                         <TextField
@@ -107,6 +109,7 @@ export default function CreateKvisBox({kvis}) {
                                                 question.answers[1] = e.target.value
                                             }}
                                         />
+                                        <Checkbox/>
                                     </Grid>
                                     <Grid container item sm={6}>
                                         <TextField
@@ -117,6 +120,7 @@ export default function CreateKvisBox({kvis}) {
                                                 question.answers[2] = e.target.value
                                             }}
                                         />
+                                        <Checkbox/>
                                     </Grid>
                                     <Grid container item sm={6}>
                                         <TextField
