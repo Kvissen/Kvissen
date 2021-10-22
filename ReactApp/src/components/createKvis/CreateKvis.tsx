@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {observer} from "mobx-react";
-import {Button, Grid} from "@mui/material";
+import {Button} from "@mui/material";
 import './CreateKvisStyleSheet.css'
 import CreateKvisBox from "./CreateKvisBox";
 import {Kvis} from "../../models/Kvis";
@@ -15,7 +15,7 @@ export function CreateKvis() {
     }
 
     function ShowKvisBox() {
-        if (kvis!=undefined){
+        if (kvis!==undefined){
             return <CreateKvisBox key={kvis.id} kvis={kvis}/>
         }
         return null
@@ -28,7 +28,7 @@ export function CreateKvis() {
                     Create a new kvis
                 </h1>
                 <Button
-                    disabled={kvis != undefined}
+                    disabled={kvis !== undefined}
                     variant="contained"
                     className="create-kvis-button"
                     onClick={() => {

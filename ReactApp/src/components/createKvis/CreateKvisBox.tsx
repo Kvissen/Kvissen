@@ -1,11 +1,8 @@
-import React, {Component, useState} from "react";
+import React, {useState} from "react";
 import {Card, Button, TextField, Grid, Box} from "@mui/material";
 import './CreateKvisStyleSheet.css'
 import AddIcon from '@mui/icons-material/Add';
-import SaveIcon from '@mui/icons-material/Save';
-import {IQuiz} from "../../stores/QuizStore";
-import {store} from "../../stores/QuizStore";
-import {Kvis} from "../../models/Kvis";
+import CheckIcon from '@mui/icons-material/Check';
 import {Question} from "../../models/Question";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -25,7 +22,7 @@ export default function CreateKvisBox({kvis}) {
                 <Button
                     className="add-new-question"
                     variant="contained"
-                    startIcon={<SaveIcon/>}
+                    startIcon={<CheckIcon/>}
                     onClick={() => {
                         saveKvis();
                     }}
@@ -33,6 +30,28 @@ export default function CreateKvisBox({kvis}) {
                     Save Kvis
                 </Button>
                 </Box>
+            )
+        }
+        return null;
+    }
+
+    function ShowQuestionName() {
+        if (questions.length>0){
+            return(
+            <Box mt={2} mb={2} display="flex"
+                 justifyContent="end"
+                 alignItems="end">
+                <TextField
+                    margin="normal"
+                    required
+                    label="Enter Kvis name"
+                    fullWidth
+                    autoFocus
+                    onChange={(e) => {
+                        kvis.name = e.target.value;
+                    }}
+                    />
+            </Box>
             )
         }
         return null;
@@ -48,6 +67,7 @@ export default function CreateKvisBox({kvis}) {
 
     return (
         <div>
+            <ShowQuestionName/>
             {
                 questions.map((question, i) => {
                     return (
