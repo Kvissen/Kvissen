@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 export default function CreateKvisBox({kvis}) {
 
     function saveKvis() {
-
+        console.log(questions)
     }
 
     function ShowDoneButton() {
@@ -60,8 +60,8 @@ export default function CreateKvisBox({kvis}) {
                                     label="Enter question"
                                     fullWidth
                                     autoFocus
-                                    onChange={() => {
-
+                                    onChange={(e) => {
+                                        question.question = e.target.value;
                                     }}
                                 />
                                 <Grid direction='row' container spacing={1}>
@@ -71,7 +71,9 @@ export default function CreateKvisBox({kvis}) {
                                             required
                                             label="Enter Answer 1"
                                             fullWidth
-                                            autoFocus
+                                            onChange={(e) => {
+                                                question.answers[0] = e.target.value
+                                            }}
                                         />
                                     </Grid>
                                     <Grid container item sm={6}>
@@ -80,7 +82,9 @@ export default function CreateKvisBox({kvis}) {
                                             required
                                             label="Enter Answer 2"
                                             fullWidth
-                                            autoFocus
+                                            onChange={(e) => {
+                                                question.answers[1] = e.target.value
+                                            }}
                                         />
                                     </Grid>
                                     <Grid container item sm={6}>
@@ -88,7 +92,9 @@ export default function CreateKvisBox({kvis}) {
                                             required
                                             label="Enter Answer 3"
                                             fullWidth
-                                            autoFocus
+                                            onChange={(e) => {
+                                                question.answers[2] = e.target.value
+                                            }}
                                         />
                                     </Grid>
                                     <Grid container item sm={6}>
@@ -96,7 +102,9 @@ export default function CreateKvisBox({kvis}) {
                                             required
                                             label="Enter Answer 4"
                                             fullWidth
-                                            autoFocus
+                                            onChange={(e) => {
+                                                question.answers[3] = e.target.value
+                                            }}
                                         />
                                     </Grid>
                                 </Grid>
