@@ -1,9 +1,10 @@
+import {Answer} from "./Answer";
+
 export class Question {
     constructor(
         public id: string,
-        public answers: string[],
-        public question?: string,
-        public correctAnswer? : number
+        public answers: Answer[] = [],
+        public question: string = "",
         ) {
     }
 

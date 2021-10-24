@@ -5,6 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
 import {Question} from "../../models/Question";
 import {v4 as uuidv4} from 'uuid';
+import {Answer} from "../../models/Answer";
 
 // @ts-ignore
 export default function CreateKvisBox({kvis}) {
@@ -65,7 +66,7 @@ export default function CreateKvisBox({kvis}) {
     }
 
     const [questions, setQuestions] = useState<Question[]>([new Question(uuidv4(), [])]);
-    const [correct, setCorrect] = useState<number>(0);
+    const [answers, setAnswers] = useState<Answer[]>();
 
     return (
         <div>
@@ -97,7 +98,7 @@ export default function CreateKvisBox({kvis}) {
                                                 question.answers[0] = e.target.value
                                             }}
                                         />
-                                        <Checkbox/>
+                                        <Checkbox />
                                     </Grid>
                                     <Grid container item sm={6}>
                                         <TextField
@@ -109,7 +110,7 @@ export default function CreateKvisBox({kvis}) {
                                                 question.answers[1] = e.target.value
                                             }}
                                         />
-                                        <Checkbox/>
+                                        <Checkbox />
                                     </Grid>
                                     <Grid container item sm={6}>
                                         <TextField
@@ -120,7 +121,7 @@ export default function CreateKvisBox({kvis}) {
                                                 question.answers[2] = e.target.value
                                             }}
                                         />
-                                        <Checkbox/>
+                                        <Checkbox />
                                     </Grid>
                                     <Grid container item sm={6}>
                                         <TextField
@@ -131,7 +132,7 @@ export default function CreateKvisBox({kvis}) {
                                                 question.answers[3] = e.target.value
                                             }}
                                         />
-                                        <Checkbox/>
+                                        <Checkbox />
                                     </Grid>
                                 </Grid>
                                 <Box mt={4} mb={4} display="flex"
