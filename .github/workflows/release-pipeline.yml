@@ -35,7 +35,3 @@ jobs:
       run: |
         cd ReactApp
         npm test
-    - name: Deploy to Docker on VM
-      run: |
-        chmod +x deploy.sh
-        ./deploy.sh

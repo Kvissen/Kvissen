@@ -21,3 +21,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.margin-container {
+  margin: 8px;
+}
+
+.basic-button {
+  height: 40px;
+}
