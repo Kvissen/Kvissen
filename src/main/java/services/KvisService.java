@@ -4,6 +4,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
@@ -20,18 +21,11 @@ public class KvisService
 	@GET
 	public String ping() throws IOException, InterruptedException
 	{
-		Process p = Runtime.getRuntime().exec("ping 130.225.170.170");
+		final String ip = "130.225.170.170";
+		InetAddress address = InetAddress.getByName(ip);
+		boolean reachable = address.isReachable(10000);
 		
-		Thread.sleep(10000);
-		
-		byte[] arr = new byte[1024];
-		int readBytes = p.getInputStream().read(arr, 0, arr.length);
-		
-		p.destroy();
-		
-		String msg = new String(arr, StandardCharsets.UTF_8);
-		
-		return String.format("Bytes Read: %s\n\n%s\n", readBytes, msg);
+		return String.format("Tried to ping %s with went %s", ip, reachable);
 	}
 	
 	/*
