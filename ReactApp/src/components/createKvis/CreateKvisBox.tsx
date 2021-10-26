@@ -67,10 +67,10 @@ export default function CreateKvisBox({kvis}) {
 
     function createInitialAnswerArray() : Answer[] {
         return [
-            new Answer("",false),
-            new Answer("",false),
-            new Answer("",false),
-            new Answer("",false)
+            new Answer(),
+            new Answer(),
+            new Answer(),
+            new Answer()
         ]
     }
 
