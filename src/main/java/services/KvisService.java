@@ -24,16 +24,19 @@ public class KvisService
 		try (Connection c = DriverManager.getConnection("jdbc:postgresql://130.225.170.170/test?user=admin&password=secret&ssl=true"))
 		{
 			//TODO: Finish this to try to get an answer from the server which maybe is located in Ireland
-			Statement stmt = c.prepareCall(
+			PreparedStatement stmt = c.prepareStatement(
 					"INSERT INTO test (description) VALUES ('Dette er en test')"
 			);
+			
+			if (stmt.execute())
+				return "Things went well";
+			else
+				return String.format("Things went bad\n\n%s", stmt.getMetaData());
 		}
 		catch (Exception e)
 		{
 			return String.format("Things went bad\n\nException:\n%s", e.getMessage());
 		}
-		
-		return "Things went well!";
 	}
 	
 	/*
