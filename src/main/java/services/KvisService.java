@@ -20,9 +20,7 @@ public class KvisService
 	@GET
 	public String ping() throws IOException, InterruptedException
 	{
-		final String ip = "130.225.170.170";
-		
-		Process p = Runtime.getRuntime().exec(String.format("ping %s", ip));
+		Process p = Runtime.getRuntime().exec("ping 130.225.170.170");
 		
 		Thread.sleep(10000);
 		
