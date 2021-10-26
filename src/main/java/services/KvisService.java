@@ -1,9 +1,9 @@
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+package services;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-@Path("test")
+@Path("kvis")
 public class KvisService
 {
 	@GET
@@ -12,6 +12,17 @@ public class KvisService
 		return "Hello World";
 	}
 	
+	@Path("ping")
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public String ping()
+	{
+		final String ip = "130.225.170.170";
+		
+		return ip;
+	}
+	
+	/*
 	@Path("json")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -19,4 +30,5 @@ public class KvisService
 	{
 		return new DataKvis();
 	}
+	 */
 }
