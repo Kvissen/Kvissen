@@ -4,9 +4,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
+import java.sql.*;
+
 
 @Path("kvis")
 public class KvisService
@@ -17,15 +16,24 @@ public class KvisService
 		return "Hello World";
 	}
 	
-	@Path("ping")
-	@GET
-	public String ping() throws IOException, InterruptedException
+	@Path("defaultTest")
+	@PUT
+	@Produces(MediaType.TEXT_PLAIN)
+	public String ping() throws IOException, InterruptedException, SQLException
 	{
-		final String ip = "130.225.170.170";
-		InetAddress address = InetAddress.getByName(ip);
-		boolean reachable = address.isReachable(10000);
+		try (Connection c = DriverManager.getConnection("jdbc:postgresql://130.225.170.170/test?user=admin&password=secret&ssl=true"))
+		{
+			//TODO: Finish this to try to get an answer from the server which maybe is located in Ireland
+			Statement stmt = c.prepareCall(
+					"INSERT INTO test (description) VALUES ('Dette er en test')"
+			);
+		}
+		catch (Exception e)
+		{
+			return String.format("Things went bad\n\nException:\n%s", e.getMessage());
+		}
 		
-		return String.format("Tried to ping %s with went %s", ip, reachable);
+		return "Things went well!";
 	}
 	
 	/*
