@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Grid, TextField, Typography} from "@mui/material";
+import {Button, CircularProgress, Grid, TextField, Typography} from "@mui/material";
 import {store} from "../../stores/QuizStore";
 import {observer} from "mobx-react";
 import {useHistory} from "react-router-dom";
@@ -27,6 +27,7 @@ function EnterCode() {
                     history.push("./kvis")
                 }}>
                     Start Kvis!
+                    <CircularProgress/>
                 </Button>
             </Grid>
         </Grid>

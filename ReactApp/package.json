@@ -12,6 +12,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@types/react-router-dom": "^5.1.9",
+    "dotenv": "^10.0.0",
     "mobx": "^6.3.3",
     "mobx-persist": "^0.4.1",
     "mobx-persist-store": "^1.0.4",
