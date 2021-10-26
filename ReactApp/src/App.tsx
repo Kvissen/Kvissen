@@ -1,14 +1,15 @@
 import React from 'react';
 import './App.css';
 import Grid from '@mui/material/Grid';
-import {BrowserRouter as Router, Route, Switch,} from "react-router-dom";
+import {Route, Switch, HashRouter} from "react-router-dom";
 import Header from "./components/header/Header";
 import EnterCodeObserver from "./components/enterCode/EnterCode";
 import KvisBox from "./components/kvisBox/KvisBox";
+import CreateKvisObserver from "./components/createKvis/CreateKvis";
 
 function App() {
     return (
-        <Router>
+        <HashRouter>
             <Grid container spacing={2} id={"maingrid"}>
                 <Grid item xs={12}>
                     <Header/>
@@ -21,11 +22,14 @@ function App() {
                         <Route exact path="/kvis">
                             <KvisBox/>
                         </Route>
+                        <Route exact path="/create-kvis">
+                            <CreateKvisObserver/>
+                        </Route>
                         <Route render={() => <h1>404</h1>}/>
                     </Switch>
                 </Grid>
             </Grid>
-        </Router>
+        </HashRouter>
     )
 }
 
