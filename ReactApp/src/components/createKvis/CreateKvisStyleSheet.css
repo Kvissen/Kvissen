@@ -1,0 +1,23 @@
+.main-container {
+    margin: 8px;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+
+.create-kvis-button {
+    height: 40px;
+}
+
+.create-kvis-box {
+    padding: 8px;
+}
+
+.add-new-question {
+    height: 40px;
+}
+
