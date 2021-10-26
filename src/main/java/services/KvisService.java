@@ -17,11 +17,11 @@ public class KvisService
 	}
 	
 	@Path("defaultTest")
-	@PUT
+	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String ping() throws IOException, InterruptedException, SQLException
 	{
-		try (Connection c = DriverManager.getConnection("jdbc:postgresql://130.225.170.170/test?user=admin&password=secret&ssl=true"))
+		try (Connection c = DriverManager.getConnection("jdbc:postgresql://130.225.170.170:5432/kvis_db?user=admin&password=kvissen"))
 		{
 			//TODO: Finish this to try to get an answer from the server which maybe is located in Ireland
 			PreparedStatement stmt = c.prepareStatement(
@@ -31,7 +31,7 @@ public class KvisService
 			if (stmt.execute())
 				return "Things went well";
 			else
-				return String.format("Things went bad\n\n%s", stmt.getMetaData());
+				return String.format("Tried to execute statement, but went bad\n\n%s", stmt.getMetaData());
 		}
 		catch (Exception e)
 		{
