@@ -5,6 +5,7 @@ import {Route, Switch, HashRouter} from "react-router-dom";
 import Header from "./components/header/Header";
 import EnterCodeObserver from "./components/enterCode/EnterCode";
 import KvisBox from "./components/kvisBox/KvisBox";
+import CreateKvisObserver from "./components/createKvis/CreateKvis";
 
 function App() {
     return (
@@ -20,6 +21,9 @@ function App() {
                         </Route>
                         <Route exact path="/kvis">
                             <KvisBox/>
+                        </Route>
+                        <Route exact path="/create-kvis">
+                            <CreateKvisObserver/>
                         </Route>
                         <Route render={() => <h1>404</h1>}/>
                     </Switch>
