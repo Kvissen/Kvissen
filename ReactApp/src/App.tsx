@@ -6,6 +6,7 @@ import Header from "./components/header/Header";
 import EnterCodeObserver from "./components/enterCode/EnterCode";
 import KvisBox from "./components/kvisBox/KvisBox";
 import CreateKvisObserver from "./components/createKvis/CreateKvis";
+import LandingObserver from "./components/landing/Landing";
 
 function App() {
     return (
@@ -24,6 +25,9 @@ function App() {
                         </Route>
                         <Route exact path="/create-kvis">
                             <CreateKvisObserver/>
+                        </Route>
+                        <Route exact path="/landing">
+                            <LandingObserver/>
                         </Route>
                         <Route render={() => <h1>404</h1>}/>
                     </Switch>
