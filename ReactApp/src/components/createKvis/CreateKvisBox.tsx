@@ -105,6 +105,7 @@ export default function CreateKvisBox({kvis}) {
                                                 question.answers[0].answer = e.target.value
                                             }}
                                         />
+                                        <p>Correct</p>
                                         <Checkbox onChange={(e) => {
                                             question.answers[0].isCorrect = e.target.checked
                                         }}/>
@@ -119,6 +120,7 @@ export default function CreateKvisBox({kvis}) {
                                                 question.answers[1].answer = e.target.value
                                             }}
                                         />
+                                        <p>Correct</p>
                                         <Checkbox onChange={(e) => {
                                             question.answers[1].isCorrect = e.target.checked
                                         }}/>
@@ -132,6 +134,7 @@ export default function CreateKvisBox({kvis}) {
                                                 question.answers[2].answer = e.target.value
                                             }}
                                         />
+                                        <p>Correct</p>
                                         <Checkbox onChange={(e) => {
                                             question.answers[2].isCorrect = e.target.checked
                                         }}/>
@@ -145,6 +148,7 @@ export default function CreateKvisBox({kvis}) {
                                                 question.answers[3].answer = e.target.value
                                             }}
                                         />
+                                        <p>Correct</p>
                                         <Checkbox onChange={(e) => {
                                             question.answers[3].isCorrect = e.target.checked
                                         }}/>
