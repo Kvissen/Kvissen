@@ -90,7 +90,6 @@ export default function CreateKvisBox({kvis}) {
                                     required
                                     label="Enter question"
                                     fullWidth
-                                    autoFocus
                                     onChange={(e) => {
                                         question.question = e.target.value;
                                     }}
