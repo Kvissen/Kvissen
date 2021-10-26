@@ -95,7 +95,7 @@ export default function CreateKvisBox({kvis}) {
                                             label="Enter Answer 1"
                                             fullWidth
                                             onChange={(e) => {
-                                                question.answers[0] = e.target.value
+                                                //question.answers[0] = e.target.value
                                             }}
                                         />
                                         <Checkbox />
@@ -107,7 +107,7 @@ export default function CreateKvisBox({kvis}) {
                                             label="Enter Answer 2"
                                             fullWidth
                                             onChange={(e) => {
-                                                question.answers[1] = e.target.value
+                                                //question.answers[1] = e.target.value
                                             }}
                                         />
                                         <Checkbox />
@@ -118,7 +118,7 @@ export default function CreateKvisBox({kvis}) {
                                             label="Enter Answer 3"
                                             fullWidth
                                             onChange={(e) => {
-                                                question.answers[2] = e.target.value
+                                                //question.answers[2] = e.target.value
                                             }}
                                         />
                                         <Checkbox />
@@ -129,7 +129,7 @@ export default function CreateKvisBox({kvis}) {
                                             label="Enter Answer 4"
                                             fullWidth
                                             onChange={(e) => {
-                                                question.answers[3] = e.target.value
+                                                //question.answers[3] = e.target.value
                                             }}
                                         />
                                         <Checkbox />
