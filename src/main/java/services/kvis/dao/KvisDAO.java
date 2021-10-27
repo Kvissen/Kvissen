@@ -2,6 +2,7 @@ package services.kvis.dao;
 
 import services.Table;
 import services.kvis.dto.Kvis;
+import services.ConnectionPool;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,14 +16,6 @@ import java.util.List;
  **/
 public class KvisDAO
 {
-	//TODO: Should be moved out somewhere, but resides here for now as this is the only place it is used.
-	private static final String URL = "jdbc:postgresql://130.225.170.170:5432/kvis_db?user=admin&password=kvissen";
-	
-	/**
-	 * Private constructor to avoid instantiation.
-	 */
-	private KvisDAO() {}
-	
 	/**
 	 * Retrieves all Kvisses from the Database.
 	 *
@@ -31,26 +24,52 @@ public class KvisDAO
 	 */
 	public static Kvis[] getAll() throws SQLException
 	{
-		// Get connection
-		try (Connection connection = DriverManager.getConnection(URL))
+		// Prepare query
+		final String query = String.format("SELECT * FROM %s", Table.KVIS.TableName);
+		
+		// Run
+		return queryDatabase(query);
+	}
+	
+	/**
+	 * Retrieves all Kvisses belonging to the user with the given username from the database.
+	 *
+	 * @param username Name of the user
+	 * @return Array of Kvisses
+	 */
+	public static Kvis[] getKvissesFromUser(final String username)
+	{
+		// Prepare query
+		final String query = String.format("SELECT * FROM %s WHERE username='%s'", Table.KVIS.TableName, username);
+		
+		// Run
+		return queryDatabase(query);
+	}
+	
+	/**
+	 * Creates PreparedStatement from the give query string, executes it and returns a parsed array of [Kvis]
+	 * objects.
+	 *
+	 * @param query query String
+	 * @return Array of [Kvis] objects
+	 */
+	private static Kvis[] queryDatabase(final String query)
+	{
+		try (
+				// Get connection
+				Connection connection = ConnectionPool.getInstance().getConnection();
+				
+				// Prepare statement
+				PreparedStatement stmt = connection.prepareStatement(query);
+				
+				// Execute
+				ResultSet res = stmt.executeQuery()
+		)
 		{
-			connection.setAutoCommit(true);
-			
-			// Prepare statement
-			final String query = String.format("SELECT * FROM %s", Table.KVIS.TableName);
-			final Statement stmt = connection.createStatement();
-			
-			// Execute
-			final ResultSet res = stmt.executeQuery(query);
-			
 			// Parse
 			return parseKvisses(res);
 		}
-		catch (Exception e)
-		{
-			System.out.println("KvisDAO.getAll() failed:\n" + e.getMessage());
-			return null;
-		}
+		catch (SQLException e) { System.out.println("KvisDAO.getAll() failed:\n" + e.getMessage()); return null; }
 	}
 	
 	/**
@@ -74,4 +93,9 @@ public class KvisDAO
 		}
 		return res.toArray(new Kvis[0]);
 	}
+	
+	/**
+	 * Private constructor to avoid instantiation.
+	 */
+	private KvisDAO() {}
 }

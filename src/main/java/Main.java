@@ -1,5 +1,6 @@
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
+import services.ConnectionPool;
 
 import java.io.File;
 import java.util.Optional;
@@ -24,5 +25,8 @@ public class Main
 		
 		tomcat.start();
 		tomcat.getServer().await();
+		
+		// Upon exist, close the connection pool
+		ConnectionPool.Close();
 	}
 }
