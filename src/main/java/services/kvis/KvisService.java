@@ -3,13 +3,9 @@ package services.kvis;
 import services.kvis.dao.KvisDAO;
 import services.kvis.dto.Kvis;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.io.File;
-import java.io.IOException;
 import java.sql.*;
-
 
 @Path("kvis")
 public class KvisService
@@ -19,10 +15,22 @@ public class KvisService
 	@Produces(MediaType.APPLICATION_JSON)
 	public Kvis[] getAllKvis()
 	{
-		try {
-			return KvisDAO.getAll();
+		try { return KvisDAO.getAll(); }
+		catch (Exception e)
+		{
+			//TODO: Return server error
+			return null;
 		}
-		catch (SQLException e) {
+	}
+	
+	@Path("user={username}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Kvis[] getKvissesFromUser(@PathParam("username") final String username)
+	{
+		try { return KvisDAO.getKvissesFromUser(username); }
+		catch (Exception e)
+		{
 			//TODO: Return server error
 			return null;
 		}

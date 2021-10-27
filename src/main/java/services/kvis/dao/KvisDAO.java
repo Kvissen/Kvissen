@@ -20,9 +20,8 @@ public final class KvisDAO
 	 * Retrieves all Kvisses from the Database.
 	 *
 	 * @return Array full of Kvisses.
-	 * @throws SQLException Catch this!
 	 */
-	public static Kvis[] getAll() throws SQLException
+	public static Kvis[] getAll()
 	{
 		// Prepare query
 		final String query = String.format("SELECT * FROM %s", Table.KVIS.TableName);
