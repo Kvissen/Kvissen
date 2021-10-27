@@ -1,9 +1,10 @@
 import React from "react";
 import AnswerBox from "../answerBox/AnswerBox";
 import {Stack} from "@mui/material";
+import {Answer} from "../../models/Answer";
 
 interface ListElement {
-    text: string,
+    answer: Answer,
     correct: boolean
 }
 
@@ -32,7 +33,7 @@ class AnswerList extends React.Component<ListOfAnswers>
     createAnswerOption(num: number, option: ListElement)
     {
         return (
-            <AnswerBox text={option.text} number={num}
+            <AnswerBox answer={option.answer} number={num}
                        onClick={
                            option.correct ?
                                () => this.correctClick() : () => this.wrongClick()
