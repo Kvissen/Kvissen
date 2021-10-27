@@ -66,7 +66,7 @@ public final class KvisDAO
 		)
 		{
 			// Parse
-			return parseKvisses(res);
+			return parseDBResponse(res);
 		}
 		catch (SQLException e) { System.out.println("KvisDAO.getAll() failed:\n" + e.getMessage()); return null; }
 	}
@@ -78,7 +78,7 @@ public final class KvisDAO
 	 * @return Array of [Kvis] objects.
 	 * @throws SQLException Catch This!
 	 */
-	private static Kvis[] parseKvisses(final ResultSet queryResult) throws SQLException
+	private static Kvis[] parseDBResponse(final ResultSet queryResult) throws SQLException
 	{
 		List<Kvis> res = new ArrayList<>(2);
 		while(queryResult.next())
