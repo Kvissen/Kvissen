@@ -50,7 +50,7 @@ public class ConnectionPool
 	 *
 	 * This takes all possible Exceptions into consideration, and doesn't throw anything.
 	 */
-	public static void Close()
+	public static void close()
 	{
 		try { instance.connSource.close(); } catch(Exception ignored) {}
 	}
@@ -58,7 +58,7 @@ public class ConnectionPool
 	/**
 	 * Retrieves a connection from the Pool.
 	 *
-	 * OBS: Closing the connection is the same as release the connection to the pool!
+	 * OBS: Closing the connection is the same as releasing the connection to the pool!
 	 *
 	 * @return [Connection]
 	 * @throws SQLException

@@ -27,6 +27,6 @@ public class Main
 		tomcat.getServer().await();
 		
 		// Upon exist, close the connection pool
-		ConnectionPool.Close();
+		ConnectionPool.close();
 	}
 }
