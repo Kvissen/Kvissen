@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Grid from '@mui/material/Grid';
 import AnswerList from "../answerList/AnswerList";
 import KwestjenBox from '../kwestjenBox/KwestjenBox';
+import {Answer} from "../../models/Answer";
 
 export default class KvisBox extends Component {
 
@@ -16,9 +17,9 @@ export default class KvisBox extends Component {
                 <Grid item xs={12} md={6}>
                     <AnswerList answerOptions={
                         [
-                            {text: "yes", correct: false},
-                            {text: "no", correct: false},
-                            {text: "both no and yes", correct: true}
+                            {answer: new Answer("Yes", false)},
+                            {answer: new Answer("No", false)},
+                            {answer: new Answer("Both no and yes", true)}
                         ]
                     }
                                 onCorrect={()=>{

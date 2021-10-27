@@ -4,8 +4,7 @@ import {Stack} from "@mui/material";
 import {Answer} from "../../models/Answer";
 
 interface ListElement {
-    answer: Answer,
-    correct: boolean
+    answer: Answer
 }
 
 interface ListOfAnswers {
@@ -35,7 +34,7 @@ class AnswerList extends React.Component<ListOfAnswers>
         return (
             <AnswerBox answer={option.answer} number={num}
                        onClick={
-                           option.correct ?
+                           option.answer.isCorrect ?
                                () => this.correctClick() : () => this.wrongClick()
                        }/>
         );
