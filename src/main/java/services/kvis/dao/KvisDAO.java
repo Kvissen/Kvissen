@@ -14,7 +14,7 @@ import java.util.List;
  * @author Alfred Röttger Rydahl
  * @date 26/10/2021
  **/
-public class KvisDAO
+public final class KvisDAO
 {
 	/**
 	 * Retrieves all Kvisses from the Database.
