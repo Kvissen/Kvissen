@@ -5,7 +5,5 @@ export class Question {
         public id: string,
         public answers: Answer[] = [],
         public question: string = "",
-        ) {
-    }
-
+        ) {}
 }
