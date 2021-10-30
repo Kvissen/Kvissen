@@ -1,9 +1,11 @@
 import {IKvisRepository} from "./IKvisRepository";
 import {Kvis} from "../../models/Kvis";
+import {IKvisDao} from "../daos/IKvisDao";
+import KvisDao from "../daos/KvisDao";
 
 class KvisRepository implements IKvisRepository {
 
-    
+    private kvisDao : IKvisDao = new KvisDao();
 
     async addKvis(kvis: Kvis): Promise<boolean> {
         return Promise.resolve(false);
