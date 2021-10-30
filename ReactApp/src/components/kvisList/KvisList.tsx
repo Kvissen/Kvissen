@@ -41,7 +41,7 @@ export function KvisList() {
                 {
                     kvisses.map((kvis) => {
                         return (
-                            <Grid item sm={6}>
+                            <Grid item sm={6} key={kvis.id}>
                                 <KvisListElement kvis={kvis}/>
                             </Grid>
                         )
