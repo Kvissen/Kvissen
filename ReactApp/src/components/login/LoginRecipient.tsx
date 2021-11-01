@@ -24,8 +24,8 @@ function LoginRecipient() {
     return (
         <div>
             <CircularProgress/>
-            <h2>Received: </h2>
-            <p>{searchParams.get('token') ?? 'No token'}</p>
+            <h2>Redirecting to dashboard...</h2>
+            <p>Got token: {searchParams.get('token') ?? 'No token'}</p>
         </div>
     )
 
