@@ -9,7 +9,7 @@ import java.net.URI;
 
 import static services.auth.EnvVars.*;
 
-public class AuthDAO {
+public class AuthHandler {
     public static Response login() {
         URI uri = UriBuilder.fromUri(TICKET_ENDPOINT + "?service=" + BASE_URL + TICKET_RESPONSE_ENDPOINT).build();
         return Response.seeOther(uri).build();

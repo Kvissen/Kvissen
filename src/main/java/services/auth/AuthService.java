@@ -20,7 +20,7 @@ public class AuthService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getLogin() {
         try {
-            return AuthDAO.login();
+            return AuthHandler.login();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -31,7 +31,7 @@ public class AuthService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response redirect(@QueryParam("ticket") String ticket) {
         try {
-            return AuthDAO.redirect(ticket);
+            return AuthHandler.redirect(ticket);
         } catch (SignatureException | UnsupportedJwtException | MalformedJwtException | IllegalArgumentException u) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         } catch (ExpiredJwtException ex) {
