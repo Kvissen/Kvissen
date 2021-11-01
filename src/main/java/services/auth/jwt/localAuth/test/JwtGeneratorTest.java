@@ -1,10 +1,10 @@
-package auth.kvisAuth.test;
+package services.auth.jwt.localAuth.test;
 
-import auth.EnvVars;
-import auth.kvisAuth.JwtDecoder;
-import auth.kvisAuth.JwtGenerator;
 import io.jsonwebtoken.Claims;
 import org.junit.jupiter.api.Test;
+import services.auth.EnvVars;
+import services.auth.jwt.localAuth.JwtDecoder;
+import services.auth.jwt.localAuth.JwtGenerator;
 
 class JwtGeneratorTest {
 

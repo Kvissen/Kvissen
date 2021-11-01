@@ -2,11 +2,11 @@
  * Erlend
  * Source https://developer.okta.com/blog/2018/10/31/jwts-with-java
  */
-package auth.kvisAuth;
+package services.auth.jwt.localAuth;
 
-import auth.EnvVars;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import services.auth.EnvVars;
 
 import javax.xml.bind.DatatypeConverter;
 
