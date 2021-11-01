@@ -1,34 +1,51 @@
 import {IKvisDao} from "./IKvisDao";
 import {Kvis} from "../../models/Kvis";
+import {IHttpClient} from "../infrastructure/IHttpClient";
+import HttpClient from "../infrastructure/HttpClient";
 
 class KvisDao implements IKvisDao{
 
     private static _instance : KvisDao
 
+    private httpClient : IHttpClient
+
+    private constructor() {
+        this.httpClient = new HttpClient();
+    }
+
     public static getInstance(): KvisDao{
         if (this._instance === null) {
-            this._instance = new KvisDao()
+            this._instance = new KvisDao();
         }
-        return this._instance
+        return this._instance;
     }
 
-    addKvis(kvis: Kvis): Promise<boolean> {
+    async addKvis(kvis: Kvis): Promise<boolean> {
+        return await this.httpClient.request({
+            method: 'POST',
+            url: 'http://localhost:7777/boards',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: {
+                kvis,
+            }
+        })
+    }
+
+    async deleteKvis(id: string): Promise<boolean> {
         return Promise.resolve(false);
     }
 
-    deleteKvis(id: string): Promise<boolean> {
-        return Promise.resolve(false);
-    }
-
-    getKvisses(): Promise<Kvis[]> {
+    async getKvisses(): Promise<Kvis[]> {
         return Promise.resolve([]);
     }
 
-    getKvissesForUser(userId: string): Promise<Kvis[]> {
+    async getKvissesForUser(userId: string): Promise<Kvis[]> {
         return Promise.resolve([]);
     }
 
-    updateKvis(id: string, newKvis: Kvis): Promise<Kvis> {
+    async updateKvis(id: string, newKvis: Kvis): Promise<Kvis> {
         return Promise.resolve(new Kvis(""));
     }
 

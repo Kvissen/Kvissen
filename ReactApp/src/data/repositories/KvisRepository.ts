@@ -5,26 +5,26 @@ import KvisDao from "../daos/KvisDao";
 
 class KvisRepository implements IKvisRepository {
 
-    private kvisDao : IKvisDao = new KvisDao();
+    private kvisDao : IKvisDao = KvisDao.getInstance();
 
     async addKvis(kvis: Kvis): Promise<boolean> {
-        return Promise.resolve(false);
+        return await this.kvisDao.addKvis(kvis);
     }
 
     async deleteKvis(id: string): Promise<boolean> {
-        return Promise.resolve(false);
+        return await this.kvisDao.deleteKvis(id);
     }
 
     async getKvisses(): Promise<Kvis[]> {
-        return Promise.resolve([]);
+        return await this.kvisDao.getKvisses();
     }
 
     async getKvissesForUser(userId: string): Promise<Kvis[]> {
-        return Promise.resolve([]);
+        return await this.kvisDao.getKvissesForUser(userId);
     }
 
     async updateKvis(id: string, newKvis: Kvis): Promise<Kvis> {
-        return Promise.resolve(new Kvis(""));
+        return await this.kvisDao.updateKvis(id,newKvis);
     }
 
 }
