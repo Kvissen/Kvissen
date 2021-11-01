@@ -18,7 +18,8 @@ public class TicketValidator {
                         TICKET_LABEL + ticket)
                 .asString()
                 .getBody();
-        // Just print and return the result for now
+
+        // Just print and return the result for now, change to bool or exception
         System.out.println("TicketVal: " + body);
         return body;
     }

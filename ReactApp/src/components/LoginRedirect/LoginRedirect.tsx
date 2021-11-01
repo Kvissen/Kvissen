@@ -1,20 +1,23 @@
 import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
 import {CircularProgress} from "@mui/material";
-import {useParams} from "react-router-dom";
 
-const LOGIN_URL = process.env.REACT_APP_LOGIN_URL!
-const REDIRECT_URL = process.env.REACT_APP_REDIRECT_URL!
+const LOGIN_URL = process.env.REACT_APP_LOGIN_URL
+const REDIRECT_URL = process.env.REACT_APP_REDIRECT_URL
+const SERVICE_LABEL = "/?service="
 
 function LoginRedirect() {
-    let signInUrl = LOGIN_URL + "/?service=" + REDIRECT_URL
+
+    let signInUrl = LOGIN_URL +
+        SERVICE_LABEL + REDIRECT_URL
+
     useEffect(() => {
         window.location.href = signInUrl;
     }, []);
 
-    // useParams grabs response from DTU redirect, AKA the ticket
-    const handle = useParams()
-    console.log(handle)
+    // At the redirect URL, useParams grabs response from DTU redirect (ticket)
+    // const handle = useParams()
+    // console.log(handle)
 
     return (<div>
         <CircularProgress/>
