@@ -1,8 +1,9 @@
 import React from "react";
 import {Card, CardContent, CardHeader, Typography} from "@mui/material";
+import {Answer} from "../../models/Answer";
 
 export interface AnswerOption {
-    text: string,
+    answer: Answer,
     number: number,
     onClick: () => void
 }
@@ -26,7 +27,7 @@ export default function AnswerBox(options: AnswerOption)
         >
             <CardHeader title={options.number}/>
             <CardContent>
-                <Typography variant={"h6"} align={"center"}>{options.text} </Typography>
+                <Typography variant={"h6"} align={"center"}>{options.answer.answer} </Typography>
             </CardContent>
         </Card>
     );

@@ -61,12 +61,20 @@ export default function CreateKvisBox({kvis}) {
 
     function addQuestion() {
         setQuestions(prevState => {
-            return [...prevState, new Question(uuidv4(), [])]
+            return [...prevState, new Question(uuidv4(), createInitialAnswerArray())]
         })
     }
 
-    const [questions, setQuestions] = useState<Question[]>([new Question(uuidv4(), [])]);
-    const [answers, setAnswers] = useState<Answer[]>();
+    function createInitialAnswerArray() : Answer[] {
+        return [
+            new Answer(),
+            new Answer(),
+            new Answer(),
+            new Answer()
+        ]
+    }
+
+    const [questions, setQuestions] = useState<Question[]>([new Question(uuidv4(), createInitialAnswerArray())]);
 
     return (
         <div>
@@ -82,7 +90,6 @@ export default function CreateKvisBox({kvis}) {
                                     required
                                     label="Enter question"
                                     fullWidth
-                                    autoFocus
                                     onChange={(e) => {
                                         question.question = e.target.value;
                                     }}
@@ -95,10 +102,13 @@ export default function CreateKvisBox({kvis}) {
                                             label="Enter Answer 1"
                                             fullWidth
                                             onChange={(e) => {
-                                                //question.answers[0] = e.target.value
+                                                question.answers[0].answer = e.target.value
                                             }}
                                         />
-                                        <Checkbox />
+                                        <p>Correct</p>
+                                        <Checkbox onChange={(e) => {
+                                            question.answers[0].isCorrect = e.target.checked
+                                        }}/>
                                     </Grid>
                                     <Grid container item sm={6}>
                                         <TextField
@@ -107,10 +117,13 @@ export default function CreateKvisBox({kvis}) {
                                             label="Enter Answer 2"
                                             fullWidth
                                             onChange={(e) => {
-                                                //question.answers[1] = e.target.value
+                                                question.answers[1].answer = e.target.value
                                             }}
                                         />
-                                        <Checkbox />
+                                        <p>Correct</p>
+                                        <Checkbox onChange={(e) => {
+                                            question.answers[1].isCorrect = e.target.checked
+                                        }}/>
                                     </Grid>
                                     <Grid container item sm={6}>
                                         <TextField
@@ -118,10 +131,13 @@ export default function CreateKvisBox({kvis}) {
                                             label="Enter Answer 3"
                                             fullWidth
                                             onChange={(e) => {
-                                                //question.answers[2] = e.target.value
+                                                question.answers[2].answer = e.target.value
                                             }}
                                         />
-                                        <Checkbox />
+                                        <p>Correct</p>
+                                        <Checkbox onChange={(e) => {
+                                            question.answers[2].isCorrect = e.target.checked
+                                        }}/>
                                     </Grid>
                                     <Grid container item sm={6}>
                                         <TextField
@@ -129,10 +145,13 @@ export default function CreateKvisBox({kvis}) {
                                             label="Enter Answer 4"
                                             fullWidth
                                             onChange={(e) => {
-                                                //question.answers[3] = e.target.value
+                                                question.answers[3].answer = e.target.value
                                             }}
                                         />
-                                        <Checkbox />
+                                        <p>Correct</p>
+                                        <Checkbox onChange={(e) => {
+                                            question.answers[3].isCorrect = e.target.checked
+                                        }}/>
                                     </Grid>
                                 </Grid>
                                 <Box mt={4} mb={4} display="flex"
