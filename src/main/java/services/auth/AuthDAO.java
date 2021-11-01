@@ -1,8 +1,7 @@
 package services.auth;
 
 import io.jsonwebtoken.Claims;
-import services.auth.jwt.localAuth.JwtDecoder;
-import services.auth.jwt.remoteAuth.TicketValidator;
+import services.auth.jwt.JwtService;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -16,20 +15,16 @@ public class AuthDAO {
         return Response.seeOther(uri).build();
     }
 
-    public static String redirect(String ticket) throws Exception {
-        System.out.println("single use ticket received: " + ticket);
-        return new TicketValidator().validate(ticket);
+    public static Response redirect(String ticket) throws Exception {
+        String id = JwtService.validateTicket(ticket);
+        String token = JwtService.generateJwt(id, JWT_DEFAULT_ISSUER, id + "@DTU", JWT_TTL);
+        return Response.seeOther(UriBuilder.fromUri(CLIENT_BASE_URL + "?token=" + token).build()).build();
     }
 
     public static Claims validate(String authentication) {
-        String[] tokenArray = authentication.split(" ");
-        String token = tokenArray[tokenArray.length - 1];
-        return new JwtDecoder().decode(token);
+        //String[] tokenArray = authentication.split(" ");
+        String token = authentication.split(" ")[1];
+        return JwtService.decodeJwt(token);
     }
-
-
-//        return new HashMap<String, String>(){{
-//            put("access_token", new JwtService().generateJwt("1", JWT_DEFAULT_ISSUER, "app", JWT_TTL));
-//        }};
 }
 

@@ -20,7 +20,6 @@ public class JwtService {
     }
 
     public static String validateTicket(String ticket) {
-        // Todo: return bool or throw
         return new TicketValidator().validate(ticket);
     }
 }

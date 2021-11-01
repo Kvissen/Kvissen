@@ -4,7 +4,6 @@
 package services.auth.jwt.remoteAuth;
 
 import kong.unirest.Unirest;
-import services.auth.jwt.localAuth.JwtGenerator;
 
 import javax.ws.rs.NotAuthorizedException;
 
@@ -36,8 +35,6 @@ public class TicketValidator {
             throw new NotAuthorizedException("Login failed");
         }
 
-        String token = new JwtGenerator().generate(id, JWT_DEFAULT_ISSUER, id + "@DTU", JWT_TTL);
-
-        return token;
+        return id;
     }
 }
