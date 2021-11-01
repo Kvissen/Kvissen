@@ -6,9 +6,9 @@ import CheckIcon from '@mui/icons-material/Check';
 import {Question} from "../../models/Question";
 import {v4 as uuidv4} from 'uuid';
 import {Answer} from "../../models/Answer";
+import {Kvis} from "../../models/Kvis";
 
-// @ts-ignore
-export default function CreateKvisBox({kvis}) {
+export default function CreateKvisBox({kvis} : {kvis: Kvis}) {
 
     function saveKvis() {
         kvis.questions = questions
