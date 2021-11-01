@@ -1,8 +1,8 @@
-import {makeAutoObservable} from 'mobx';
-import {makePersistable} from "mobx-persist-store";
-
 // Erlend
 // Source: https://github.com/jherr/todos-many-ways/tree/master/todo-mobx
+
+import {makeAutoObservable} from 'mobx';
+import {makePersistable} from "mobx-persist-store";
 
 export interface IQuiz {
     id: string;

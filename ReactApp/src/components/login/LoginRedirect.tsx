@@ -3,16 +3,16 @@ import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
 import {CircularProgress} from "@mui/material";
 
-const LOGIN_URL = process.env.LOGIN_URL
-const SERVER_URL = process.env.SERVER_BASE_URL
-
 // Redirect page for login to the Kvis Server
 function LoginRedirect() {
 
-    // Can't be found in webapp folder
-    //let signInUrl = SERVER_URL! + LOGIN_URL!
+    // Require webPack to use environment vars
+    require('dotenv').config()
 
-    let signInUrl = "http://localhost:8080/api/auth/login"
+    // Can't be found in webapp folder
+    let signInUrl = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_LOGIN_URL
+
+    //let signInUrl = "http://localhost:8080/api/auth/login"
 
     useEffect(() => {
         window.location.href = signInUrl;

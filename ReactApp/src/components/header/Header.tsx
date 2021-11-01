@@ -1,11 +1,11 @@
+// Erlend
 import React from 'react';
 import {Link, Stack, Typography} from "@mui/material"
 import Grid from '@mui/material/Grid';
 import logo from '../../ImageAssets/kvislogo.png';
 import Box from '@mui/material/Box';
 import {observer} from 'mobx-react';
-// Context is an alternative to injection.
-// A 'global' variable limited to those classes who have access to the context
+
 import store from "../../stores/QuizStore";
 import DropDownMenu from "./DropDownMenu";
 

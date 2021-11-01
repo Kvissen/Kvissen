@@ -1,31 +1,33 @@
 // Erlend
-import React from 'react';
+import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
 import {CircularProgress} from "@mui/material";
 import {useLocation} from 'react-router-dom'
 
-const LOGIN_URL = process.env.LOGIN_URL
-const SERVER_URL = process.env.SERVER_BASE_URL
-
 // Redirect page for login to the Kvis Server
 function LoginRecipient() {
 
-    // TODO: DTU replies with %2F instead of ? handle encoding
+    // Require webPack to use environment vars
+    require('dotenv').config()
 
+    // Get path search param
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
 
-    let signInUrl = "http://localhost:8080/api/auth/login"
+    // Store token
+    localStorage.setItem('access_token', searchParams.get('token') ?? "null");
 
-    // useEffect(() => {
-    //     window.location.href = signInUrl;
-    // }, []);
+    let afterSignInURI = process.env.REACT_APP_BASE_URL + "/#/landing"
+
+    // Go to dashboard after retrieving token
+    useEffect(() => {
+        window.location.href = afterSignInURI;
+    }, []);
 
     return (
         <div>
             <CircularProgress/>
             <h2>Redirecting to dashboard...</h2>
-            <p>Got token: {searchParams.get('token') ?? 'No token'}</p>
         </div>
     )
 

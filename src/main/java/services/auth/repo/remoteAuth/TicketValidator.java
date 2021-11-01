@@ -1,13 +1,13 @@
 /*
  * Erlend
  */
-package services.auth.jwt.remoteAuth;
+package services.auth.repo.remoteAuth;
 
 import kong.unirest.Unirest;
 
 import javax.ws.rs.NotAuthorizedException;
 
-import static services.auth.EnvVars.*;
+import static Common.EnvVars.*;
 
 
 public class TicketValidator {
