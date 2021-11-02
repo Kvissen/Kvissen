@@ -30,31 +30,41 @@ function LoginRecipient() {
 
 }
 
+const creatorScope = "creator"
+const playerScope = "player"
+
 function handleToken(searchParams: URLSearchParams) {
     let token: String | null = searchParams.get('token')
     var scope: String = "";
+
+    // Get scope
     if (token == null) {
         // go to error page with arg: token failed
     } else {
         scope = getAccessScope(token)
     }
 
+    if (scope == creatorScope) {
+        // Store creator token
+        localStorage.setItem('access_token', searchParams.get('token') ?? "null");
+        return process.env.REACT_APP_BASE_URL + "/#/landing"
 
-    // Store player token
-    localStorage.setItem('player_access_token', searchParams.get('token') ?? "null");
-    return process.env.REACT_APP_BASE_URL + "/#/kvis"
-
-    // Store token
-    localStorage.setItem('access_token', searchParams.get('token') ?? "null");
-    return process.env.REACT_APP_BASE_URL + "/#/landing"
+    } else {
+        // Store player token
+        localStorage.setItem('player_access_token', searchParams.get('token') ?? "null");
+        return process.env.REACT_APP_BASE_URL + "/#/kvis"
+    }
 }
 
 function getAccessScope(token: String) {
     const jwt = require("jsonwebtoken");
     let decoded = jwt.decode(token)
+    console.log("Got token from server")
     console.log(token)
-    //if (decoded.)
-    return "player"
+    if (decoded.includes(creatorScope)) {
+        return creatorScope
+    }
+    return playerScope
 }
 
 const LoginRecipientObserver = observer(LoginRecipient)

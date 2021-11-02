@@ -6,7 +6,7 @@ package Common;
  * @author erlendtyrmi
  */
 public class EnvVars {
-    public static final boolean IS_PRODUCTION = true; // Reset if you touch this!
+    public static final boolean IS_PRODUCTION = false; // Reset if you touch this!
 
     // JWT secret - Move to cloud environment
     public static final String JWT_SECRET_KEY = "AJi4QfGWy6qGEMy99wLPUmcj261ck8pPFVwpiyFasnAlW05wbVXHdWHzrePox1CvBxh5gXf3hA";

@@ -63,7 +63,7 @@ public class AuthHandler {
      *
      * @return anonymous access token
      */
-    public static Response playerLogin() {
+    public static Response playerLogin() throws Exception {
         String id = "anonymous";
         String token = new JwtGenerator().generate(id, JWT_DEFAULT_ISSUER, AccessScope.player, JWT_TTL);
         // Send back to frontend with player_token as search param

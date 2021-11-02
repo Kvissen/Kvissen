@@ -12,12 +12,9 @@ function LoginRedirect() {
     // Can't be found in webapp folder
     let signInUrl = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_LOGIN_URL
 
-    //let signInUrl = "http://localhost:8080/api/auth/login"
-
     useEffect(() => {
         window.location.href = signInUrl;
     }, []);
-
 
     return (<div>
         <CircularProgress/>
