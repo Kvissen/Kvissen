@@ -13,6 +13,23 @@ import controllers.kvis.dto.kvisDB.KvisDBPayload;
 public class KvisFactory
 {
 	/**
+	 * Convert an Array of [KvisDBDTO] to an Array of [KvisAPIDTO].
+	 *
+	 * @param dbdtos
+	 * @return
+	 */
+	public static KvisAPIDTO[] DBToAPI(final KvisDBDTO[] dbdtos)
+	{
+		final KvisAPIDTO[] res = new KvisAPIDTO[dbdtos.length];
+		
+		final int length = dbdtos.length;
+		for (int i=0; i < length; i++)
+			res[i] = DBToAPI(dbdtos[i]);
+		
+		return res;
+	}
+	
+	/**
 	 * Convert [KvisDBDTO] to [KvisAPIDTO].
 	 *
 	 * @param dbdto
