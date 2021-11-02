@@ -8,7 +8,7 @@ package controllers;
  **/
 public enum Table
 {
-	KVIS("test");
+	KVIS("kvissen");
 	
 	/**
 	 * The name of the table to be used with SQL statements.
