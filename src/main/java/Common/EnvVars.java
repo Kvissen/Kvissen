@@ -12,7 +12,7 @@ public class EnvVars {
     public static final String JWT_SECRET_KEY = "AJi4QfGWy6qGEMy99wLPUmcj261ck8pPFVwpiyFasnAlW05wbVXHdWHzrePox1CvBxh5gXf3hA";
 
     // Server base url
-    public static final String BASE_URL = IS_PRODUCTION ? "https://kvissen.herokuapp.com" : "http://localhost:8080";
+    public static final String BASE_URL = IS_PRODUCTION ? "http://kvissen.devops.diplomportal.dk:8080" : "http://localhost:8080";
     public static final String CLIENT_BASE_URL = BASE_URL + "#login-recipient"; // Note: The "/" is omitted after "#"!
 
     // Default token settings
