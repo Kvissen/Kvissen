@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import controllers.kvis.dto.Question;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+
 /**
  *
  *
@@ -16,13 +19,15 @@ public class KvisAPIDTO
 	public final String uuid;
 	public final String name;
 	public final String creator;
+	public final Timestamp ts;
 	public final Question[] questions;
 	
-	private KvisAPIDTO(String uuid, String name, String creator, Question[] questions)
+	private KvisAPIDTO(String uuid, String name, String creator, Timestamp ts, Question[] questions)
 	{
 		this.uuid = uuid;
 		this.name = name;
 		this.creator = creator;
+		this.ts = ts;
 		this.questions = questions;
 	}
 	
@@ -32,6 +37,7 @@ public class KvisAPIDTO
 		private String uuid;
 		private String name;
 		private String creator;
+		private Timestamp ts;
 		private Question[] questions;
 		
 		public KvisAPIDTOBuilder setUuid(String uuid)
@@ -52,6 +58,12 @@ public class KvisAPIDTO
 			return this;
 		}
 		
+		public KvisAPIDTOBuilder setTimestamp(Timestamp ts)
+		{
+			this.ts = ts;
+			return this;
+		}
+		
 		public KvisAPIDTOBuilder setQuestions(Question[] questions)
 		{
 			this.questions = questions;
@@ -60,7 +72,7 @@ public class KvisAPIDTO
 		
 		public KvisAPIDTO build()
 		{
-			return new KvisAPIDTO(uuid, name, creator, questions);
+			return new KvisAPIDTO(uuid, name, creator, ts, questions);
 		}
 	}
 }
