@@ -13,26 +13,17 @@ public class KvisService
 	@Path("all")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Kvis[] getAllKvis()
+	public Kvis[] getAllKvis() throws SQLException
 	{
-		try { return KvisDAO.getAll(); }
-		catch (Exception e)
-		{
-			//TODO: Return server error
-			return null;
-		}
+		
+		return KvisDAO.getAll();
 	}
 	
 	@Path("user={username}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Kvis[] getKvissesFromUser(@PathParam("username") final String username)
+	public Kvis[] getKvissesFromUser(@PathParam("username") final String username) throws SQLException
 	{
-		try { return KvisDAO.getKvissesFromUser(username); }
-		catch (Exception e)
-		{
-			//TODO: Return server error
-			return null;
-		}
+		return KvisDAO.getKvissesFromUser(username);
 	}
 }

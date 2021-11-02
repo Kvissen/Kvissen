@@ -21,7 +21,7 @@ public final class KvisDAO
 	 *
 	 * @return Array full of Kvisses.
 	 */
-	public static Kvis[] getAll()
+	public static Kvis[] getAll() throws SQLException
 	{
 		// Prepare query
 		final String query = String.format("SELECT * FROM %s", Table.KVIS.TableName);
@@ -36,7 +36,7 @@ public final class KvisDAO
 	 * @param username Name of the user
 	 * @return Array of Kvisses
 	 */
-	public static Kvis[] getKvissesFromUser(final String username)
+	public static Kvis[] getKvissesFromUser(final String username) throws SQLException
 	{
 		// Prepare query
 		final String query = String.format("SELECT * FROM %s WHERE username='%s'", Table.KVIS.TableName, username);
@@ -52,7 +52,7 @@ public final class KvisDAO
 	 * @param query query String
 	 * @return Array of [Kvis] objects
 	 */
-	private static Kvis[] queryDatabase(final String query)
+	private static Kvis[] queryDatabase(final String query) throws SQLException
 	{
 		try (
 				// Get connection
@@ -68,7 +68,7 @@ public final class KvisDAO
 			// Parse
 			return parseDBResponse(res);
 		}
-		catch (SQLException e) { System.out.println("KvisDAO.getAll() failed:\n" + e.getMessage()); return null; }
+		catch (SQLException e) { System.out.println("KvisDAO.getAll() failed:\n" + e.getMessage()); throw e; }
 	}
 	
 	/**
