@@ -8,6 +8,7 @@ import services.auth.repo.remoteAuth.TicketValidator;
 
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.util.UUID;
 
 import static Common.EnvVars.*;
 
@@ -36,8 +37,13 @@ public class AuthService {
      * @throws Exception
      */
     public static Response redirect(String ticket) throws Exception {
-        String id = new TicketValidator().validate(ticket);
-        String token = new JwtGenerator().generate(id, JWT_DEFAULT_ISSUER, AccessScope.creator, JWT_TTL);
+        String userId = new TicketValidator().validate(ticket);
+        String token = new JwtGenerator().generate(
+                AccessScope.creator,
+                "none",
+                userId,
+                UUID.randomUUID().toString(),
+                JWT_DEFAULT_ISSUER, JWT_TTL);
         // Send back to frontend with token as search param
         return Response.seeOther(URI.create(CLIENT_BASE_URL + "?token=" + token)).build();
     }
@@ -59,6 +65,19 @@ public class AuthService {
         //io.jsonwebtoken.MalformedJwtException
         //io.jsonwebtoken.SignatureException
         //IllegalArgumentException
+    }
+
+    public static Response playerLogin(String quizCode) {
+        String userId = "anonymous";
+        String token = new JwtGenerator().generate(
+                AccessScope.player,
+                quizCode,
+                userId,
+                UUID.randomUUID().toString(),
+                JWT_DEFAULT_ISSUER, JWT_TTL
+        );
+        // Send back to frontend with token as search param
+        return Response.seeOther(URI.create(CLIENT_BASE_URL + "?token=" + token)).build();
     }
 }
 

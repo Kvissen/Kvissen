@@ -10,6 +10,7 @@ import LoginRedirectObserver from "./components/login/LoginRedirect";
 import LandingObserver from "./components/landing/Landing";
 import KvisListObserver from "./components/kvisList/KvisList";
 import LoginRecipientObserver from "./components/login/LoginRecipient";
+import ErrorPage from "./components/error/errorPage";
 
 function App() {
     return (
@@ -40,6 +41,9 @@ function App() {
                         </Route>
                         <Route exact path="/login-recipient">
                             <LoginRecipientObserver/>
+                        </Route>
+                        <Route exact path="/error-page">
+                            <ErrorPage/>
                         </Route>
                         <Route render={() => <h1>404</h1>}/>
                     </Switch>

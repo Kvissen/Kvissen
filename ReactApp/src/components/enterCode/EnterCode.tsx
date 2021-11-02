@@ -25,7 +25,7 @@ function EnterCode() {
                 />
 
 
-                <Link href={getTokenUri}>Count me in!</Link>
+                <Link href={getTokenUri + "/" + store.quizId}>Count me in!</Link>
                 {/*<Button onClick={() => {
                     store.startQuiz();
                     let getTokenUri = process.env.REACT_APP_BASE_URL! + "/api/auth/player-login"

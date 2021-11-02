@@ -1,9 +1,6 @@
 package services.auth;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -32,6 +29,17 @@ public class AuthApiController {
     public Response redirect(@QueryParam("ticket") String ticket) {
         try {
             return AuthService.redirect(ticket);
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @Path("player-login/{quizCode}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response playerLogin(@PathParam("quizCode") final String quizCode) {
+        try {
+            return AuthService.playerLogin(quizCode);
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

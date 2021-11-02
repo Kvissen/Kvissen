@@ -15,33 +15,32 @@ function LoginRecipient() {
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
 
-    let afterSignInURI = handleToken(searchParams)
+    let afterSignInURI = getUriWithToken(searchParams)
 
     // Go to dashboard after retrieving token
     useEffect(() => {
-
         window.location.href = afterSignInURI;
     }, [afterSignInURI]);
 
     return (
         <div>
             <CircularProgress/>
-            <h2>Redirecting to dashboard...</h2>
+            <h2>Redirecting...</h2>
         </div>
     )
-
 }
 
 const creatorScope = "creator"
 const playerScope = "player"
 
-function handleToken(searchParams: URLSearchParams) {
+function getUriWithToken(searchParams: URLSearchParams) {
     let token: String | null = searchParams.get('token')
     var scope: String = "";
 
     // Get scope
     if (token == null) {
-        // go to error page with arg: token failed
+        let errormessage = "Internal error: Got a null token"
+        return process.env.REACT_APP_BASE_URL + "/#/error-page?message=" + errormessage
     } else {
         scope = getAccessScope(token)
     }
@@ -60,7 +59,7 @@ function handleToken(searchParams: URLSearchParams) {
 
 function getAccessScope(token: String) {
 
-    let decoded = jwt.decode(token.toString())
+    let decoded = jwt.decode(token.toString())?.toString()
     console.log("Got token from server")
     console.log(token)
     if (decoded != null && decoded.includes(creatorScope)) {
