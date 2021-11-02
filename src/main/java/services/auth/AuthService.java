@@ -18,7 +18,7 @@ public class AuthService {
     @Path("login")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getLogin() {
+    public Response login() {
         try {
             return AuthHandler.login();
         } catch (Exception e) {
@@ -32,6 +32,17 @@ public class AuthService {
     public Response redirect(@QueryParam("ticket") String ticket) {
         try {
             return AuthHandler.redirect(ticket);
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @Path("player-login")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response playerLogin() {
+        try {
+            return AuthHandler.playerLogin();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

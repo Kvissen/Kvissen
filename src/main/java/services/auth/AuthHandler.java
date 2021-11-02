@@ -57,5 +57,17 @@ public class AuthHandler {
         //io.jsonwebtoken.SignatureException
         //IllegalArgumentException
     }
+
+    /**
+     * Logs in a player, participant in the quiz. No login required.
+     *
+     * @return anonymous access token
+     */
+    public static Response playerLogin() {
+        String id = "anonymous";
+        String token = new JwtGenerator().generate(id, JWT_DEFAULT_ISSUER, AccessScope.player, JWT_TTL);
+        // Send back to frontend with player_token as search param
+        return Response.seeOther(URI.create(CLIENT_BASE_URL + "?token=" + token)).build();
+    }
 }
 

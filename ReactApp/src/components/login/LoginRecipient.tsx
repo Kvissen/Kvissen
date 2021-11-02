@@ -14,10 +14,7 @@ function LoginRecipient() {
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
 
-    // Store token
-    localStorage.setItem('access_token', searchParams.get('token') ?? "null");
-
-    let afterSignInURI = process.env.REACT_APP_BASE_URL + "/#/landing"
+    let afterSignInURI = handleToken(searchParams)
 
     // Go to dashboard after retrieving token
     useEffect(() => {
@@ -31,6 +28,33 @@ function LoginRecipient() {
         </div>
     )
 
+}
+
+function handleToken(searchParams: URLSearchParams) {
+    let token: String | null = searchParams.get('token')
+    var scope: String = "";
+    if (token == null) {
+        // go to error page with arg: token failed
+    } else {
+        scope = getAccessScope(token)
+    }
+
+
+    // Store player token
+    localStorage.setItem('player_access_token', searchParams.get('token') ?? "null");
+    return process.env.REACT_APP_BASE_URL + "/#/kvis"
+
+    // Store token
+    localStorage.setItem('access_token', searchParams.get('token') ?? "null");
+    return process.env.REACT_APP_BASE_URL + "/#/landing"
+}
+
+function getAccessScope(token: String) {
+    const jwt = require("jsonwebtoken");
+    let decoded = jwt.decode(token)
+    console.log(token)
+    //if (decoded.)
+    return "player"
 }
 
 const LoginRecipientObserver = observer(LoginRecipient)
