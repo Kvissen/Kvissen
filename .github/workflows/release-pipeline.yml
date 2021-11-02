@@ -35,7 +35,3 @@ jobs:
       run: |
         cd ReactApp
         npm test
-    - name: Deployment
-      run: |
-        chmod +x deploy.sh
-        ./deploy.sh
