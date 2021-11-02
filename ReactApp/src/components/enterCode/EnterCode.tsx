@@ -1,6 +1,6 @@
 // Erlend
 import React from 'react';
-import {Button, CircularProgress, Grid, TextField, Typography} from "@mui/material";
+import {Button, Grid, TextField, Typography} from "@mui/material";
 import {store} from "../../stores/QuizStore";
 import {observer} from "mobx-react";
 import {useHistory} from "react-router-dom";
@@ -33,7 +33,6 @@ function EnterCode() {
                     }, [getTokenUri]);*/
                 }}>
                     Start Kvis!
-                    <CircularProgress/>
                 </Button>
             </Grid>
         </Grid>
