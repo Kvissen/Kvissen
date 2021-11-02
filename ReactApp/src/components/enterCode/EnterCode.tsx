@@ -1,12 +1,13 @@
 // Erlend
 import React from 'react';
-import {Button, Grid, TextField, Typography} from "@mui/material";
+import {Grid, Link, TextField, Typography} from "@mui/material";
 import {store} from "../../stores/QuizStore";
 import {observer} from "mobx-react";
 import {useHistory} from "react-router-dom";
 
 function EnterCode() {
     const history = useHistory();
+    const getTokenUri = process.env.REACT_APP_BASE_URL! + "/api/auth/playerLogin"
     return (
         <Grid container spacing={2} alignContent={"center"} className={"entercodebg"}>
             <Grid item xs={6} md={4} margin={"128px auto"} className={"entercodebox"}>
@@ -23,17 +24,19 @@ function EnterCode() {
                     onChange={(evt) => store.quizId = evt.target.value}
                 />
 
-                <Button onClick={() => {
+
+                <Link href={getTokenUri}>Count me in!</Link>
+                {/*<Button onClick={() => {
                     store.startQuiz();
                     let getTokenUri = process.env.REACT_APP_BASE_URL! + "/api/auth/playerLogin"
 
                     // Retrieve token (redirected to LoginRecipient)
-                    /*useEffect(() => {
+                    useEffect(() => {
                         window.location.href = getTokenUri;
-                    }, [getTokenUri]);*/
+                    }, [getTokenUri]);
                 }}>
                     Start Kvis!
-                </Button>
+                </Button>*/}
             </Grid>
         </Grid>
     )
