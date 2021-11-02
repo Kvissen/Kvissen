@@ -25,7 +25,12 @@ function EnterCode() {
 
                 <Button onClick={() => {
                     store.startQuiz();
-                    history.push("./kvis")
+                    let getTokenUri = process.env.REACT_APP_BASE_URL! + "/api/auth/playerLogin"
+
+                    // Retrieve token (redirected to LoginRecipient)
+                    /*useEffect(() => {
+                        window.location.href = getTokenUri;
+                    }, [getTokenUri]);*/
                 }}>
                     Start Kvis!
                     <CircularProgress/>

@@ -3,6 +3,7 @@ import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
 import {CircularProgress} from "@mui/material";
 import {useLocation} from 'react-router-dom'
+import jwt from 'jsonwebtoken'
 
 // Redirect page for login to the Kvis Server
 function LoginRecipient() {
@@ -58,11 +59,11 @@ function handleToken(searchParams: URLSearchParams) {
 }
 
 function getAccessScope(token: String) {
-    const jwt = require("jsonwebtoken");
-    let decoded = jwt.decode(token)
+
+    let decoded = jwt.decode(token.toString())
     console.log("Got token from server")
     console.log(token)
-    if (decoded.includes(creatorScope)) {
+    if (decoded != null && decoded.includes(creatorScope)) {
         return creatorScope
     }
     return playerScope
