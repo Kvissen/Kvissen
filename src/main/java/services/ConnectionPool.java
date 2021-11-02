@@ -19,7 +19,7 @@ import java.sql.SQLException;
  **/
 public class ConnectionPool
 {
-	public static final String connectURI = "jdbc:postgresql://2001:878:25a:ff00::aa:5432/kvis_db?user=admin&password=kvissen";
+	public static final String connectURI = "jdbc:postgresql://[2001:878:25a:ff00::aa]:5432/kvis_db?user=admin&password=kvissen";
 	
 	/**
 	 * Static instance of this class.
