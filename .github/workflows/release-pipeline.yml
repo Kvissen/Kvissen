@@ -37,5 +37,5 @@ jobs:
         npm test
     - name: Deployment
       run: |
-        chmod -x deploy.sh
+        chmod +x deploy.sh
         ./deploy.sh
