@@ -10,6 +10,8 @@ import LoginRedirectObserver from "./components/login/LoginRedirect";
 import LandingObserver from "./components/landing/Landing";
 import KvisListObserver from "./components/kvisList/KvisList";
 import LoginRecipientObserver from "./components/login/LoginRecipient";
+import PlayKvis from "./components/playKvis/PlayKvis";
+import PlayKvisObserver from "./components/playKvis/PlayKvis";
 
 function App() {
     return (
@@ -25,6 +27,9 @@ function App() {
                         </Route>
                         <Route exact path="/kvis">
                             <KvisBox/>
+                        </Route>
+                        <Route exact path="/play-kvis">
+                            <PlayKvisObserver/>
                         </Route>
                         <Route exact path="/create-kvis">
                             <CreateKvisObserver/>
