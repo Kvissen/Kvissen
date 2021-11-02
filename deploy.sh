@@ -2,7 +2,7 @@
 
 # Deploy script to server using ssh, scp and docker
 
-HOST="2001:878:25a:ff00::aa"
+HOST="kvissen.devops.diplomportal.dk"
 PORT="22022"
 USER="s160107"
 WEBAPPDIRECTORY="~/devops/src/main/webapp"
@@ -13,20 +13,16 @@ DOCKERPORT="8080"
 # Mark file as readable
 chmod 400 id_rsa
 
-ping6 ipv6.google.com
-
-ping -6 ipv6.google.com
-
 ssh -t -p $PORT -i id_rsa -o "StrictHostKeyChecking=no" $USER@$HOST "rm -rf $BASEDIRECTORY ; mkdir -p $WEBAPPDIRECTORY"
 
 # Transfer webapp project
-scp -6 -v -r -P $PORT -i id_rsa src/main/webapp/* $USER@\[$HOST\]:$WEBAPPDIRECTORY
+scp -v -r -P $PORT -i id_rsa src/main/webapp/* $USER@$HOST:$WEBAPPDIRECTORY
 
 # Transfer Jar file
-scp -6 -v -r -P $PORT -i id_rsa target/Kvissen.jar $USER@\[$HOST\]:$BASEDIRECTORY
+scp -v -r -P $PORT -i id_rsa target/Kvissen.jar $USER@$HOST:$BASEDIRECTORY
 
 # Transfer Dockerfile
-scp -6 -v -r -P $PORT -i id_rsa Dockerfile $USER@\[$HOST\]:$BASEDIRECTORY
+scp -v -r -P $PORT -i id_rsa Dockerfile $USER@$HOST:$BASEDIRECTORY
 
 
 # SSH to VM, Docker build and run
