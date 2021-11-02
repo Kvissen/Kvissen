@@ -1,12 +1,19 @@
 package controllers.kvis.dao;
 
-import controllers.Table;
-import controllers.kvis.dto.Kvis;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import controllers.ConnectionPool;
+import controllers.Table;
+import controllers.kvis.dto.KvisFactory;
+import controllers.kvis.dto.kvisAPI.KvisAPIDTO;
+import controllers.kvis.dto.kvisDB.KvisDBDTO;
+import controllers.kvis.dto.kvisDB.KvisDBPayload;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.LinkedList;
 
 /**
  * Class responsible for retrieving Kvisses from the Database.
@@ -21,13 +28,13 @@ public final class KvisDAO
 	 *
 	 * @return Array full of Kvisses.
 	 */
-	public static Kvis[] getAll() throws SQLException
+	public static KvisAPIDTO[] getAll() throws SQLException, JsonProcessingException
 	{
 		// Prepare query
 		final String query = String.format("SELECT * FROM %s", Table.KVIS.TableName);
 		
 		// Run
-		return queryDatabase(query);
+		return KvisFactory.DBToAPI(queryDatabase(query));
 	}
 	
 	/**
@@ -36,13 +43,13 @@ public final class KvisDAO
 	 * @param username Name of the user
 	 * @return Array of Kvisses
 	 */
-	public static Kvis[] getKvissesFromUser(final String username) throws SQLException
+	public static KvisAPIDTO[] getKvissesFromUser(final String username) throws SQLException, JsonProcessingException
 	{
 		// Prepare query
 		final String query = String.format("SELECT * FROM %s WHERE username='%s'", Table.KVIS.TableName, username);
 		
 		// Run
-		return queryDatabase(query);
+		return KvisFactory.DBToAPI(queryDatabase(query));
 	}
 	
 	/**
@@ -52,7 +59,7 @@ public final class KvisDAO
 	 * @param query query String
 	 * @return Array of [Kvis] objects
 	 */
-	private static Kvis[] queryDatabase(final String query) throws SQLException
+	private static KvisDBDTO[] queryDatabase(final String query) throws SQLException, JsonProcessingException
 	{
 		try (
 				// Get connection
@@ -68,7 +75,8 @@ public final class KvisDAO
 			// Parse
 			return parseDBResponse(res);
 		}
-		catch (SQLException e) { System.out.println("KvisDAO.getAll() failed:\n" + e.getMessage()); throw e; }
+		catch (SQLException | JsonProcessingException e)
+		{ System.out.println("KvisDAO.getAll() failed:\n" + e.getMessage()); throw e; }
 	}
 	
 	/**
@@ -78,19 +86,28 @@ public final class KvisDAO
 	 * @return Array of [Kvis] objects.
 	 * @throws SQLException Catch This!
 	 */
-	private static Kvis[] parseDBResponse(final ResultSet queryResult) throws SQLException
+	private static KvisDBDTO[] parseDBResponse(final ResultSet queryResult) throws SQLException, JsonProcessingException
 	{
-		List<Kvis> res = new ArrayList<>(2);
+		LinkedList<KvisDBDTO> res = new LinkedList<>();
 		while(queryResult.next())
 		{
 			res.add(
-					new Kvis(
-							queryResult.getString(1),
-							queryResult.getString(2)
-					)
+					new KvisDBDTO.KvisDBDTOBuilder()
+							.setUuid(queryResult.getString("kvis_id"))
+							.setName(queryResult.getString("name"))
+							.setCreator(queryResult.getString("user_id"))
+							.setTimestamp(queryResult.getTimestamp("created"))
+							.setPayload(
+									new ObjectMapper().readValue(
+											queryResult.getString("kvis"),
+											KvisDBPayload.class
+									)
+									
+							)
+							.build()
 			);
 		}
-		return res.toArray(new Kvis[0]);
+		return res.toArray(new KvisDBDTO[0]);
 	}
 	
 	/**
