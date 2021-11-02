@@ -14,7 +14,7 @@ function LoginRedirect() {
 
     useEffect(() => {
         window.location.href = signInUrl;
-    }, []);
+    }, [signInUrl]);
 
     return (<div>
         <CircularProgress/>

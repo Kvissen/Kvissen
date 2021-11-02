@@ -18,8 +18,9 @@ function LoginRecipient() {
 
     // Go to dashboard after retrieving token
     useEffect(() => {
+
         window.location.href = afterSignInURI;
-    }, []);
+    }, [afterSignInURI]);
 
     return (
         <div>
