@@ -1,13 +1,15 @@
 import React from 'react';
 import './App.css';
 import Grid from '@mui/material/Grid';
-import {Route, Switch, HashRouter} from "react-router-dom";
+import {HashRouter, Route, Switch} from "react-router-dom";
 import Header from "./components/header/Header";
 import EnterCodeObserver from "./components/enterCode/EnterCode";
 import KvisBox from "./components/kvisBox/KvisBox";
 import CreateKvisObserver from "./components/createKvis/CreateKvis";
+import LoginRedirectObserver from "./components/login/LoginRedirect";
 import LandingObserver from "./components/landing/Landing";
 import KvisListObserver from "./components/kvisList/KvisList";
+import LoginRecipientObserver from "./components/login/LoginRecipient";
 
 function App() {
     return (
@@ -32,6 +34,12 @@ function App() {
                         </Route>
                         <Route exact path="/kvis-list">
                             <KvisListObserver/>
+                        </Route>
+                        <Route exact path="/login-redirect">
+                            <LoginRedirectObserver/>
+                        </Route>
+                        <Route exact path="/login-recipient">
+                            <LoginRecipientObserver/>
                         </Route>
                         <Route render={() => <h1>404</h1>}/>
                     </Switch>
