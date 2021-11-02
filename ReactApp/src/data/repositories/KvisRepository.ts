@@ -5,7 +5,18 @@ import KvisDao from "../daos/KvisDao";
 
 class KvisRepository implements IKvisRepository {
 
+    private static _instance : KvisRepository
     private kvisDao : IKvisDao = KvisDao.getInstance();
+
+    private constructor() {
+    }
+
+    public static getInstance(): KvisRepository {
+        if (this._instance === null) {
+            this._instance = new KvisRepository();
+        }
+        return this._instance;
+    }
 
     async addKvis(kvis: Kvis): Promise<boolean> {
         return await this.kvisDao.addKvis(kvis);
