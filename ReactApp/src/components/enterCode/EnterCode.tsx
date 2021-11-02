@@ -7,7 +7,7 @@ import {useHistory} from "react-router-dom";
 
 function EnterCode() {
     const history = useHistory();
-    const getTokenUri = process.env.REACT_APP_BASE_URL! + "/api/auth/playerLogin"
+    const getTokenUri = process.env.REACT_APP_BASE_URL! + "/api/auth/player-login"
     return (
         <Grid container spacing={2} alignContent={"center"} className={"entercodebg"}>
             <Grid item xs={6} md={4} margin={"128px auto"} className={"entercodebox"}>
@@ -28,7 +28,7 @@ function EnterCode() {
                 <Link href={getTokenUri}>Count me in!</Link>
                 {/*<Button onClick={() => {
                     store.startQuiz();
-                    let getTokenUri = process.env.REACT_APP_BASE_URL! + "/api/auth/playerLogin"
+                    let getTokenUri = process.env.REACT_APP_BASE_URL! + "/api/auth/player-login"
 
                     // Retrieve token (redirected to LoginRecipient)
                     useEffect(() => {
