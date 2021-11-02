@@ -1,4 +1,4 @@
-package services;
+package controllers;
 
 /**
  * Enumeration that holds all table names in the database.

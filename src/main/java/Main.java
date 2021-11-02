@@ -1,6 +1,6 @@
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
-import services.ConnectionPool;
+import controllers.ConnectionPool;
 
 import java.io.File;
 import java.util.Optional;

@@ -1,8 +1,8 @@
-package services.kvis.dao;
+package controllers.kvis.dao;
 
-import services.Table;
-import services.kvis.dto.Kvis;
-import services.ConnectionPool;
+import controllers.Table;
+import controllers.kvis.dto.Kvis;
+import controllers.ConnectionPool;
 
 import java.sql.*;
 import java.util.ArrayList;
