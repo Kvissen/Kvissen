@@ -17,10 +17,11 @@ function LoginRecipient() {
     // Store token
     localStorage.setItem('access_token', searchParams.get('token') ?? "null");
 
-    let afterSignInURI = process.env.REACT_APP_BASE_URL + "/#/landing"
+
 
     // Go to dashboard after retrieving token
     useEffect(() => {
+        let afterSignInURI = process.env.REACT_APP_BASE_URL + "/#/landing"
         window.location.href = afterSignInURI;
     }, []);
 
