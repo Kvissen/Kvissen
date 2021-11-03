@@ -10,9 +10,8 @@ import LoginRedirectObserver from "./components/login/LoginRedirect";
 import LandingObserver from "./components/landing/Landing";
 import KvisListObserver from "./components/kvisList/KvisList";
 import LoginRecipientObserver from "./components/login/LoginRecipient";
-import PlayKvis from "./components/playKvis/PlayKvis";
 import PlayKvisObserver from "./components/playKvis/PlayKvis";
-import KvisSummaryObserver, {KvisSummary} from "./components/playKvisSummary/KvisSummary";
+import KvisSummaryObserver from "./components/playKvisSummary/KvisSummary";
 
 function App() {
     return (
