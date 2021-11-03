@@ -1,4 +1,4 @@
-import {Grid} from "@mui/material";
+import {CircularProgress, Grid} from "@mui/material";
 import {observer} from "mobx-react";
 import KvisListElement from "./KvisListElement";
 import {Kvis} from "../../models/Kvis";
@@ -10,34 +10,20 @@ import {KvisRepository} from "../../data/repositories/KvisRepository";
 
 export function KvisList() {
 
-
-    useEffect(() => {
-        test();
-    },[])
-
-    async function test() {
-
-        //const t = KvisRepository.getInstance().getKvisses();
-        const repo = new KvisRepository();
-        const kvisList = await repo.getKvisses();
-        console.log(kvisList)
-        setKvisses(kvisList)
-
-        /*
-        await fetch("http://localhost:8080/api/kvis/all", { method: 'GET'})
-            .then(res => {
-            return res.json();
-        })
-            .then(data => {
-                setKvisses(data as Kvis[])
-            })
-
-         */
-    }
+    const [isLoading, setIsLoading] = useState(true)
     const [kvisses, setKvisses] = useState<Kvis[]>([]);
 
-    return (
+    useEffect(() => {
+        fetchKvisses();
+    },[])
+
+    async function fetchKvisses() {
+        await setKvisses(await KvisRepository.getInstance().getKvisses())
+        setIsLoading(false)
+    }
+       return (
         <div className="margin-container">
+            {isLoading && <CircularProgress />}
             <Grid direction='row' container spacing={4} justifyContent={"space-between"} alignItems={"center"}>
                 {
                     kvisses.map((kvis) => {

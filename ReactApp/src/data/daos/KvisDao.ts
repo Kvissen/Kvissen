@@ -9,19 +9,12 @@ class KvisDao implements IKvisDao{
 
     private httpClient : IHttpClient
 
-    constructor() {
+    private constructor() {
         this.httpClient = new HttpClient();
     }
 
-    /*
-        private constructor() {
-            this.httpClient = new HttpClient();
-        }
-
-
-     */
     public static getInstance(): KvisDao{
-        if (this._instance === null) {
+        if (this._instance == null) {
             this._instance = new KvisDao();
         }
         return this._instance;

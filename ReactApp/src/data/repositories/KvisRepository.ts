@@ -6,16 +6,12 @@ import KvisDao from "../daos/KvisDao";
 export class KvisRepository implements IKvisRepository {
 
     private static _instance : KvisRepository
-    private kvisDao : IKvisDao;
+    private kvisDao : IKvisDao = KvisDao.getInstance();
 
-
-
-    constructor() {
-        this.kvisDao = new KvisDao();
-    }
+    private constructor() {}
 
     public static getInstance(): KvisRepository {
-        if (this._instance === null) {
+        if (this._instance == null) {
             this._instance = new KvisRepository();
         }
         return this._instance;
