@@ -41,7 +41,6 @@ export function PlayKvis() {
     }
 
     function nextQuestion(){
-        console.log(currentQuestion)
         if (currentQuestion < kvis.questions.length-1){
             setCurrentQuestion(currentQuestion+1)
         }
