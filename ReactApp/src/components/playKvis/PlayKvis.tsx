@@ -4,7 +4,7 @@ import {v4 as uuidv4} from "uuid";
 import {Question} from "../../models/Question";
 import {Answer} from "../../models/Answer";
 import QuestionBox from "./QuestionBox";
-import {Grid} from "@mui/material";
+import {Box, Grid} from "@mui/material";
 import AnswerBox from "./AnswerBox";
 import {useState} from "react";
 
@@ -24,30 +24,31 @@ export function PlayKvis() {
     const [currentQuestion, setCurrentQuestion] = useState(0)
 
     function alertUser(isCorrect: boolean) {
-        if (isCorrect){
+        if (isCorrect) {
             alert("Correct")
-        }
-        else {
+        } else {
             alert("Incorrect")
         }
     }
 
     return (
         <div className={"main-container"}>
-            <QuestionBox question={kvis.questions[currentQuestion]}/>
-            <Grid direction='row' container spacing={4} justifyContent={"space-between"} alignItems={"center"}>
-                {
-                    kvis.questions[currentQuestion].answers.map((answer) => {
-                        return (
-                            <Grid item sm={6}>
-                                <AnswerBox answer={answer} onAnswerSelected={(isCorrect => {
-                                    alertUser(isCorrect)
-                                })}/>
-                            </Grid>
-                        )
-                    })
-                }
-            </Grid>
+            <Box display={"flex"} flexDirection={"column"} justifyContent={"space-between"}>
+                <QuestionBox question={kvis.questions[currentQuestion]}/>
+                <Grid direction='row' container spacing={4} justifyContent={"space-between"} alignItems={"center"}>
+                    {
+                        kvis.questions[currentQuestion].answers.map((answer) => {
+                            return (
+                                <Grid item sm={6}>
+                                    <AnswerBox answer={answer} onAnswerSelected={(isCorrect => {
+                                        alertUser(isCorrect)
+                                    })}/>
+                                </Grid>
+                            )
+                        })
+                    }
+                </Grid>
+            </Box>
         </div>
     )
 
