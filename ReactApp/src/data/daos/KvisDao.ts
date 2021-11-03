@@ -9,10 +9,17 @@ class KvisDao implements IKvisDao{
 
     private httpClient : IHttpClient
 
-    private constructor() {
+    constructor() {
         this.httpClient = new HttpClient();
     }
 
+    /*
+        private constructor() {
+            this.httpClient = new HttpClient();
+        }
+
+
+     */
     public static getInstance(): KvisDao{
         if (this._instance === null) {
             this._instance = new KvisDao();
@@ -41,20 +48,12 @@ class KvisDao implements IKvisDao{
     }
 
     async getKvisses(): Promise<Kvis[]> {
-        const response = await this.httpClient.request({
+        return await this.httpClient.request({
             method: 'GET',
             url: 'http://localhost:8080/api/kvis/all'
-        })
-
-        console.log(response);
-/*
-        if (response?.kvisses) {
-            return response.kvisses
-        }
-
- */
-        // Empty array if no kvisses were found
-        return Promise.resolve([]);
+        }).then(data => {
+            return data as Kvis[];
+        });
     }
 
     async getKvissesForUser(userId: string): Promise<Kvis[]> {

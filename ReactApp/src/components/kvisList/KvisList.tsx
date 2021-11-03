@@ -16,6 +16,14 @@ export function KvisList() {
     },[])
 
     async function test() {
+
+        //const t = KvisRepository.getInstance().getKvisses();
+        const repo = new KvisRepository();
+        const kvisList = await repo.getKvisses();
+        console.log(kvisList)
+        setKvisses(kvisList)
+
+        /*
         await fetch("http://localhost:8080/api/kvis/all", { method: 'GET'})
             .then(res => {
             return res.json();
@@ -24,9 +32,7 @@ export function KvisList() {
                 setKvisses(data as Kvis[])
             })
 
-
-
-
+         */
     }
     const [kvisses, setKvisses] = useState<Kvis[]>([]);
 
