@@ -4,12 +4,13 @@ import Grid from '@mui/material/Grid';
 import {HashRouter, Route, Switch} from "react-router-dom";
 import Header from "./components/header/Header";
 import EnterCodeObserver from "./components/enterCode/EnterCode";
-import KvisBox from "./components/kvisBox/KvisBox";
 import CreateKvisObserver from "./components/createKvis/CreateKvis";
 import LoginRedirectObserver from "./components/login/LoginRedirect";
 import LandingObserver from "./components/landing/Landing";
 import KvisListObserver from "./components/kvisList/KvisList";
 import LoginRecipientObserver from "./components/login/LoginRecipient";
+import PlayKvisObserver from "./components/playKvis/PlayKvis";
+import KvisSummaryObserver from "./components/playKvisSummary/KvisSummary";
 
 function App() {
     return (
@@ -23,8 +24,11 @@ function App() {
                         <Route exact path="/">
                             <EnterCodeObserver/>
                         </Route>
-                        <Route exact path="/kvis">
-                            <KvisBox/>
+                        <Route exact path="/play-kvis">
+                            <PlayKvisObserver/>
+                        </Route>
+                        <Route exact path="/summary-kvis">
+                            <KvisSummaryObserver/>
                         </Route>
                         <Route exact path="/create-kvis">
                             <CreateKvisObserver/>
