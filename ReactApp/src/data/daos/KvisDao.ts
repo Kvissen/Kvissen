@@ -23,7 +23,7 @@ class KvisDao implements IKvisDao{
     async addKvis(kvis: Kvis): Promise<boolean> {
         return await this.httpClient.request({
             method: 'POST',
-            url: 'http://localhost:7777/kvis',
+            url: 'http://localhost:3000/kvis',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -43,12 +43,16 @@ class KvisDao implements IKvisDao{
     async getKvisses(): Promise<Kvis[]> {
         const response = await this.httpClient.request({
             method: 'GET',
-            url: 'http://localhost:7777/kvisses'
+            url: 'http://localhost:8080/api/kvis/all'
         })
 
+        console.log(response);
+/*
         if (response?.kvisses) {
             return response.kvisses
         }
+
+ */
         // Empty array if no kvisses were found
         return Promise.resolve([]);
     }

@@ -3,7 +3,7 @@ import {Kvis} from "../../models/Kvis";
 import {IKvisDao} from "../daos/IKvisDao";
 import KvisDao from "../daos/KvisDao";
 
-class KvisRepository implements IKvisRepository {
+export class KvisRepository implements IKvisRepository {
 
     private static _instance : KvisRepository
     private kvisDao : IKvisDao = KvisDao.getInstance();

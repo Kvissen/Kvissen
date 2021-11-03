@@ -16,7 +16,7 @@ export function CreateKvis() {
 
     function ShowKvisBox() {
         if (kvis!==undefined){
-            return <CreateKvisBox key={kvis.id} kvis={kvis}/>
+            return <CreateKvisBox key={kvis.uuid} kvis={kvis}/>
         }
         return null
     }
