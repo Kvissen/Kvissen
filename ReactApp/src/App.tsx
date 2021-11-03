@@ -12,6 +12,7 @@ import KvisListObserver from "./components/kvisList/KvisList";
 import LoginRecipientObserver from "./components/login/LoginRecipient";
 import PlayKvis from "./components/playKvis/PlayKvis";
 import PlayKvisObserver from "./components/playKvis/PlayKvis";
+import KvisSummaryObserver, {KvisSummary} from "./components/playKvisSummary/KvisSummary";
 
 function App() {
     return (
@@ -30,6 +31,9 @@ function App() {
                         </Route>
                         <Route exact path="/play-kvis">
                             <PlayKvisObserver/>
+                        </Route>
+                        <Route exact path="/summary-kvis">
+                            <KvisSummaryObserver/>
                         </Route>
                         <Route exact path="/create-kvis">
                             <CreateKvisObserver/>

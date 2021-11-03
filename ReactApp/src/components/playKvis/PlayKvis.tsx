@@ -7,6 +7,7 @@ import QuestionBox from "./QuestionBox";
 import {Box, Grid} from "@mui/material";
 import AnswerBox from "./AnswerBox";
 import {useState} from "react";
+import {useHistory} from "react-router-dom";
 
 export function PlayKvis() {
 
@@ -26,8 +27,10 @@ export function PlayKvis() {
             ], "Test question2")
         ])
 
+    const history = useHistory();
+
     // Replace with KvisStore to persist
-    const [currentQuestion, setCurrentQuestion] = useState(0)
+    const [currentQuestion, setCurrentQuestion] = useState(0);
 
     function alertUser(isCorrect: boolean) {
         if (isCorrect) {
@@ -41,6 +44,9 @@ export function PlayKvis() {
         console.log(currentQuestion)
         if (currentQuestion < kvis.questions.length-1){
             setCurrentQuestion(currentQuestion+1)
+        }
+        else {
+            history.replace("/summary-kvis")
         }
     }
 
