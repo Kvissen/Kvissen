@@ -1,4 +1,4 @@
-package services;
+package controllers;
 
 /**
  * Enumeration that holds all table names in the database.
@@ -8,7 +8,7 @@ package services;
  **/
 public enum Table
 {
-	KVIS("test");
+	KVIS("kvissen");
 	
 	/**
 	 * The name of the table to be used with SQL statements.
