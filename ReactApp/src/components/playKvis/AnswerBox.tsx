@@ -9,7 +9,7 @@ export default function AnswerBox(
         <Box>
             <Card onClick={() => {
                 onAnswerSelected(answer.isCorrect)
-            }}>
+            }} sx={{padding: 1}}>
                 <h4>{answer.answer}</h4>
             </Card>
         </Box>

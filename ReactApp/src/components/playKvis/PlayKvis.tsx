@@ -40,33 +40,34 @@ export function PlayKvis() {
         }
     }
 
-    function nextQuestion(){
-        if (currentQuestion < kvis.questions.length-1){
-            setCurrentQuestion(currentQuestion+1)
-        }
-        else {
+    function nextQuestion() {
+        if (currentQuestion < kvis.questions.length - 1) {
+            setCurrentQuestion(currentQuestion + 1)
+        } else {
             history.replace("/summary-kvis")
         }
     }
 
     return (
         <div className={"main-container"}>
-            <Box display={"flex"} flexDirection={"column"} justifyContent={"space-between"}>
+            <Box>
                 <QuestionBox question={kvis.questions[currentQuestion]}/>
-                <Grid direction='row' container spacing={4} justifyContent={"space-between"} alignItems={"center"}>
-                    {
-                        kvis.questions[currentQuestion].answers.map((answer) => {
-                            return (
-                                <Grid item sm={6}>
-                                    <AnswerBox answer={answer} onAnswerSelected={(isCorrect => {
-                                        alertUser(isCorrect);
-                                        nextQuestion();
-                                    })}/>
-                                </Grid>
-                            )
-                        })
-                    }
-                </Grid>
+                <Box position={"absolute"} bottom={40} right={10} left={10}>
+                    <Grid direction='row' container spacing={4} justifyContent={"space-between"} alignItems={"center"}>
+                        {
+                            kvis.questions[currentQuestion].answers.map((answer) => {
+                                return (
+                                    <Grid item sm={6}>
+                                        <AnswerBox answer={answer} onAnswerSelected={(isCorrect => {
+                                            alertUser(isCorrect);
+                                            nextQuestion();
+                                        })}/>
+                                    </Grid>
+                                )
+                            })
+                        }
+                    </Grid>
+                </Box>
             </Box>
         </div>
     )
