@@ -17,7 +17,13 @@ export function PlayKvis() {
                 new Answer("Test answer1", false),
                 new Answer("Test answer2", false),
                 new Answer("Test answer correct", true),
-            ], "Test question")
+            ], "Test question"),
+            new Question(uuidv4(), [
+                new Answer("Test", false),
+                new Answer("Test2", false),
+                new Answer("Test3", false),
+                new Answer("Test answer correct", true),
+            ], "Test question2")
         ])
 
     // Replace with KvisStore to persist
@@ -31,6 +37,13 @@ export function PlayKvis() {
         }
     }
 
+    function nextQuestion(){
+        console.log(currentQuestion)
+        if (currentQuestion < kvis.questions.length-1){
+            setCurrentQuestion(currentQuestion+1)
+        }
+    }
+
     return (
         <div className={"main-container"}>
             <Box display={"flex"} flexDirection={"column"} justifyContent={"space-between"}>
@@ -41,7 +54,8 @@ export function PlayKvis() {
                             return (
                                 <Grid item sm={6}>
                                     <AnswerBox answer={answer} onAnswerSelected={(isCorrect => {
-                                        alertUser(isCorrect)
+                                        alertUser(isCorrect);
+                                        nextQuestion();
                                     })}/>
                                 </Grid>
                             )
