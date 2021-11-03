@@ -25,7 +25,7 @@ function EnterCode() {
 
                 <Button onClick={() => {
                     store.startQuiz();
-                    history.push("./kvis")
+                    history.push("./play-kvis")
                 }}>
                     Start Kvis!
                 </Button>
