@@ -1,10 +1,10 @@
 package controllers.kvis.dto.kvisAPI;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import controllers.kvis.dto.Question;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 
 /**
@@ -58,6 +58,7 @@ public class KvisAPIDTO
 			return this;
 		}
 		
+		@JsonProperty("ts")
 		public KvisAPIDTOBuilder setTimestamp(Timestamp ts)
 		{
 			this.ts = ts;

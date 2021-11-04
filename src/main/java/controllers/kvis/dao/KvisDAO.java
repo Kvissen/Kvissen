@@ -52,6 +52,25 @@ public final class KvisDAO
 		return KvisFactory.DBToAPI(queryDatabase(query));
 	}
 	
+	public static KvisAPIDTO createKvis(final KvisAPIDTO apidto) throws JsonProcessingException, SQLException
+	{
+		// Convert
+		final KvisDBDTO dbdto = KvisFactory.APIToDB(apidto);
+		
+		// Prepare query
+		final String query = String.format(
+				"INSERT INTO %s (name, created, user_id, kvis) VALUES('%s', '%s','%s', '%s') RETURNING *",
+				Table.KVIS.TableName,
+				dbdto.name,
+				dbdto.ts,
+				dbdto.creator,
+				new ObjectMapper().writeValueAsString(dbdto.payload)
+		);
+		
+		// Run
+		return KvisFactory.DBToAPI(queryDatabase(query))[0];
+	}
+	
 	/**
 	 * Creates PreparedStatement from the give query string, executes it and returns a parsed array of [Kvis]
 	 * objects.
