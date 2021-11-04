@@ -21,9 +21,10 @@ class KvisDao implements IKvisDao{
     }
 
     async addKvis(kvis: Kvis): Promise<boolean> {
+        const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_CREATE_KVIS
         return await this.httpClient.request({
             method: 'POST',
-            url: 'http://localhost:3000/kvis',
+            url: url,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -41,9 +42,10 @@ class KvisDao implements IKvisDao{
     }
 
     async getKvisses(): Promise<Kvis[]> {
+        const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_GET_ALL_KVIS
         return await this.httpClient.request({
             method: 'GET',
-            url: 'http://localhost:8080/api/kvis/all'
+            url: url
         }).then(data => {
             return data as Kvis[];
         });

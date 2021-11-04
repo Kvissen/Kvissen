@@ -12,7 +12,7 @@ import {useHistory} from "react-router-dom";
 export function PlayKvis() {
 
     const kvis =
-        new Kvis(uuidv4(), "Test Kvis", [
+        new Kvis(uuidv4(), "Test Kvis", uuidv4(),new Date().getDate(),[
             new Question(uuidv4(), [
                 new Answer("Test answer", false),
                 new Answer("Test answer1", false),

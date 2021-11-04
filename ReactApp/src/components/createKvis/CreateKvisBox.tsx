@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Card, Button, TextField, Grid, Box, Checkbox} from "@mui/material";
+import {Card, Button, TextField, Grid, Box, Checkbox, CircularProgress} from "@mui/material";
 import './CreateKvisStyleSheet.css'
 import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
@@ -7,12 +7,18 @@ import {Question} from "../../models/Question";
 import {v4 as uuidv4} from 'uuid';
 import {Answer} from "../../models/Answer";
 import {Kvis} from "../../models/Kvis";
+import {KvisRepository} from "../../data/repositories/KvisRepository";
 
 export default function CreateKvisBox({kvis} : {kvis: Kvis}) {
 
-    function saveKvis() {
+    async function saveKvis() {
+        setIsLoading(true)
+        kvis.ts = new Date().getTime()
         kvis.questions = questions
+        kvis.creator = uuidv4()
         console.log(kvis)
+        await KvisRepository.getInstance().addKvis(kvis);
+        setIsLoading(false)
     }
 
     function ShowDoneButton() {
@@ -25,7 +31,7 @@ export default function CreateKvisBox({kvis} : {kvis: Kvis}) {
                         className="add-new-question"
                         variant="contained"
                         startIcon={<CheckIcon/>}
-                        onClick={() => {
+                        onClick={async () => {
                             saveKvis();
                         }}
                     >
@@ -75,10 +81,13 @@ export default function CreateKvisBox({kvis} : {kvis: Kvis}) {
     }
 
     const [questions, setQuestions] = useState<Question[]>([new Question(uuidv4(), createInitialAnswerArray())]);
+    const [isLoading, setIsLoading] = useState(false)
+
 
     return (
         <div>
             <ShowQuestionName/>
+            {isLoading && <CircularProgress />}
             {
                 questions.map((question, i) => {
                     return (
