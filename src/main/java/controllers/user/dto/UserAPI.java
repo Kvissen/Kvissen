@@ -1,6 +1,7 @@
 package controllers.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Alfred Röttger Rydahl
@@ -12,7 +13,7 @@ public class UserAPI
 	public final String schoolId;
 	
 	@JsonCreator
-	public UserAPI(String uuid, String schoolId)
+	public UserAPI(@JsonProperty("user_id") String uuid, @JsonProperty("school_id") String schoolId)
 	{
 		this.uuid = uuid;
 		this.schoolId = schoolId;
