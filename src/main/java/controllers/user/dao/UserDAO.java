@@ -32,6 +32,13 @@ public class UserDAO
 		return queryDatabase(query);
 	}
 	
+	/**
+	 *
+	 *
+	 * @param userToCreate
+	 * @return
+	 * @throws SQLException
+	 */
 	public static UserAPI createUser(final UserAPI userToCreate) throws SQLException
 	{
 		// Convert
@@ -45,6 +52,13 @@ public class UserDAO
 		return queryDatabase(query)[0];
 	}
 	
+	/**
+	 *
+	 *
+	 * @param query
+	 * @return
+	 * @throws SQLException
+	 */
 	private static UserAPI[] queryDatabase(final String query) throws SQLException
 	{
 		try (
@@ -65,6 +79,13 @@ public class UserDAO
 		{ System.out.println("KvisDAO.getAll() failed:\n" + e.getMessage()); throw e; }
 	}
 	
+	/**
+	 *
+	 *
+	 * @param resultSet
+	 * @return
+	 * @throws SQLException
+	 */
 	private static UserDB[] parseDBResponse(final ResultSet resultSet) throws SQLException
 	{
 		LinkedList<UserDB> res = new LinkedList<>();
