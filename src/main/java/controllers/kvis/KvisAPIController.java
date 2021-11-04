@@ -20,6 +20,14 @@ public class KvisAPIController
 		return KvisDAO.getAll();
 	}
 	
+	@Path("user/{username}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public KvisAPIDTO[] getKvissesFromUser(@PathParam("username") final String username) throws SQLException, JsonProcessingException
+	{
+		return KvisDAO.getKvissesFromUser(username);
+	}
+	
 	@Path("create")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -28,13 +36,5 @@ public class KvisAPIController
 	{
 		KvisDAO.createKvis(apidto);
 		return Response.status(Response.Status.CREATED).build();
-	}
-	
-	@Path("user={username}")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public KvisAPIDTO[] getKvissesFromUser(@PathParam("username") final String username) throws SQLException, JsonProcessingException
-	{
-		return KvisDAO.getKvissesFromUser(username);
 	}
 }
