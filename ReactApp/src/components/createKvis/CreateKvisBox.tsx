@@ -67,7 +67,7 @@ export default function CreateKvisBox({kvis} : {kvis: Kvis}) {
 
     function addQuestion() {
         setQuestions(prevState => {
-            return [...prevState, new Question(uuidv4(), createInitialAnswerArray())]
+            return [...prevState, new Question(createInitialAnswerArray())]
         })
     }
 
@@ -80,7 +80,7 @@ export default function CreateKvisBox({kvis} : {kvis: Kvis}) {
         ]
     }
 
-    const [questions, setQuestions] = useState<Question[]>([new Question(uuidv4(), createInitialAnswerArray())]);
+    const [questions, setQuestions] = useState<Question[]>([new Question(createInitialAnswerArray())]);
     const [isLoading, setIsLoading] = useState(false)
 
 
@@ -91,7 +91,7 @@ export default function CreateKvisBox({kvis} : {kvis: Kvis}) {
             {
                 questions.map((question, i) => {
                     return (
-                        <Box key={question.id} mb={2} mt={2}>
+                        <Box mb={2} mt={2}>
                             <Card className="create-kvis-box">
                                 <h2 className="create-kvis-question-header">Question {i + 1}</h2>
                                 <TextField

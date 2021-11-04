@@ -28,9 +28,7 @@ class KvisDao implements IKvisDao{
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: {
-                kvis,
-            }
+            body: kvis
         })
     }
 
