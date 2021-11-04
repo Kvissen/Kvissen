@@ -33,10 +33,8 @@ class KvisDao implements IKvisDao{
     }
 
     async deleteKvis(id: string): Promise<boolean> {
-        return await this.httpClient.request({
-            method: 'DELETE',
-            url: 'http://localhost:7777/kvis/' + id
-        })
+        // TODO: Implement me
+        return Promise.resolve(false)
     }
 
     async getKvisses(): Promise<Kvis[]> {
@@ -50,29 +48,13 @@ class KvisDao implements IKvisDao{
     }
 
     async getKvissesForUser(userId: string): Promise<Kvis[]> {
-        const response = await this.httpClient.request({
-            method: 'GET',
-            url: 'http://localhost:7777/kvisses/' + userId
-        })
-
-        if (response?.kvisses) {
-            return response.kvisses
-        }
-        // Empty array if no kvisses were found
+        // TODO: Implement me
         return Promise.resolve([]);
     }
 
     async updateKvis(id: string, newKvis: Kvis): Promise<Kvis> {
-        return await this.httpClient.request({
-            method: 'PUT',
-            url: 'http://localhost:7777/kvis/' + id,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: {
-                newKvis,
-            }
-        })
+        // TODO: Implement me
+        return Promise.resolve(new Kvis(""))
     }
 
 }
