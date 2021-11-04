@@ -8,15 +8,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 export function CreateKvis() {
 
-    const [kvis, setKvis] = useState<Kvis>()
+    const [createKvis, setCreateKvis] = useState<boolean>(false)
 
     function OnClickAddKvis() {
-        setKvis(new Kvis(uuidv4()))
+        setCreateKvis(true)
     }
 
     function ShowKvisBox() {
-        if (kvis!==undefined){
-            return <CreateKvisBox key={kvis.uuid} kvis={kvis}/>
+        if (createKvis){
+            return <CreateKvisBox/>
         }
         return null
     }
@@ -28,7 +28,7 @@ export function CreateKvis() {
                     Create a new kvis
                 </h1>
                 <Button
-                    disabled={kvis !== undefined}
+                    disabled={createKvis}
                     variant="contained"
                     className="create-kvis-button"
                     onClick={() => {

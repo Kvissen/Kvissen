@@ -9,14 +9,15 @@ import {Answer} from "../../models/Answer";
 import {Kvis} from "../../models/Kvis";
 import {KvisRepository} from "../../data/repositories/KvisRepository";
 
-export default function CreateKvisBox({kvis} : {kvis: Kvis}) {
+export default function CreateKvisBox() {
+
+    const kvis = new Kvis(uuidv4())
 
     async function saveKvis() {
         setIsLoading(true)
         kvis.ts = new Date().getTime()
         kvis.questions = questions
         kvis.creator = uuidv4()
-        console.log(kvis)
         await KvisRepository.getInstance().addKvis(kvis);
         setIsLoading(false)
     }
