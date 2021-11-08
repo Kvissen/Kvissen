@@ -20,9 +20,12 @@ public class KvisFactory
 	 */
 	public static KvisAPIDTO[] DBToAPI(final KvisDBDTO[] dbdtos)
 	{
-		final KvisAPIDTO[] res = new KvisAPIDTO[dbdtos.length];
-		
+		// Get the length of DB object array
 		final int length = dbdtos.length;
+		
+		// Create Array
+		final KvisAPIDTO[] res = new KvisAPIDTO[length];
+		
 		for (int i=0; i < length; i++)
 			res[i] = DBToAPI(dbdtos[i]);
 		
