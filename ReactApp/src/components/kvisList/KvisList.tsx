@@ -15,7 +15,7 @@ export function KvisList() {
     },[])
 
     async function fetchKvisses() {
-        await setKvisses(await KvisRepository.getInstance().getKvisses())
+        setKvisses(await KvisRepository.getInstance().getKvisses())
         setIsLoading(false)
     }
        return (
