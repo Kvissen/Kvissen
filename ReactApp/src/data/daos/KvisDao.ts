@@ -9,6 +9,9 @@ class KvisDao implements IKvisDao{
 
     private httpClient : IHttpClient
 
+    //FIXME: REMOVE THIS TEST USER
+    private testUser : string = "7b3beb72-1be3-48c7-aa10-4b5fe07fcd96"
+
     private constructor() {
         this.httpClient = new HttpClient();
     }
@@ -21,6 +24,7 @@ class KvisDao implements IKvisDao{
     }
 
     async addKvis(kvis: Kvis): Promise<boolean> {
+        kvis.creator = this.testUser
         const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_CREATE_KVIS
         return await this.httpClient.request({
             method: 'POST',
@@ -48,8 +52,13 @@ class KvisDao implements IKvisDao{
     }
 
     async getKvissesForUser(userId: string): Promise<Kvis[]> {
-        // TODO: Implement me
-        return Promise.resolve([]);
+        const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_GET_KVIS_BY_USERID + "/" + userId
+        return await this.httpClient.request({
+            method: 'GET',
+            url: url
+        }).then(data => {
+            return data as Kvis[];
+        });
     }
 
     async updateKvis(id: string, newKvis: Kvis): Promise<Kvis> {
