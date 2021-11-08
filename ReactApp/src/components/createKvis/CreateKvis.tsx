@@ -3,8 +3,6 @@ import {observer} from "mobx-react";
 import {Button} from "@mui/material";
 import './CreateKvisStyleSheet.css'
 import CreateKvisBox from "./CreateKvisBox";
-import {Kvis} from "../../models/Kvis";
-import { v4 as uuidv4 } from 'uuid';
 
 export function CreateKvis() {
 

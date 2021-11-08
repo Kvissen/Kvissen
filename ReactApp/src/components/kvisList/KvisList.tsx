@@ -2,9 +2,6 @@ import {CircularProgress, Grid} from "@mui/material";
 import {observer} from "mobx-react";
 import KvisListElement from "./KvisListElement";
 import {Kvis} from "../../models/Kvis";
-import {v4 as uuidv4} from 'uuid';
-import {Question} from "../../models/Question";
-import {Answer} from "../../models/Answer";
 import {useEffect, useState} from "react";
 import {KvisRepository} from "../../data/repositories/KvisRepository";
 
