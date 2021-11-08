@@ -59,3 +59,4 @@ class UserDao implements IUserDao{
     }
 
 }
+export default UserDao
