@@ -17,7 +17,6 @@ export default function CreateKvisBox() {
         setIsLoading(true)
         kvis.ts = new Date().getTime()
         kvis.questions = questions
-        kvis.creator = uuidv4()
         await KvisRepository.getInstance().addKvis(kvis);
         setIsLoading(false)
     }
