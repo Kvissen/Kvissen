@@ -46,7 +46,7 @@ public final class KvisDAO
 	public static KvisAPIDTO[] getKvissesFromUser(final String username) throws SQLException, JsonProcessingException
 	{
 		// Prepare query
-		final String query = String.format("SELECT * FROM %s WHERE username='%s'", Table.KVIS.TableName, username);
+		final String query = String.format("SELECT * FROM %s WHERE user_id='%s'", Table.KVIS.TableName, username);
 		
 		// Run
 		return KvisFactory.DBToAPI(queryDatabase(query));
