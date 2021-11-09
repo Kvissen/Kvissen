@@ -1,13 +1,15 @@
 // Erlend
-// Source: https://github.com/jherr/todos-many-ways/tree/master/todo-mobx
 
 import {makeAutoObservable} from 'mobx';
 import {makePersistable} from "mobx-persist-store";
 
-export interface IQuiz {
-    id: string;
-    name: string;
-    qa: string[]; // Pair of Q+A objects. Answers is a list.
+// Data class for result of a quiz as stored locally in MobX
+export class Result {
+    constructor(
+        public quizId: string = "not set",
+        public points: boolean[] = []
+    ) {
+    }
 }
 
 export class QuizStore {
@@ -16,7 +18,7 @@ export class QuizStore {
         makeAutoObservable(this)
         makePersistable(this, {
             name: 'KvisLocalData',
-            properties: ["quiz", "quizId"],
+            properties: ["quizId", "result"],
             expireIn: 1800000, // Half hour
             removeOnExpiration: true,
             storage: window.localStorage
@@ -25,12 +27,19 @@ export class QuizStore {
         });
     }
 
-    quiz: IQuiz = {id: "", name: 'Kvis', qa: ["question?", "answer!"]}
+    // Data
     quizId: string = ""
+    result: Result = new Result()
 
     startQuiz = () => {
-        this.quiz = {id: this.quizId, name: "new quiz ", qa: ["question?", "answer!"]}
-        console.log("Quiz set to " + this.quiz.name + " " + this.quiz.id)
+        // Update result object with quiz id on start quiz
+        this.result.quizId = this.quizId
+        console.log("startQuiz: added id to the quiz")
+    }
+
+    addResult = (result: boolean) => {
+        this.result.points.push(result)
+        console.log("addResult: pushed result of an answer: " + result)
     }
 }
 
