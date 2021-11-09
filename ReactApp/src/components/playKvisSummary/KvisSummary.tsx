@@ -4,7 +4,7 @@ export function KvisSummary() {
 
     return (
         <div className={"main-container"}>
-            <h1>You are done with the Kvis</h1>
+            <h1 data-testid="summary-test-h1">You are done with the Kvis</h1>
         </div>
     )
 
