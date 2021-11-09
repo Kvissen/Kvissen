@@ -91,7 +91,7 @@ export default function CreateKvisBox() {
             {
                 questions.map((question, i) => {
                     return (
-                        <Box key={uuidv4()} mb={2} mt={2}>
+                        <Box key={uuidv4()} mb={2} mt={2} data-testid="createkvisbox-test-container">
                             <Card className="create-kvis-box">
                                 <h2 className="create-kvis-question-header">Question {i + 1}</h2>
                                 <TextField
