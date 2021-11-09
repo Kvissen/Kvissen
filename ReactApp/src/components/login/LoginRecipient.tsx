@@ -45,7 +45,7 @@ function getUriWithToken(searchParams: URLSearchParams) {
         scope = getAccessScope(token)
     }
 
-    if (scope == creatorScope) {
+    if (scope === creatorScope) {
         // Store creator token
         localStorage.setItem('access_token', searchParams.get('token') ?? "null");
         return process.env.REACT_APP_BASE_URL + "/#/landing"
