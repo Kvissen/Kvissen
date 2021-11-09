@@ -53,16 +53,18 @@ function getUriWithToken(searchParams: URLSearchParams) {
     } else {
         // Store player token
         localStorage.setItem('player_access_token', searchParams.get('token') ?? "null");
-        return process.env.REACT_APP_BASE_URL + "/#/kvis"
+        return process.env.REACT_APP_BASE_URL + "/#/play-kvis"
     }
 }
 
 function getAccessScope(token: String) {
+    const {scope} = jwt.decode(token.toString()) as {
+        scope: string;
+    };
 
-    let decoded = jwt.decode(token.toString())?.toString()
-    console.log("Got token from server")
-    console.log(token)
-    if (decoded != null && decoded.includes(creatorScope)) {
+    console.log("Logged in as " + scope)
+
+    if (scope != null && scope.startsWith(creatorScope)) {
         return creatorScope
     }
     return playerScope

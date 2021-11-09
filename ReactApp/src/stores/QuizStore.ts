@@ -25,7 +25,7 @@ export class QuizStore {
         });
     }
 
-    quiz: IQuiz = {id: "ABC", name: 'no name', qa: ["question?", "answer!"]}
+    quiz: IQuiz = {id: "", name: 'Kvis', qa: ["question?", "answer!"]}
     quizId: string = ""
 
     startQuiz = () => {

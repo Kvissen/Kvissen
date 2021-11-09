@@ -37,8 +37,8 @@ public class JwtGenerator {
         // Add claims
         Map<String, Object> claims = new HashMap<>();
         claims.put("scope", scope.toString());
-        claims.put("kvis-code", scope.toString());
-        claims.put("user", scope.toString());
+        claims.put("kvis-code", kvisId);
+        claims.put("user", userId);
 
         JwtBuilder builder = Jwts.builder().setId(id)
                 .setIssuedAt(now)
