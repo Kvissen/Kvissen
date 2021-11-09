@@ -85,13 +85,13 @@ export default function CreateKvisBox() {
 
 
     return (
-        <div>
+        <div >
             <ShowQuestionName/>
             {isLoading && <CircularProgress />}
             {
                 questions.map((question, i) => {
                     return (
-                        <Box mb={2} mt={2}>
+                        <Box key={uuidv4()} mb={2} mt={2}>
                             <Card className="create-kvis-box">
                                 <h2 className="create-kvis-question-header">Question {i + 1}</h2>
                                 <TextField

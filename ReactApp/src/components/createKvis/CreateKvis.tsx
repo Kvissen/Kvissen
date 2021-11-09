@@ -14,7 +14,7 @@ export function CreateKvis() {
 
     function ShowKvisBox() {
         if (createKvis){
-            return <CreateKvisBox/>
+            return <CreateKvisBox data-testid="createkvis-test-kvisbox"/>
         }
         return null
     }
@@ -22,12 +22,14 @@ export function CreateKvis() {
     return (
         <div className="main-container">
             <div className="flex-container">
-                <h1>
+                <h1 data-testid="createkvis-test-header">
                     Create a new kvis
                 </h1>
                 <Button
                     disabled={createKvis}
                     variant="contained"
+                    id="create-kvis"
+                    data-testid="createkvis-test-button"
                     className="create-kvis-button"
                     onClick={() => {
                         OnClickAddKvis();
@@ -35,7 +37,7 @@ export function CreateKvis() {
                     Create Kvis
                 </Button>
             </div>
-            <ShowKvisBox/>
+            <ShowKvisBox data-testid="createkvis-test-showkvisbox"/>
         </div>
     )
 }
