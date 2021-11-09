@@ -37,6 +37,15 @@ public final class KvisDAO
 		return KvisFactory.DBToAPI(queryDatabase(query));
 	}
 	
+	public static KvisAPIDTO getSingle(final String id) throws SQLException, JsonProcessingException
+	{
+		// Prepare query
+		final String query = String.format("SELECT * FROM %s WHERE kvis_id = '%s'", Table.KVIS.TableName, id);
+		
+		// Run
+		return KvisFactory.DBToAPI(queryDatabase(query))[0];
+	}
+	
 	/**
 	 * Retrieves all Kvisses belonging to the user with the given username from the database.
 	 *
