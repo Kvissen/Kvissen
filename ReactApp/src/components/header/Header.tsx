@@ -12,12 +12,18 @@ import DropDownMenu from "./DropDownMenu";
 function Header() {
 
     return (
-        <Box className={"headerbox"}>
-            <Grid container spacing={2}>
-                <Grid item xs={4}> <Link href={"/"}><img src={logo} width="64" alt="Logo"/></Link> </Grid>
+        <Box
+            data-testid="header-test-container"
+            className={"headerbox"}>
+            <Grid
+                data-testid="header-test-grid-container"
+                container spacing={2}>
+                <Grid item xs={4}> <Link href={"/"}><img data-testid="header-test-logo" src={logo} width="64" alt="Logo"/></Link> </Grid>
                 <Grid item xs={4}>
                     <Box pt={2.6}>
-                        <Typography variant="subtitle1" align={"center"}>
+                        <Typography
+                            data-testid="header-test-quizname"
+                            variant="subtitle1" align={"center"}>
                             {store.quiz.name + " (" + store.quiz.id + ")"}
                         </Typography>
                     </Box>

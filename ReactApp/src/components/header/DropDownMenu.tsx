@@ -18,7 +18,9 @@ export default function DropDownMenu() {
     };
 
     return (
-        <div>
+        <div
+            data-testid="dropdown-test-container"
+        >
             <Button
                 id="basic-button"
                 variant={"contained"}
