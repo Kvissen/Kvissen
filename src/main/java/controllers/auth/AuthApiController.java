@@ -19,7 +19,7 @@ public class AuthApiController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getLogin() {
         try {
-            return AuthService.login();
+            return Response.seeOther(AuthService.login()).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -30,7 +30,7 @@ public class AuthApiController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response redirect(@QueryParam("ticket") String ticket) {
         try {
-            return AuthService.redirect(ticket);
+            return Response.seeOther(AuthService.redirect(ticket)).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -41,7 +41,7 @@ public class AuthApiController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response playerLogin(@PathParam("quizCode") final String quizCode) {
         try {
-            return AuthService.playerLogin(quizCode);
+            return Response.seeOther(AuthService.playerLogin(quizCode)).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
