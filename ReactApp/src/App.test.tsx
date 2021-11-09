@@ -4,10 +4,10 @@ import App from './App';
 import {matchPath} from "react-router-dom";
 import PlayKvisObserver from "./components/playKvis/PlayKvis";
 import EnterCodeObserver from "./components/enterCode/EnterCode";
+import {act} from "react-dom/test-utils";
 
-test('defined paths should be accessible', () => {
-  render(<App />);
-
+it('defined paths should be accessible', () => {
+  
   const defaultMatch = matchPath("/", {
     path: "/",
     exact: true,
@@ -26,7 +26,7 @@ test('defined paths should be accessible', () => {
   expect(playKvisMatch).toBeTruthy();
 });
 
-test("should display 404 when not valid path", () => {
+it("should display 404 when not valid path", () => {
   const invalidPathMatch = matchPath("/invalidPath", {
     path: "/invalidPath",
     children: <h1>404</h1>
