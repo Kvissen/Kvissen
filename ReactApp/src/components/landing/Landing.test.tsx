@@ -1,8 +1,8 @@
 import React from "react";
 import {act} from "react-dom/test-utils";
-import {Landing} from "./Landing";
+import LandingObserver, {Landing} from "./Landing";
 import {fireEvent, render, screen} from "@testing-library/react";
-import {Button} from "@mui/material";
+import store from "../../stores/QuizStore";
 
 const mockHistoryPush = jest.fn();
 
@@ -13,10 +13,9 @@ jest.mock('react-router-dom', () => ({
     }),
 }));
 
-
 beforeEach(() => {
     act(() => {
-        render(<Landing />)
+        render(<LandingObserver />)
     })
 })
 
