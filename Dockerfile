@@ -1,10 +1,13 @@
 FROM java:8
 
 WORKDIR /
-ADD Kvissen.jar Kvissen.jar
 
-# Mappen src/main/webapp skal eksistere i Docker-imaget. 
-ADD src/main/webapp /src/main/webapp
+# Add Sources to container
+ADD . .
+
+# Build and package
+RUN mvn package
+
 EXPOSE 8080
 
 CMD java -jar Kvissen.jar
