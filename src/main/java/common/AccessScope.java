@@ -1,4 +1,4 @@
-package Common;
+package common;
 
 /**
  * Defines type of access to the app in jwt package

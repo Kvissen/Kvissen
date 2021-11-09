@@ -1,4 +1,6 @@
-package services.auth;
+package controllers.auth;
+
+import services.auth.AuthService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

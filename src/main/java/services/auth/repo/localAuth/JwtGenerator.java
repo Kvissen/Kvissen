@@ -4,8 +4,8 @@
  */
 package services.auth.repo.localAuth;
 
-import Common.AccessScope;
-import Common.EnvVars;
+import common.AccessScope;
+import common.EnvVars;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

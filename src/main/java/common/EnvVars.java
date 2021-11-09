@@ -1,4 +1,4 @@
-package Common;
+package common;
 
 /**
  * Mock environment variables
