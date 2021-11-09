@@ -24,7 +24,7 @@ function EnterCode() {
                 <Button onClick={() => {
                     store.startQuiz();
                     // Raw redirect
-                    window.location.href = process.env.REACT_APP_BASE_URL! + "/api/auth/player-login" + "/" + store.quizId
+                    window.location.href = process.env.REACT_APP_BASE_URL! + "/api/auth/player-login/" + store.quizId
                 }}>
                     Start Kvis!
                 </Button>
