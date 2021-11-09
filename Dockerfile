@@ -15,4 +15,4 @@ RUN mvn package -e
 
 EXPOSE 8080
 
-CMD java -jar Kvissen.jar
+CMD java -jar target/Kvissen.jar
