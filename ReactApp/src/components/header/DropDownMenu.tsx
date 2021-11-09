@@ -10,18 +10,20 @@ import MenuItem from '@mui/material/MenuItem';
 export default function DropDownMenu() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+
+    function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
         setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
+    }
+    function handleClose() {
         setAnchorEl(null);
-    };
+    }
 
     return (
         <div
             data-testid="dropdown-test-container"
         >
             <Button
+                data-testid="dropdown-test-button-open"
                 id="basic-button"
                 variant={"contained"}
                 aria-controls="basic-menu"
@@ -33,6 +35,7 @@ export default function DropDownMenu() {
                 Create & Manage
             </Button>
             <Menu
+                data-testid="dropdown-test-menu"
                 id="basic-menu"
                 anchorEl={anchorEl}
                 open={open}
@@ -43,7 +46,7 @@ export default function DropDownMenu() {
             >
                 <MenuItem onClick={handleClose}>Do this</MenuItem>
                 <MenuItem onClick={handleClose}>Do that</MenuItem>
-                <MenuItem onClick={handleClose}><LoginComponent/></MenuItem>
+                <MenuItem onClick={handleClose} data-testid="dropdown-test-menu-login"><LoginComponent/></MenuItem>
             </Menu>
         </div>
     );
@@ -55,7 +58,9 @@ export function LoginComponent() {
     // TODO: Display logout based on state of token
 
     return (
-        <Button variant="outlined"
+        <Button
+            data-testid="dropdown-test-login"
+            variant="outlined"
                 onClick={
 
                     //  Normal flow: request with Kvis token succeeds
@@ -63,7 +68,7 @@ export function LoginComponent() {
                     //  if Kvis token expired or failed receives DTU login url from server:
 
                     //  Redirect to DTU
-                    () => history.push("./login-redirect")
+                    () => history.push("/login-redirect")
 
                     //  Get DTU ticket?
 
