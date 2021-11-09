@@ -16,7 +16,6 @@ function LoginRedirect() {
         window.location.href = signInUrl;
     }, [signInUrl]);
 
-
     return (<div>
         <CircularProgress/>
         <h2>Redirecting to login page...</h2>

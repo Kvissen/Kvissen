@@ -7,7 +7,7 @@ import kong.unirest.Unirest;
 
 import javax.ws.rs.NotAuthorizedException;
 
-import static Common.EnvVars.*;
+import static common.EnvVars.*;
 
 
 public class TicketValidator {

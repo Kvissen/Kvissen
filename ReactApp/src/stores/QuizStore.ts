@@ -7,7 +7,7 @@ import {makePersistable} from "mobx-persist-store";
 export interface IQuiz {
     id: string;
     name: string;
-    qa: string[];    // Pair of Q+A objects. Answers is a list.
+    qa: string[]; // Pair of Q+A objects. Answers is a list.
 }
 
 export class QuizStore {
