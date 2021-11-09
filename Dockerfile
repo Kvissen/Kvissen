@@ -1,9 +1,9 @@
 FROM java:8
 
 # Update and install maven
-RUN apt update -y
-RUN apt upgrade -y
-RUN apt install maven -y
+RUN apt-get update -y
+RUN apt-get upgrade -y
+RUN apt-get install maven -y
 
 WORKDIR /
 
