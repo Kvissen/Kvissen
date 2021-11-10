@@ -24,7 +24,7 @@ function Header() {
                         <Typography
                             data-testid="header-test-quizname"
                             variant="subtitle1" align={"center"}>
-                            {store.quiz.name + " (" + store.quiz.id + ")"}
+                            {showKvisIdOrMessage()}
                         </Typography>
                     </Box>
                 </Grid>
@@ -36,6 +36,10 @@ function Header() {
             </Grid>
         </Box>
     )
+}
+
+function showKvisIdOrMessage() {
+    return (store.quizId !== "") ? <p>Kvis: {store.quizId}</p> : <p>Enter code to start Kvis!</p>
 }
 
 const HeaderObserver = observer(Header)

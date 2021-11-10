@@ -3,10 +3,8 @@ import React from 'react';
 import {Button, Grid, TextField, Typography} from "@mui/material";
 import {store} from "../../stores/QuizStore";
 import {observer} from "mobx-react";
-import {useHistory} from "react-router-dom";
 
 function EnterCode() {
-    const history = useHistory();
     return (
         <Grid container spacing={2} alignContent={"center"} className={"entercodebg"}>
             <Grid
@@ -28,9 +26,10 @@ function EnterCode() {
 
                 <Button
                     data-testid="entercode-test-button"
-                    onClick={() => {
+                    disabled={(store.quizId === "")} onClick={() => {
                     store.startQuiz();
-                    history.push("/play-kvis")
+                    // Raw redirect
+                    window.location.href = process.env.REACT_APP_BASE_URL! + "/api/auth/player-login/" + store.quizId
                 }}>
                     Start Kvis!
                 </Button>
@@ -41,7 +40,3 @@ function EnterCode() {
 
 const EnterCodeObserver = observer(EnterCode)
 export default EnterCodeObserver;
-
-
-
-

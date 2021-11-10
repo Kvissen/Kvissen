@@ -55,8 +55,6 @@ export default function DropDownMenu() {
 export function LoginComponent() {
     const history = useHistory();
 
-    // TODO: Display logout based on state of token
-
     return (
         <Button
             data-testid="dropdown-test-login"

@@ -4,7 +4,7 @@
  */
 package services.auth.repo.localAuth;
 
-import Common.EnvVars;
+import common.EnvVars;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
