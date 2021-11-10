@@ -37,6 +37,16 @@
                     </execution>
 
                     <execution>
+                        <id>set-yarn-network-timeout</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>config set network-timeout 300000</arguments>
+                        </configuration>
+                    </execution>
+
+                    <execution>
                         <id>yarn-install</id>
                         <goals>
                             <goal>yarn</goal>

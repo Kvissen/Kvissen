@@ -1,3 +1,4 @@
+# These versions should follow the ones specified in the pom.xml
 FROM maven:3.8.1-jdk-8
 
 # Update and install maven
