@@ -1,7 +1,6 @@
 import QuestionBox from "./QuestionBox";
 import {Box, Grid} from "@mui/material";
 import AnswerBox from "./AnswerBox";
-import {useState} from "react";
 import {useHistory} from "react-router-dom";
 import {store} from "../../stores/QuizStore";
 import {observer} from "mobx-react";
