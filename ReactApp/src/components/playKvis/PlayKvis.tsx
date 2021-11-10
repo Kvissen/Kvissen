@@ -18,7 +18,7 @@ function PlayKvis() {
 
     return (
         <div className={"main-container"}>
-            <Box>
+            <Box data-testid="playkvis-test-container">
                 <QuestionBox question={store.currentKvis.questions[store.questionIndex]}/>
                 <Box position={"absolute"} bottom={40} right={10} left={10}>
                     <Grid direction='row' container spacing={4} justifyContent={"space-between"} alignItems={"center"}>
