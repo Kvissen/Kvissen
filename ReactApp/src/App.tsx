@@ -9,7 +9,7 @@ import LoginRedirectObserver from "./components/login/LoginRedirect";
 import LandingObserver from "./components/landing/Landing";
 import KvisListObserver from "./components/kvisList/KvisList";
 import LoginRecipientObserver from "./components/login/LoginRecipient";
-import ErrorPage from "./components/error/errorPage";
+import ErrorPage from "./components/error/ErrorPage";
 import PlayKvisObserver from "./components/playKvis/PlayKvis";
 import KvisSummaryObserver from "./components/playKvisSummary/KvisSummary";
 
