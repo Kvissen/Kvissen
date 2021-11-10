@@ -22,7 +22,7 @@ class QuizStore {
         makeAutoObservable(this)
         makePersistable(this, {
             name: 'KvisLocalData',
-            properties: ["quizId", "result", "currentKvis"],
+            properties: ["quizId", "result", "currentKvis", "questionIndex"],
             expireIn: 1800000, // Half hour
             removeOnExpiration: true,
             storage: window.localStorage
@@ -35,12 +35,14 @@ class QuizStore {
     quizId: string = ""
     result: Result = new Result()
     currentKvis: Kvis = new Kvis()
+    questionIndex = 0
 
     startQuiz = () => {
         // Update result object with quiz id on start quiz
         this.result.quizId = this.quizId
         // Clear old result
         this.result.answerResults = []
+        this.questionIndex = 0
         console.log("startQuiz: added id to the quiz")
         // Get quiz on start
         this.getQuiz(this.quizId)
@@ -52,9 +54,13 @@ class QuizStore {
         console.log("addResult: pushed result of an answer: " + result)
     }
 
+    incrementCurrentQuestion() {
+        this.questionIndex++
+    }
+
     // TODO: get quiz from API
     getQuiz(quizId: string) {
-        let query = quizId
+        console.log("Mock fetching quiz: " + quizId)
 
         this.currentKvis = store.currentKvis = new Kvis(uuidv4(), "Test Kvis", uuidv4(), new Date().getDate(), [
             new Question([

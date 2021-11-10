@@ -7,23 +7,11 @@ import {store} from "../../stores/QuizStore";
 import {observer} from "mobx-react";
 
 function PlayKvis() {
-    const kvis = store.currentKvis
     const history = useHistory();
 
-    // Replace with KvisStore to persist
-    const [currentQuestion, setCurrentQuestion] = useState(0);
-
-    function alertUser(isCorrect: boolean) {
-        // if (isCorrect) {
-        //     alert("Correct")
-        // } else {
-        //     alert("Incorrect")
-        // }
-    }
-
     function nextQuestion() {
-        if (currentQuestion < kvis.questions.length - 1) {
-            setCurrentQuestion(currentQuestion + 1)
+        if (store.questionIndex < store.currentKvis.questions.length - 1) {
+            store.incrementCurrentQuestion()
         } else {
             history.replace("/summary-kvis")
         }
@@ -32,16 +20,15 @@ function PlayKvis() {
     return (
         <div className={"main-container"}>
             <Box>
-                <QuestionBox question={kvis.questions[currentQuestion]}/>
+                <QuestionBox question={store.currentKvis.questions[store.questionIndex]}/>
                 <Box position={"absolute"} bottom={40} right={10} left={10}>
                     <Grid direction='row' container spacing={4} justifyContent={"space-between"} alignItems={"center"}>
                         {
-                            kvis.questions[currentQuestion].answers.map((answer) => {
+                            store.currentKvis.questions[store.questionIndex].answers.map((answer) => {
                                 return (
                                     <Grid item sm={6}>
                                         <AnswerBox answer={answer} onAnswerSelected={(isCorrect => {
                                             store.addResult(isCorrect)
-                                            alertUser(isCorrect);
                                             nextQuestion();
                                         })}/>
                                     </Grid>
