@@ -1,7 +1,3 @@
-import {Kvis} from "../../models/Kvis";
-import {v4 as uuidv4} from "uuid";
-import {Question} from "../../models/Question";
-import {Answer} from "../../models/Answer";
 import QuestionBox from "./QuestionBox";
 import {Box, Grid} from "@mui/material";
 import AnswerBox from "./AnswerBox";
@@ -11,34 +7,18 @@ import {store} from "../../stores/QuizStore";
 import {observer} from "mobx-react";
 
 function PlayKvis() {
-
-    const kvis =
-        new Kvis(uuidv4(), "Test Kvis", uuidv4(), new Date().getDate(), [
-            new Question([
-                new Answer("Test answer", false),
-                new Answer("Test answer1", false),
-                new Answer("Test answer2", false),
-                new Answer("Test answer correct", true),
-            ], "Test question"),
-            new Question([
-                new Answer("Test", false),
-                new Answer("Test2", false),
-                new Answer("Test3", false),
-                new Answer("Test answer correct", true),
-            ], "Test question2")
-        ])
-
+    const kvis = store.currentKvis
     const history = useHistory();
 
     // Replace with KvisStore to persist
     const [currentQuestion, setCurrentQuestion] = useState(0);
 
     function alertUser(isCorrect: boolean) {
-        if (isCorrect) {
-            alert("Correct")
-        } else {
-            alert("Incorrect")
-        }
+        // if (isCorrect) {
+        //     alert("Correct")
+        // } else {
+        //     alert("Incorrect")
+        // }
     }
 
     function nextQuestion() {
