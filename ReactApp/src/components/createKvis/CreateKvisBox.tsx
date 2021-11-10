@@ -29,6 +29,7 @@ export default function CreateKvisBox() {
                      alignItems="end">
                     <Button
                         className="add-new-question"
+                        data-testid="createkvisbox-test-done"
                         variant="contained"
                         startIcon={<CheckIcon/>}
                         onClick={async () => {
@@ -52,6 +53,7 @@ export default function CreateKvisBox() {
                     <TextField
                         margin="normal"
                         required
+                        data-testid="createkvisbox-test-kvisname"
                         label="Enter Kvis name"
                         fullWidth
                         autoFocus
@@ -98,6 +100,7 @@ export default function CreateKvisBox() {
                                     margin="normal"
                                     required
                                     label="Enter question"
+                                    data-testid="createkvisbox-test-question"
                                     fullWidth
                                     onChange={(e) => {
                                         question.question = e.target.value;
@@ -108,6 +111,7 @@ export default function CreateKvisBox() {
                                         <TextField
                                             margin="normal"
                                             required
+                                            data-testid="createkvisbox-test-answer"
                                             label="Enter Answer 1"
                                             fullWidth
                                             onChange={(e) => {
@@ -115,7 +119,9 @@ export default function CreateKvisBox() {
                                             }}
                                         />
                                         <p>Correct</p>
-                                        <Checkbox onChange={(e) => {
+                                        <Checkbox
+                                            data-testid="createkvisbox-test-checkbox"
+                                            onChange={(e) => {
                                             question.answers[0].isCorrect = e.target.checked
                                         }}/>
                                     </Grid>
@@ -123,6 +129,7 @@ export default function CreateKvisBox() {
                                         <TextField
                                             margin="normal"
                                             required
+                                            data-testid="createkvisbox-test-answer"
                                             label="Enter Answer 2"
                                             fullWidth
                                             onChange={(e) => {
@@ -130,7 +137,9 @@ export default function CreateKvisBox() {
                                             }}
                                         />
                                         <p>Correct</p>
-                                        <Checkbox onChange={(e) => {
+                                        <Checkbox
+                                            data-testid="createkvisbox-test-checkbox"
+                                            onChange={(e) => {
                                             question.answers[1].isCorrect = e.target.checked
                                         }}/>
                                     </Grid>
@@ -138,13 +147,16 @@ export default function CreateKvisBox() {
                                         <TextField
                                             required
                                             label="Enter Answer 3"
+                                            data-testid="createkvisbox-test-answer"
                                             fullWidth
                                             onChange={(e) => {
                                                 question.answers[2].answer = e.target.value
                                             }}
                                         />
                                         <p>Correct</p>
-                                        <Checkbox onChange={(e) => {
+                                        <Checkbox
+                                            data-testid="createkvisbox-test-checkbox"
+                                            onChange={(e) => {
                                             question.answers[2].isCorrect = e.target.checked
                                         }}/>
                                     </Grid>
@@ -152,13 +164,16 @@ export default function CreateKvisBox() {
                                         <TextField
                                             required
                                             label="Enter Answer 4"
+                                            data-testid="createkvisbox-test-answer"
                                             fullWidth
                                             onChange={(e) => {
                                                 question.answers[3].answer = e.target.value
                                             }}
                                         />
                                         <p>Correct</p>
-                                        <Checkbox onChange={(e) => {
+                                        <Checkbox
+                                            data-testid="createkvisbox-test-checkbox"
+                                            onChange={(e) => {
                                             question.answers[3].isCorrect = e.target.checked
                                         }}/>
                                     </Grid>
@@ -167,6 +182,7 @@ export default function CreateKvisBox() {
                                      justifyContent="center"
                                      alignItems="center">
                                     <Button
+                                        data-testid="createkvisbox-test-addquestion"
                                         className="add-new-question"
                                         variant="contained"
                                         startIcon={<AddIcon/>}
