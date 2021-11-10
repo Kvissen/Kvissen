@@ -1,7 +1,7 @@
 import {IUserDao} from "./IUserDao";
 import {User} from "../../models/User";
 import HttpClient from "../infrastructure/HttpClient";
-import {Kvis} from "../../models/Kvis";
+import {defaultCreatorHeaders} from "../headers/urlHeaders";
 
 class UserDao implements IUserDao{
 
@@ -26,9 +26,7 @@ class UserDao implements IUserDao{
         return await this.httpClient.request({
             method: 'POST',
             url: url,
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: defaultCreatorHeaders,
             body: user
         })
     }

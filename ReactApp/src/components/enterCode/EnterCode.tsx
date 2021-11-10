@@ -21,7 +21,7 @@ function EnterCode() {
                     onChange={(evt) => store.quizId = evt.target.value}
                 />
 
-                <Button onClick={() => {
+                <Button disabled={(store.quizId === "")} onClick={() => {
                     store.startQuiz();
                     // Raw redirect
                     window.location.href = process.env.REACT_APP_BASE_URL! + "/api/auth/player-login/" + store.quizId
