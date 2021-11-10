@@ -53,7 +53,6 @@ const ScorePieChart = (props: IResultPieChartProps) => {
             })
 
         arch.append('path').attr('d', path)
-        //})
     }
     return <div className="basicPieChart"/>
 }
