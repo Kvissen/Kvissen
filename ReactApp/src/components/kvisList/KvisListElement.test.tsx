@@ -1,28 +1,7 @@
 import React from "react";
 import {act, render, screen} from "@testing-library/react";
 import KvisListElement from "./KvisListElement";
-import {Kvis} from "../../models/Kvis";
-import {Question} from "../../models/Question";
-import {Answer} from "../../models/Answer";
-
-let mockAnswers = [
-    new Answer("testAnswer"),
-    new Answer("testAnswer"),
-    new Answer("testAnswer"),
-    new Answer("testAnswer"),
-];
-
-let mockQuestions = [
-    new Question(mockAnswers,"testQuestion")
-];
-
-let mockKvis = new Kvis(
-    "testId",
-    "testName",
-    "testCreator",
-    0,
-    mockQuestions
-);
+import {mockKvis} from "../../testutil/Mocks";
 
 beforeEach(() => {
     act(() => {
