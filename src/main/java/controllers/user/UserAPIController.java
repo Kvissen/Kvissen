@@ -5,6 +5,7 @@ import controllers.user.dto.UserAPI;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 
 /**
@@ -16,17 +17,17 @@ public class UserAPIController
 {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserAPI[] getAllUsers() throws SQLException
+	public Response getAllUsers() throws SQLException
 	{
-		return UserDAO.retrieveAllUsers();
+		return Response.ok(UserDAO.retrieveAllUsers()).build();
 	}
 	
 	@POST
 	@Path("create")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserAPI createUser(final UserAPI userAPI) throws SQLException
+	public Response createUser(final UserAPI userAPI) throws SQLException
 	{
-		return UserDAO.createUser(userAPI);
+		return Response.ok(UserDAO.createUser(userAPI)).build();
 	}
 }
