@@ -61,7 +61,6 @@ class QuizStore {
     // TODO: get quiz from API
     getQuiz(quizId: string) {
         console.log("Mock fetching quiz: " + quizId)
-
         this.currentKvis = store.currentKvis = new Kvis(uuidv4(), "Test Kvis", uuidv4(), new Date().getDate(), [
             new Question([
                 new Answer("Test answer", false),
