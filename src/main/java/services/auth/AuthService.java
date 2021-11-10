@@ -43,7 +43,7 @@ public class AuthService {
                 UUID.randomUUID().toString(),
                 JWT_DEFAULT_ISSUER, JWT_TTL);
         // Send back to frontend with token as search param
-        return URI.create(CLIENT_BASE_URL + "?token=" + token);
+        return URI.create(CLIENT_JWT_PARSER_URL + "?token=" + token);
     }
 
     /**
@@ -74,7 +74,7 @@ public class AuthService {
                 JWT_TTL
         );
         // Send back to frontend with token as search param
-        return URI.create(CLIENT_BASE_URL + "?token=" + token);
+        return URI.create(CLIENT_JWT_PARSER_URL + "?token=" + token);
     }
 }
 

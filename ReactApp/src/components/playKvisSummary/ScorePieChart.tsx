@@ -1,4 +1,4 @@
-// Erlend and https://medium.com/react-courses/drawing-basic-charts-with-react-typescript-d3-part-ii-pie-scatter-chart-da4fc653b715
+// Erlend
 import React, {useEffect} from 'react'
 import * as d3 from 'd3'
 import {PieArcDatum} from 'd3-shape'

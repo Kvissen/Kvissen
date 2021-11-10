@@ -29,7 +29,7 @@ function listResultsRaw() {
 // Shows percentage of right answers
 function listResultsSummary() {
     return (
-        <h2>Result: {getResultChartData()[0].value * 100 / store.result.answerResults.length}</h2>
+        <h2>Result: {getResultChartData()[0].value * 100 / store.result.answerResults.length}%</h2>
     )
 }
 

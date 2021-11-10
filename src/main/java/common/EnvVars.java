@@ -43,7 +43,7 @@ public class EnvVars {
 
     // Server base url
     public static final String BASE_URL = getBaseUrl();
-    public static final String CLIENT_BASE_URL = BASE_URL + "#login-recipient"; // Note: The "/" is omitted after "#"!
+    public static final String CLIENT_JWT_PARSER_URL = BASE_URL + "#login-recipient"; // Note: The "/" is omitted after "#"!
 
     // Default token settings
     public static final String JWT_DEFAULT_ISSUER = "KvisServer";
