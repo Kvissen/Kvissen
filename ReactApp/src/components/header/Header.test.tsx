@@ -23,6 +23,4 @@ it("should contain HTML elements with expected input", () => {
     expect(logoImage.getAttribute("src")).toBe(logo);
 
     expect(quizName).toBeTruthy();
-    expect(quizName.textContent).toContain(store.quiz.name);
-    expect(quizName.textContent).toContain(store.quiz.id);
 })

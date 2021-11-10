@@ -2,7 +2,7 @@ import {observer} from "mobx-react";
 import {store} from "../../stores/QuizStore";
 import ScorePieChart from "./ScorePieChart";
 
-function KvisSummary() {
+export function KvisSummary() {
 
     return (
         <div className={"main-container"}>

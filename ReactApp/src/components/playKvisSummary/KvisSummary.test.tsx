@@ -9,5 +9,5 @@ it("should display text",() => {
         render(<KvisSummary />);
     })
     const checkText = screen.getByTestId("summary-test-h1")
-    expect(checkText.textContent).toBe("You are done with the Kvis");
+    expect(checkText.textContent).toBe("You have conquered this Kvis!");
 })

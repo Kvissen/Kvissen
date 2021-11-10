@@ -6,13 +6,6 @@ import store from "../../stores/QuizStore";
 
 const mockHistoryPush = jest.fn();
 
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useHistory: () => ({
-        push: mockHistoryPush,
-    }),
-}));
-
 beforeEach(() => {
     act(() => {
         render(<EnterCodeObserver />)
@@ -28,11 +21,3 @@ it("should contain container and textfield", () => {
     expect(textField).toBeTruthy();
     expect(textField.title).toBe(store.quizId)
 })
-
-it('should push history', () => {
-    const button = screen.getByTestId("entercode-test-button")
-
-    expect(button).toBeTruthy();
-    fireEvent.click(button);
-    expect(mockHistoryPush).toHaveBeenCalledWith("/play-kvis")
-});

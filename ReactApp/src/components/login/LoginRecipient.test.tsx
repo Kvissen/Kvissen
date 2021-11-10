@@ -38,5 +38,5 @@ it("should show login recipient layout", () => {
     expect(container).toBeTruthy();
     expect(progress).toBeTruthy();
     expect(h2).toBeTruthy();
-    expect(h2.textContent).toBe("Redirecting to dashboard...");
+    expect(h2.textContent).toBe("Redirecting...");
 });
