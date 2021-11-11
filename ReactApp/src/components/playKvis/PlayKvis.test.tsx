@@ -3,9 +3,11 @@ import {act} from "react-dom/test-utils";
 import {render} from "@testing-library/react";
 import PlayKvisObserver from "./PlayKvis";
 
+
+
 beforeEach(() => {
     act(() => {
-        //render(<PlayKvisObserver/>)
+        render(<PlayKvisObserver/>)
     })
 })
 

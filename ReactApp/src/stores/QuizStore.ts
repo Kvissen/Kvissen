@@ -6,15 +6,7 @@ import {Kvis} from "../models/Kvis";
 import {v4 as uuidv4} from "uuid";
 import {Question} from "../models/Question";
 import {Answer} from "../models/Answer";
-
-// Data class for result of a quiz as stored locally in MobX
-export class Result {
-    constructor(
-        public quizId: string = "not set",
-        public answerResults: boolean[] = []
-    ) {
-    }
-}
+import {Result} from "../models/Result";
 
 class QuizStore {
 
