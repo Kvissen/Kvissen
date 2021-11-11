@@ -6,7 +6,7 @@ import logo from '../../ImageAssets/kvislogo.png';
 import Box from '@mui/material/Box';
 import {observer} from 'mobx-react';
 
-import store from "../../stores/QuizStore";
+import store from "../../stores/KvisStore";
 import DropDownMenu from "./DropDownMenu";
 
 function Header() {
@@ -39,7 +39,7 @@ function Header() {
 }
 
 function showKvisIdOrMessage() {
-    return (store.quizId !== "") ? <p>Kvis: {store.quizId}</p> : <p>Enter code to start Kvis!</p>
+    return (store.kvisId !== "") ? <p>Kvis: {store.kvisId}</p> : <p>Enter code to start Kvis!</p>
 }
 
 const HeaderObserver = observer(Header)

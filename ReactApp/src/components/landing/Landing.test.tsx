@@ -2,7 +2,7 @@ import React from "react";
 import {act} from "react-dom/test-utils";
 import LandingObserver, {Landing} from "./Landing";
 import {fireEvent, render, screen} from "@testing-library/react";
-import store from "../../stores/QuizStore";
+import store from "../../stores/KvisStore";
 
 const mockHistoryPush = jest.fn();
 

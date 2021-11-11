@@ -1,5 +1,5 @@
 import {observer} from "mobx-react";
-import {store} from "../../stores/QuizStore";
+import {store} from "../../stores/KvisStore";
 import ScorePieChart from "./ScorePieChart";
 
 export function KvisSummary() {

@@ -8,13 +8,13 @@ import {Question} from "../models/Question";
 import {Answer} from "../models/Answer";
 import {Result} from "../models/Result";
 
-class QuizStore {
+class KvisStore {
 
     constructor() {
         makeAutoObservable(this)
         makePersistable(this, {
             name: 'KvisLocalData',
-            properties: ["quizId", "result", "currentKvis", "questionIndex"],
+            properties: ["kvisId", "result", "currentKvis", "questionIndex"],
             expireIn: 1800000, // Half hour
             removeOnExpiration: true,
             storage: window.localStorage
@@ -24,20 +24,20 @@ class QuizStore {
     }
 
     // Data
-    quizId: string = ""
+    kvisId: string = ""
     result: Result = new Result()
     currentKvis: Kvis = new Kvis()
     questionIndex = 0
 
     startQuiz = () => {
         // Update result object with quiz id on start quiz
-        this.result.quizId = this.quizId
+        this.result.kvisId = this.kvisId
         // Clear old result
         this.result.answerResults = []
         this.questionIndex = 0
         console.log("startQuiz: added id to the quiz")
         // Get quiz on start
-        this.getQuiz(this.quizId)
+        this.getQuiz(this.kvisId)
 
     }
 
@@ -70,5 +70,5 @@ class QuizStore {
     }
 }
 
-export const store = new QuizStore()
+export const store = new KvisStore()
 export default store

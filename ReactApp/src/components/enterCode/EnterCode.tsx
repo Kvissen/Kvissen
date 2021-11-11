@@ -1,7 +1,7 @@
 // Erlend
 import React from 'react';
 import {Button, Grid, TextField, Typography} from "@mui/material";
-import {store} from "../../stores/QuizStore";
+import {store} from "../../stores/KvisStore";
 import {observer} from "mobx-react";
 
 function EnterCode() {
@@ -20,16 +20,16 @@ function EnterCode() {
                     name="code"
                     data-testid="entercode-test-textfield"
                     autoFocus
-                    value={store.quizId}
-                    onChange={(evt) => store.quizId = evt.target.value}
+                    value={store.kvisId}
+                    onChange={(evt) => store.kvisId = evt.target.value}
                 />
 
                 <Button
                     data-testid="entercode-test-button"
-                    disabled={(store.quizId === "")} onClick={() => {
+                    disabled={(store.kvisId === "")} onClick={() => {
                     store.startQuiz();
                     // Raw redirect
-                    window.location.href = process.env.REACT_APP_BASE_URL! + "/api/auth/player-login/" + store.quizId
+                    window.location.href = process.env.REACT_APP_BASE_URL! + "/api/auth/player-login/" + store.kvisId
                 }}>
                     Start Kvis!
                 </Button>

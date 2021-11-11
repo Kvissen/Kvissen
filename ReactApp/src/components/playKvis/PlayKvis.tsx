@@ -2,8 +2,9 @@ import QuestionBox from "./QuestionBox";
 import {Box, Grid} from "@mui/material";
 import AnswerBox from "./AnswerBox";
 import {useHistory} from "react-router-dom";
-import {store} from "../../stores/QuizStore";
+import {store} from "../../stores/KvisStore";
 import {observer} from "mobx-react";
+import {v4 as uuidv4} from "uuid";
 
 function PlayKvis() {
     const history = useHistory();
@@ -25,7 +26,7 @@ function PlayKvis() {
                         {
                             store.currentKvis.questions[store.questionIndex].answers.map((answer) => {
                                 return (
-                                    <Grid item sm={6}>
+                                    <Grid key={uuidv4()} item sm={6}>
                                         <AnswerBox answer={answer} onAnswerSelected={(isCorrect => {
                                             store.addResult(isCorrect)
                                             nextQuestion();

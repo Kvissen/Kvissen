@@ -3,7 +3,7 @@ import {act} from "react-dom/test-utils";
 import {render, screen} from "@testing-library/react";
 import HeaderObserver from "./Header";
 import logo from '../../ImageAssets/kvislogo.png';
-import store from "../../stores/QuizStore";
+import store from "../../stores/KvisStore";
 
 it("should contain HTML elements with expected input", () => {
     act(() => {
