@@ -15,8 +15,8 @@ export default function ErrorPage() {
 
     return (
         <div>
-            <h1>Error</h1>
-            <h2>{message}</h2>
+            <h1 data-testid="error-test-header">Error</h1>
+            <h2 data-testid="error-test-body">{message}</h2>
         </div>
     )
 }
