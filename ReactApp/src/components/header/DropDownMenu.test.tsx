@@ -2,7 +2,6 @@ import React from "react";
 import {act} from "react-dom/test-utils";
 import {fireEvent, render, screen} from "@testing-library/react";
 import DropDownMenu from "./DropDownMenu";
-import {shallow} from "enzyme";
 
 const mockHistoryPush = jest.fn();
 
