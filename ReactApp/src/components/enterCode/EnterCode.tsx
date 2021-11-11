@@ -1,13 +1,15 @@
 // Erlend
 import React from 'react';
 import {Button, Grid, TextField, Typography} from "@mui/material";
-import {store} from "../../stores/QuizStore";
+import {store} from "../../stores/KvisStore";
 import {observer} from "mobx-react";
 
 function EnterCode() {
     return (
         <Grid container spacing={2} alignContent={"center"} className={"entercodebg"}>
-            <Grid item xs={6} md={4} margin={"128px auto"} className={"entercodebox"}>
+            <Grid
+                data-testid="entercode-test-container"
+                item xs={6} md={4} margin={"128px auto"} className={"entercodebox"}>
                 <Typography align={"center"}>ENTER CODE</Typography>
                 <TextField
                     margin="normal"
@@ -16,15 +18,18 @@ function EnterCode() {
                     label="Kvis Code"
                     fullWidth
                     name="code"
+                    data-testid="entercode-test-textfield"
                     autoFocus
-                    value={store.quizId}
-                    onChange={(evt) => store.quizId = evt.target.value}
+                    value={store.kvisId}
+                    onChange={(evt) => store.kvisId = evt.target.value}
                 />
 
-                <Button disabled={(store.quizId === "")} onClick={() => {
+                <Button
+                    data-testid="entercode-test-button"
+                    disabled={(store.kvisId === "")} onClick={() => {
                     store.startQuiz();
                     // Raw redirect
-                    window.location.href = process.env.REACT_APP_BASE_URL! + "/api/auth/player-login/" + store.quizId
+                    window.location.href = process.env.REACT_APP_BASE_URL! + "/api/auth/player-login/" + store.kvisId
                 }}>
                     Start Kvis!
                 </Button>
