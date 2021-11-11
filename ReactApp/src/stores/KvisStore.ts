@@ -7,6 +7,7 @@ import {v4 as uuidv4} from "uuid";
 import {Question} from "../models/Question";
 import {Answer} from "../models/Answer";
 import {Result} from "../models/Result";
+import {mockKvis} from "../testutil/Mocks";
 
 class KvisStore {
 
@@ -67,6 +68,17 @@ class KvisStore {
                 new Answer("Test answer correct", true),
             ], "Test question2")
         ])
+    }
+
+    startMockQuiz() {
+        // Update result object with quiz id on start quiz
+        this.result.kvisId = this.kvisId
+        // Clear old result
+        this.result.answerResults = []
+        this.questionIndex = 0
+        console.log("startQuiz: added id to the quiz")
+        // Get quiz on start
+        this.currentKvis = mockKvis;
     }
 }
 

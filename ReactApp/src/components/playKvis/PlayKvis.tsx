@@ -26,8 +26,9 @@ function PlayKvis() {
                         {
                             store.currentKvis.questions[store.questionIndex].answers.map((answer) => {
                                 return (
-                                    <Grid key={uuidv4()} item sm={6}>
-                                        <AnswerBox answer={answer} onAnswerSelected={(isCorrect => {
+                                    <Grid data-testid="playkvis-test-answerbox" key={uuidv4()} item sm={6}>
+                                        <AnswerBox
+                                            answer={answer} onAnswerSelected={(isCorrect => {
                                             store.addResult(isCorrect)
                                             nextQuestion();
                                         })}/>
