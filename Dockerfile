@@ -1,10 +1,19 @@
-FROM java:8
+# These versions should follow the ones specified in the pom.xml
+FROM maven:3.8.1-jdk-8
+
+# Update and install maven
+#RUN apt-get update -y
+#RUN apt-get upgrade -y
+#RUN apt-get install maven -y
 
 WORKDIR /
-ADD Kvissen.jar Kvissen.jar
 
-# Mappen src/main/webapp skal eksistere i Docker-imaget. 
-ADD src/main/webapp /src/main/webapp
+# Add Sources to container
+ADD . .
+
+# Build and package
+RUN mvn package -e
+
 EXPOSE 8080
 
-CMD java -jar Kvissen.jar
+CMD java -jar target/Kvissen.jar
