@@ -8,6 +8,7 @@ import {Question} from "../models/Question";
 import {Answer} from "../models/Answer";
 import {Result} from "../models/Result";
 import {mockKvis} from "../testutil/Mocks";
+import {KvisRepository} from "../data/repositories/KvisRepository";
 
 class KvisStore {
 
@@ -38,7 +39,7 @@ class KvisStore {
         this.questionIndex = 0
         console.log("startQuiz: added id to the quiz")
         // Get quiz on start
-        this.getQuiz(this.kvisId)
+        this.getQuiz()
 
     }
 
@@ -52,22 +53,11 @@ class KvisStore {
     }
 
     // TODO: get quiz from API
-    getQuiz(quizId: string) {
-        console.log("Mock fetching quiz: " + quizId)
-        this.currentKvis = store.currentKvis = new Kvis(uuidv4(), "Test Kvis", uuidv4(), new Date().getDate(), [
-            new Question([
-                new Answer("Test answer", false),
-                new Answer("Test answer1", false),
-                new Answer("Test answer2", false),
-                new Answer("Test answer correct", true),
-            ], "Test question"),
-            new Question([
-                new Answer("Test", false),
-                new Answer("Test2", false),
-                new Answer("Test3", false),
-                new Answer("Test answer correct", true),
-            ], "Test question2")
-        ])
+    async getQuiz() {
+        await KvisRepository.getInstance().getKvisses().then(result => {
+            this.currentKvis = store.currentKvis = result[0];
+            window.location.href = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_AUTH_PLAYER + store.kvisId
+        })
     }
 
     startMockQuiz() {

@@ -28,8 +28,6 @@ function EnterCode() {
                     data-testid="entercode-test-button"
                     disabled={(store.kvisId === "")} onClick={() => {
                     store.startQuiz();
-                    // Raw redirect
-                    window.location.href = process.env.REACT_APP_BASE_URL! + "/api/auth/player-login/" + store.kvisId
                 }}>
                     Start Kvis!
                 </Button>
