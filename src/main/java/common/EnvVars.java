@@ -50,8 +50,8 @@ public class EnvVars {
     public static final long JWT_TTL = 3600000;
 
     // Ticket Validation URL's
-    public static final String TICKET_ENDPOINT = "https://www.auth.dtu.dk/dtu/";
-    public static final String TICKET_VALIDATION_ENDPOINT = "https://www.auth.dtu.dk/dtu/validate";
+    public static final String TICKET_ENDPOINT = "https://auth.dtu.dk/dtu/";
+    public static final String TICKET_VALIDATION_ENDPOINT = "https://auth.dtu.dk/dtu/validate";
     // Where we would like to receive ticket :-)
     public static final String TICKET_RESPONSE_ENDPOINT = "/api/auth/redirect";
 }
