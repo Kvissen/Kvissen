@@ -3,9 +3,6 @@
 import {makeAutoObservable} from 'mobx';
 import {makePersistable} from "mobx-persist-store";
 import {Kvis} from "../models/Kvis";
-import {v4 as uuidv4} from "uuid";
-import {Question} from "../models/Question";
-import {Answer} from "../models/Answer";
 import {Result} from "../models/Result";
 import {mockKvis} from "../testutil/Mocks";
 import {KvisRepository} from "../data/repositories/KvisRepository";
