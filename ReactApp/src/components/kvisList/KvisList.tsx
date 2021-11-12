@@ -21,12 +21,14 @@ export function KvisList() {
        return (
         <div className="margin-container">
             {isLoading && <CircularProgress />}
-            <Grid direction='row' container spacing={4} justifyContent={"space-between"} alignItems={"center"}>
+            <Grid
+                data-testid="kvislist-test-container"
+                direction='row' container spacing={4} justifyContent={"space-between"} alignItems={"center"}>
                 {
                     kvisses.map((kvis) => {
                         return (
                             <Grid item sm={6} key={kvis.uuid}>
-                                <KvisListElement kvis={kvis}/>
+                                <KvisListElement data-testid="kvislist-test-item" kvis={kvis}/>
                             </Grid>
                         )
                     })

@@ -2,7 +2,7 @@
 import React, {useEffect} from 'react'
 import * as d3 from 'd3'
 import {PieArcDatum} from 'd3-shape'
-import {ChartData} from './chartData'
+import {ChartData} from '../../models/ChartData'
 import {observer} from "mobx-react";
 
 const ScorePieChart = (props: IResultPieChartProps) => {

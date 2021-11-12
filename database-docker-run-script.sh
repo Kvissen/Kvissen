@@ -1,0 +1,1 @@
+sudo docker run --name kvispostgresql -p 5432:5432 --mount type=bind,source=/home/root/database,target=/var/lib/postgresql/data -e PGDATA=/var/lib/postgresql/data/pgdata -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=Kvissen22 -d postgres

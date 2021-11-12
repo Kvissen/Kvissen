@@ -7,10 +7,12 @@ export default function AnswerBox(
 
     return (
         <Box>
-            <Card onClick={() => {
+            <Card
+                data-testid="answerbox-test-card"
+                onClick={() => {
                 onAnswerSelected(answer.isCorrect)
             }} sx={{padding: 1}}>
-                <h4>{answer.answer}</h4>
+                <h4 data-testid="answerbox-test-h4">{answer.answer}</h4>
             </Card>
         </Box>
     )

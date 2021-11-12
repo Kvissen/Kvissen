@@ -16,9 +16,13 @@ function LoginRedirect() {
         window.location.href = signInUrl;
     }, [signInUrl]);
 
-    return (<div>
-        <CircularProgress/>
-        <h2>Redirecting to login page...</h2>
+
+    return (<div
+        data-testid="loginredirect-test-container">
+        <CircularProgress
+            data-testid="loginredirect-test-progress"
+        />
+        <h2 data-testid="loginredirect-test-h2">Redirecting to login page...</h2>
     </div>)
 }
 
