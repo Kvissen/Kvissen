@@ -34,7 +34,11 @@ public final class KvisDAO
 		final String query = String.format("SELECT * FROM %s", Table.KVIS.TableName);
 		
 		// Run
-		return KvisFactory.DBToAPI(queryDatabase(query));
+		try { return KvisFactory.DBToAPI(queryDatabase(query)); }
+		catch (Exception e)
+		{
+			System.out.println("KvisDAO.getAll() failed:\n" + e.getMessage()); throw e;
+		}
 	}
 	
 	public static KvisAPIDTO getSingle(final String id) throws SQLException, JsonProcessingException
@@ -43,7 +47,11 @@ public final class KvisDAO
 		final String query = String.format("SELECT * FROM %s WHERE kvis_id = '%s'", Table.KVIS.TableName, id);
 		
 		// Run
-		return KvisFactory.DBToAPI(queryDatabase(query))[0];
+		try { return KvisFactory.DBToAPI(queryDatabase(query))[0]; }
+		catch (Exception e)
+		{
+			System.out.println("KvisDAO.getSingle() failed:\n" + e.getMessage()); throw e;
+		}
 	}
 	
 	/**
@@ -58,26 +66,34 @@ public final class KvisDAO
 		final String query = String.format("SELECT * FROM %s WHERE user_id='%s'", Table.KVIS.TableName, username);
 		
 		// Run
-		return KvisFactory.DBToAPI(queryDatabase(query));
+		try { return KvisFactory.DBToAPI(queryDatabase(query)); }
+		catch (Exception e) {
+			System.out.println("KvisDAO.getKvissesFromUser() failed:\n" + e.getMessage()); throw e;
+		}
 	}
 	
-	public static KvisAPIDTO createKvis(final KvisAPIDTO apidto) throws JsonProcessingException, SQLException
+	public static KvisAPIDTO createKvis(final KvisAPIDTO apidto) throws SQLException, JsonProcessingException
 	{
 		// Convert
 		final KvisDBDTO dbdto = KvisFactory.APIToDB(apidto);
 		
-		// Prepare query
-		final String query = String.format(
-				"INSERT INTO %s (name, created, user_id, kvis) VALUES('%s', '%s','%s', '%s') RETURNING *",
-				Table.KVIS.TableName,
-				dbdto.name,
-				dbdto.ts,
-				dbdto.creator,
-				new ObjectMapper().writeValueAsString(dbdto.payload)
-		);
-		
 		// Run
-		return KvisFactory.DBToAPI(queryDatabase(query))[0];
+		try {
+			// Prepare query
+			final String query = String.format(
+					"INSERT INTO %s (name, created, user_id, kvis) VALUES('%s', '%s','%s', '%s') RETURNING *",
+					Table.KVIS.TableName,
+					dbdto.name,
+					dbdto.ts,
+					dbdto.creator,
+					new ObjectMapper().writeValueAsString(dbdto.payload)
+			);
+			
+			return KvisFactory.DBToAPI(queryDatabase(query))[0];
+		}
+		catch (Exception e) {
+			System.out.println("KvisDAO.createKvis() failed:\n" + e.getMessage()); throw e;
+		}
 	}
 	
 	/**
@@ -89,22 +105,25 @@ public final class KvisDAO
 	 */
 	private static KvisDBDTO[] queryDatabase(final String query) throws SQLException, JsonProcessingException
 	{
-		try (
-				// Get connection
-				Connection connection = ConnectionPool.getInstance().getConnection();
-				
-				// Prepare statement
-				PreparedStatement stmt = connection.prepareStatement(query);
-				
-				// Execute
-				ResultSet res = stmt.executeQuery()
-		)
-		{
-			// Parse
-			return parseDBResponse(res);
-		}
-		catch (SQLException | JsonProcessingException e)
-		{ System.out.println("KvisDAO.getAll() failed:\n" + e.getMessage()); throw e; }
+		// Get connection
+		Connection connection = ConnectionPool.getInstance().getConnection();
+		
+		// Prepare statement
+		PreparedStatement stmt = connection.prepareStatement(query);
+		
+		// Execute
+		ResultSet res = stmt.executeQuery();
+	
+		// Parse
+		final KvisDBDTO[] kvisses = parseDBResponse(res);
+		
+		// Clean up
+		connection.close();
+		stmt.close();
+		res.close();
+		
+		// Return
+		return kvisses;
 	}
 	
 	/**
