@@ -1,12 +1,12 @@
 import {observer} from "mobx-react";
-import {store} from "../../stores/QuizStore";
+import {store} from "../../stores/KvisStore";
 import ScorePieChart from "./ScorePieChart";
 
-function KvisSummary() {
+export function KvisSummary() {
 
     return (
         <div className={"main-container"}>
-            <h1>You have conquered this Kvis!</h1>
+            <h1 data-testid="summary-test-h1">You have conquered this Kvis!</h1>
             <article>{listResultsSummary()}</article>
             <article>{listResultsRaw()}</article>
             <ScorePieChart width={400} height={400}

@@ -23,9 +23,9 @@ function LoginRecipient() {
     }, [afterSignInURI]);
 
     return (
-        <div>
-            <CircularProgress/>
-            <h2>Redirecting...</h2>
+        <div data-testid="loginrecipient-test-container">
+            <CircularProgress data-testid="loginrecipient-test-progress"/>
+            <h2 data-testid="loginrecipient-test-h2">Redirecting...</h2>
         </div>
     )
 }
