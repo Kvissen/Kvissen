@@ -18,7 +18,7 @@ public class EnvVars {
     public static String getBaseUrl() {
         switch (DEPLOYMENT_TYPE.toLowerCase()) {
             case "prod":
-                return "http://kvissen.devops.diplomportal.dk:8080";
+                return "http://www.kvissen.devops.diplomportal.dk:8080";
             case "dev":
                 // Debug server
                 return "https://kvissen-dev.caprover-root.kvissen.devops.diplomportal.dk";
