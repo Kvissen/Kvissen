@@ -11,7 +11,7 @@ export default function AnswerBox(
                 data-testid="answerbox-test-card"
                 onClick={() => {
                 onAnswerSelected(answer.isCorrect)
-            }} sx={{padding: 1}}>
+            }} sx={{padding: 1, cursor: "pointer"}}>
                 <h4 data-testid="answerbox-test-h4">{answer.answer}</h4>
             </Card>
         </Box>
