@@ -29,7 +29,10 @@ public class UserDAO
 		final String query = String.format("SELECT * FROM %s", Table.USER.TableName);
 		
 		// Execute query
-		return queryDatabase(query);
+		try { return queryDatabase(query); }
+		catch (Exception e) {
+			System.out.println("UserDAO.retrieveAllUsers() failed:\n" + e.getMessage()); throw e;
+		}
 	}
 	
 	/**
@@ -49,7 +52,10 @@ public class UserDAO
 				Table.USER.TableName, dbObject.schoolId);
 		
 		// Execute
-		return queryDatabase(query)[0];
+		try { return queryDatabase(query)[0]; }
+		catch (Exception e) {
+			System.out.println("UserDAO.createUser() failed:\n" + e.getMessage()); throw e;
+		}
 	}
 	
 	/**
@@ -61,22 +67,25 @@ public class UserDAO
 	 */
 	private static UserAPI[] queryDatabase(final String query) throws SQLException
 	{
-		try (
-				// Get connection
-				Connection connection = ConnectionPool.getInstance().getConnection();
-				
-				// Prepare statement
-				PreparedStatement stmt = connection.prepareStatement(query);
-				
-				// Execute
-				ResultSet res = stmt.executeQuery()
-		)
-		{
-			// Parse
-			return UserFactory.DBToAPI(parseDBResponse(res));
-		}
-		catch (SQLException e)
-		{ System.out.println("KvisDAO.getAll() failed:\n" + e.getMessage()); throw e; }
+		// Get connection
+		Connection connection = ConnectionPool.getInstance().getConnection();
+		
+		// Prepare statement
+		PreparedStatement stmt = connection.prepareStatement(query);
+		
+		// Execute
+		ResultSet res = stmt.executeQuery();
+		
+		// Parse
+		final UserAPI[] users = UserFactory.DBToAPI(parseDBResponse(res));
+		
+		// Clean up
+		connection.close();
+		stmt.close();
+		res.close();
+		
+		// Return
+		return users;
 	}
 	
 	/**
