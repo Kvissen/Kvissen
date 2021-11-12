@@ -18,10 +18,10 @@ public class EnvVars {
     public static String getBaseUrl() {
         switch (DEPLOYMENT_TYPE.toLowerCase()) {
             case "prod":
-                return "http://www.kvissen.devops.diplomportal.dk:8080";
+                return "http://www.kvissen.devops.diplomportal.dk";
             case "dev":
                 // Debug server
-                return "https://kvissen-dev.caprover-root.kvissen.devops.diplomportal.dk";
+                return "https://www.kvissen-dev.caprover.kvissen.devops.diplomportal.dk";
             default:
                 // On your PC :-)
                 return "http://localhost:8080";
@@ -50,8 +50,8 @@ public class EnvVars {
     public static final long JWT_TTL = 3600000;
 
     // Ticket Validation URL's
-    public static final String TICKET_ENDPOINT = "https://auth.dtu.dk/dtu/";
-    public static final String TICKET_VALIDATION_ENDPOINT = "https://auth.dtu.dk/dtu/validate";
+    public static final String TICKET_ENDPOINT = "https://www.auth.dtu.dk/dtu/";
+    public static final String TICKET_VALIDATION_ENDPOINT = "https://www.auth.dtu.dk/dtu/validate";
     // Where we would like to receive ticket :-)
     public static final String TICKET_RESPONSE_ENDPOINT = "/api/auth/redirect";
 }
