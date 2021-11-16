@@ -2,7 +2,7 @@ import {IKvisDao} from "./IKvisDao";
 import {Kvis} from "../../models/Kvis";
 import {IHttpClient} from "../infrastructure/IHttpClient";
 import HttpClient from "../infrastructure/HttpClient";
-import {defaultCreatorHeaders, defaultPlayerHeaders} from "../headers/urlHeaders";
+import {defaultCreatorHeaders, defaultPlayerHeaders, playerTokenExists} from "../headers/urlHeaders";
 
 class KvisDao implements IKvisDao{
 
@@ -44,10 +44,13 @@ class KvisDao implements IKvisDao{
 
     async getKvisses(): Promise<Kvis[]> {
         const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_GET_ALL_KVIS
+        // Access with any token, prefer smallest scope
+        const headers = playerTokenExists() ? defaultPlayerHeaders : defaultCreatorHeaders
+        console.log("getKvisses: Sending headers " + headers)
         return await this.httpClient.request({
             method: 'GET',
             url: url,
-            headers: defaultPlayerHeaders // Change if players should access all quizzes
+            headers: headers
         }).then(data => {
             return data as Kvis[];
         });

@@ -6,7 +6,6 @@ import {Kvis} from "../models/Kvis";
 import {Result} from "../models/Result";
 import {mockKvis} from "../testutil/Mocks";
 import {KvisRepository} from "../data/repositories/KvisRepository";
-import {useHistory} from "react-router-dom";
 
 class KvisStore {
 
@@ -37,8 +36,6 @@ class KvisStore {
         this.result.answerResults = []
         this.questionIndex = 0
         console.log("startQuiz: added id to the quiz")
-        // Login player and redirect
-
 
         // Get quiz on start
         this.getQuiz()
@@ -60,12 +57,9 @@ class KvisStore {
         this.questionIndex++
     }
 
-    // TODO: get quiz from API
     async getQuiz() {
         await KvisRepository.getInstance().getKvisses().then(result => {
             this.currentKvis = store.currentKvis = result[0];
-            useHistory().push(process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_AUTH_PLAYER + store.kvisCode)
-            //window.location.href = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_AUTH_PLAYER + store.kvisId
         })
     }
 

@@ -1,13 +1,14 @@
 // Erlend
-import React, {useEffect} from 'react';
+import React from 'react';
 import {observer} from 'mobx-react';
 import {CircularProgress} from "@mui/material";
-import {useLocation} from 'react-router-dom'
+import {useHistory, useLocation} from 'react-router-dom'
 import jwt from 'jsonwebtoken'
 import {store} from "../../stores/KvisStore";
 
 // Redirect page for login to the Kvis Server
 function LoginRecipient() {
+    let history = useHistory()
 
     // Require webPack to use environment vars
     require('dotenv').config()
@@ -16,12 +17,22 @@ function LoginRecipient() {
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
 
-    let afterSignInURI = getUriWithToken(searchParams)
+    let scope = getSCopeFromSearchParams(searchParams)
 
-    // Go to dashboard after retrieving token
-    useEffect(() => {
-        window.location.href = afterSignInURI;
-    }, [afterSignInURI]);
+    if (scope === creatorScope) {
+        // Store creator token
+        localStorage.setItem('access_token', searchParams.get('token') ?? "NOT_FOUND");
+        history.push("/landing")
+    } else if (scope === playerScope) {
+        // Store player token
+        store.startQuiz()
+        localStorage.setItem('player_access_token', searchParams.get('token') ?? "NOT_FOUND");
+        history.push("/play-kvis")
+    } else {
+        // Go to error page
+        console.log("Failed to detect scope in token. Found: " + scope)
+        history.push("/error-page")
+    }
 
     return (
         <div data-testid="loginrecipient-test-container">
@@ -34,30 +45,17 @@ function LoginRecipient() {
 const creatorScope = "creator"
 const playerScope = "player"
 
-function getUriWithToken(searchParams: URLSearchParams) {
+function getSCopeFromSearchParams(searchParams: URLSearchParams) {
     let token: String | null = searchParams.get('token')
-    var scope: String = "";
+    let scope: String = "";
 
     // Get scope
-    if (token == null) {
+    if (token === null || token.length < 10) {
         let errormessage = "Internal error: Got a null token"
-        return process.env.REACT_APP_BASE_URL + "/#/error-page?message=" + errormessage
     } else {
         scope = getAccessScope(token)
     }
-
-    if (scope === creatorScope) {
-        // Store creator token
-        localStorage.setItem('access_token', searchParams.get('token') ?? "null");
-        return process.env.REACT_APP_BASE_URL + "/#/landing"
-
-    } else {
-        // Store player token
-        localStorage.setItem('player_access_token', searchParams.get('token') ?? "null");
-        // Load the quiz data and go
-        store.startQuiz();
-        return process.env.REACT_APP_BASE_URL + "/#/play-kvis"
-    }
+    return scope
 }
 
 function getAccessScope(token: String) {
@@ -65,12 +63,15 @@ function getAccessScope(token: String) {
         scope: string;
     };
 
-    console.log("Logged in as " + scope)
+    console.log("LoginRecipient received a token with scope " + scope)
 
     if (scope != null && scope.startsWith(creatorScope)) {
         return creatorScope
+    } else if (scope != null && scope.startsWith(playerScope)) {
+        return playerScope
+    } else {
+        return "0"
     }
-    return playerScope
 }
 
 const LoginRecipientObserver = observer(LoginRecipient)

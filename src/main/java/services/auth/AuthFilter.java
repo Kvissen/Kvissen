@@ -64,6 +64,7 @@ public class AuthFilter implements javax.ws.rs.container.ContainerRequestFilter 
                 System.out.println("Received token? " + token);
                 claims = AuthService.validate(authorization.get(0));
             } catch (Exception e) {
+                System.out.println("Failed to validate token.");
                 e.printStackTrace();
                 requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
                         .entity("You cannot access this resource").build());
@@ -79,36 +80,8 @@ public class AuthFilter implements javax.ws.rs.container.ContainerRequestFilter 
                 } else {
                     requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
                             .entity("You cannot access this resource").build());
-                    return;
                 }
-//                //Is user valid?
-//                if( ! isUserAllowed(username, password, rolesSet))
-//                {
-//                    requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-//                            .entity("You cannot access this resource").build());
-//                    return;
-//                }
             }
         }
     }
-
-    private boolean isUserAllowed(final String username, final String password, final Set<String> rolesSet) {
-        boolean isAllowed = false;
-
-        //Step 1. Fetch password from database and match with password in argument
-        //If both match then get the defined role for user from database and continue; else return isAllowed [false]
-        //Access the database and do this part yourself
-        //String userRole = userMgr.getUserRole(username);
-
-        if (username.equals("howtodoinjava") && password.equals("password")) {
-            String userRole = "ADMIN";
-
-            //Step 2. Verify user role
-            if (rolesSet.contains(userRole)) {
-                isAllowed = true;
-            }
-        }
-        return isAllowed;
-    }
-
 }
