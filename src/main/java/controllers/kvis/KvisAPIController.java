@@ -1,7 +1,6 @@
 package controllers.kvis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import common.AccessScope;
 import common.EnvVars;
 import controllers.kvis.dao.KvisDAO;
 import controllers.kvis.dto.kvisAPI.KvisAPIDTO;
@@ -13,12 +12,15 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.sql.SQLException;
 
+import static common.AccessScope.creatorScope;
+import static common.AccessScope.playerScope;
+
 @Path("kvis")
 public class KvisAPIController
 {
 	@Path("all")
 	@GET
-	@RolesAllowed({AccessScope.creatorScope, AccessScope.playerScope})
+	@RolesAllowed({creatorScope, playerScope})
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getAllKvis() throws SQLException, JsonProcessingException
@@ -28,7 +30,7 @@ public class KvisAPIController
 	
 	@Path("id/{kvis_id}")
 	@GET
-	@RolesAllowed({AccessScope.creatorScope, AccessScope.playerScope})
+	@RolesAllowed({creatorScope, playerScope})
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getSingleKvis(@PathParam("kvis_id") final String id) throws SQLException, JsonProcessingException
@@ -46,7 +48,7 @@ public class KvisAPIController
 	
 	@Path("user/{username}")
 	@GET
-	@RolesAllowed({AccessScope.creatorScope})
+	@RolesAllowed({creatorScope})
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getKvissesFromUser(@PathParam("username") final String username) throws SQLException, JsonProcessingException
@@ -56,7 +58,7 @@ public class KvisAPIController
 
 	@Path("create")
 	@POST
-	@RolesAllowed({AccessScope.creatorScope})
+	@RolesAllowed({creatorScope})
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createKvis(final KvisAPIDTO apidto) throws SQLException, JsonProcessingException
