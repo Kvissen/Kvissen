@@ -4,10 +4,10 @@ import './CreateKvisStyleSheet.css'
 import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
 import {Question} from "../../models/Question";
-import {v4 as uuidv4} from 'uuid';
 import {Answer} from "../../models/Answer";
 import {Kvis} from "../../models/Kvis";
 import {KvisRepository} from "../../data/repositories/KvisRepository";
+import {getCreatorFromToken} from "../../util/Util";
 
 export default function CreateKvisBox() {
 
@@ -17,8 +17,8 @@ export default function CreateKvisBox() {
     async function saveKvis() {
         setIsLoading(true)
         kvis.ts = new Date().getTime()
-        console.log(kvis)
-       // await KvisRepository.getInstance().addKvis(kvis);
+        kvis.creator = getCreatorFromToken(localStorage.getItem("access_token"))
+        await KvisRepository.getInstance().addKvis(kvis);
         setIsLoading(false)
     }
 
@@ -45,32 +45,11 @@ export default function CreateKvisBox() {
         return null;
     }
 
-    function ShowQuestionName() {
-        if (kvis.questions.length > 0) {
-            return (
-                <Box mt={2} mb={2} display="flex"
-                     justifyContent="end"
-                     alignItems="end">
-                    <TextField
-                        margin="normal"
-                        required
-                        data-testid="createkvisbox-test-kvisname"
-                        label="Enter Kvis name"
-                        fullWidth
-                        onChange={(e) => {
-                            kvis.name = e.target.value;
-                        }}
-                    />
-                </Box>
-            )
-        }
-        return null;
-    }
-
     function addQuestion() {
+        let newName = kvis.name
         let newQuestions = kvis.questions
         newQuestions.push(new Question(createInitialAnswerArray()))
-        setKvis({...kvis, questions: newQuestions})
+        setKvis({...kvis, name: newName, questions: newQuestions})
     }
 
     function createInitialAnswerArray() : Answer[] {
@@ -84,7 +63,20 @@ export default function CreateKvisBox() {
 
     return (
         <div >
-            <ShowQuestionName/>
+            <Box mt={2} mb={2} display="flex"
+                 justifyContent="end"
+                 alignItems="end">
+                <TextField
+                    margin="normal"
+                    required
+                    data-testid="createkvisbox-test-kvisname"
+                    label="Enter Kvis name"
+                    fullWidth
+                    onChange={(e) => {
+                        kvis.name = e.target.value;
+                    }}
+                />
+            </Box>
             {isLoading && <CircularProgress />}
             {
                 kvis.questions.map((question, i) => {
