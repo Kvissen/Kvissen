@@ -5,8 +5,13 @@ package common;
  *
  * @author erlendtyrmi
  */
-public enum AccessScope {
-    creator,
-    player,
+public class AccessScope {
+    public static final String creatorScope = "creator";
+    public static final String playerScope = "player";
 }
+
+
+
+
+
 

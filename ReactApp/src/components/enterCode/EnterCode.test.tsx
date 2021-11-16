@@ -1,6 +1,6 @@
 import React from "react";
 import {act} from "react-dom/test-utils";
-import {fireEvent, render, screen} from "@testing-library/react";
+import {render, screen} from "@testing-library/react";
 import EnterCodeObserver from "./EnterCode";
 import store from "../../stores/KvisStore";
 
@@ -19,5 +19,5 @@ it("should contain container and textfield", () => {
     expect(container).toBeTruthy();
     expect(container.children.length).toBe(3)
     expect(textField).toBeTruthy();
-    expect(textField.title).toBe(store.kvisId)
+    expect(textField.title).toBe(store.kvisCode)
 })

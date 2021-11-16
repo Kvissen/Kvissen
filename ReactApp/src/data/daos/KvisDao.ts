@@ -47,7 +47,7 @@ class KvisDao implements IKvisDao{
         return await this.httpClient.request({
             method: 'GET',
             url: url,
-            headers: defaultCreatorHeaders // Change if players should access all quizzes
+            headers: defaultPlayerHeaders // Change if players should access all quizzes
         }).then(data => {
             return data as Kvis[];
         });
@@ -57,7 +57,7 @@ class KvisDao implements IKvisDao{
         const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_GET_KVIS_BY_USERID + "/" + userId
         return await this.httpClient.request({
             method: 'GET',
-            headers: defaultPlayerHeaders, // Headers that allow access to play the game
+            headers: defaultCreatorHeaders, // Headers that allow access to play the game
             url: url
         }).then(data => {
             return data as Kvis[];

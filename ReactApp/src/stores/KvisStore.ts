@@ -6,6 +6,7 @@ import {Kvis} from "../models/Kvis";
 import {Result} from "../models/Result";
 import {mockKvis} from "../testutil/Mocks";
 import {KvisRepository} from "../data/repositories/KvisRepository";
+import {useHistory} from "react-router-dom";
 
 class KvisStore {
 
@@ -13,7 +14,7 @@ class KvisStore {
         makeAutoObservable(this)
         makePersistable(this, {
             name: 'KvisLocalData',
-            properties: ["kvisId", "result", "currentKvis", "questionIndex"],
+            properties: ["kvisCode", "result", "currentKvis", "questionIndex", "completedKvis"],
             expireIn: 1800000, // Half hour
             removeOnExpiration: true,
             storage: window.localStorage
@@ -23,21 +24,31 @@ class KvisStore {
     }
 
     // Data
-    kvisId: string = ""
+    kvisCode: string = ""
     result: Result = new Result()
     currentKvis: Kvis = new Kvis()
+    completedKvis: Kvis[] = []
     questionIndex = 0
 
     startQuiz = () => {
         // Update result object with quiz id on start quiz
-        this.result.kvisId = this.kvisId
+        this.result.kvisId = this.kvisCode
         // Clear old result
         this.result.answerResults = []
         this.questionIndex = 0
         console.log("startQuiz: added id to the quiz")
+        // Login player and redirect
+
+
         // Get quiz on start
         this.getQuiz()
 
+    }
+
+    // Add the Kvis to completed, remove current
+    setKvisCompleted() {
+        this.completedKvis.push(this.currentKvis)
+        this.currentKvis = new Kvis();
     }
 
     addResult = (result: boolean) => {
@@ -53,13 +64,14 @@ class KvisStore {
     async getQuiz() {
         await KvisRepository.getInstance().getKvisses().then(result => {
             this.currentKvis = store.currentKvis = result[0];
-            window.location.href = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_AUTH_PLAYER + store.kvisId
+            useHistory().push(process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_AUTH_PLAYER + store.kvisCode)
+            //window.location.href = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_AUTH_PLAYER + store.kvisId
         })
     }
 
     startMockQuiz() {
         // Update result object with quiz id on start quiz
-        this.result.kvisId = this.kvisId
+        this.result.kvisId = this.kvisCode
         // Clear old result
         this.result.answerResults = []
         this.questionIndex = 0

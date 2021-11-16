@@ -37,7 +37,7 @@ public class AuthService {
     public static URI redirect(String ticket) throws Exception {
         String userId = new TicketValidator().validate(ticket);
         String token = new JwtGenerator().generate(
-                AccessScope.creator,
+                AccessScope.creatorScope,
                 "none",
                 userId,
                 UUID.randomUUID().toString(),
@@ -66,7 +66,7 @@ public class AuthService {
     public static URI playerLogin(String quizCode) {
         String userId = "anonymous";
         String token = new JwtGenerator().generate(
-                AccessScope.player,
+                AccessScope.playerScope,
                 quizCode,
                 userId,
                 UUID.randomUUID().toString(),

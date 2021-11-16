@@ -4,6 +4,7 @@ import {observer} from 'mobx-react';
 import {CircularProgress} from "@mui/material";
 import {useLocation} from 'react-router-dom'
 import jwt from 'jsonwebtoken'
+import {store} from "../../stores/KvisStore";
 
 // Redirect page for login to the Kvis Server
 function LoginRecipient() {
@@ -53,6 +54,8 @@ function getUriWithToken(searchParams: URLSearchParams) {
     } else {
         // Store player token
         localStorage.setItem('player_access_token', searchParams.get('token') ?? "null");
+        // Load the quiz data and go
+        store.startQuiz();
         return process.env.REACT_APP_BASE_URL + "/#/play-kvis"
     }
 }
