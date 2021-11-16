@@ -1,13 +1,57 @@
 import {Box, Button, Card} from "@mui/material";
-import React from "react";
+import React, {useState} from "react";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import EditIcon from '@mui/icons-material/Edit';
 import {Kvis} from "../../models/Kvis";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import TextField from "@mui/material/TextField";
+import DialogActions from "@mui/material/DialogActions";
+import Dialog from "@mui/material/Dialog";
 
 export default function KvisListElement({kvis}: { kvis: Kvis }) {
 
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+
+    function RenderDialog() {
+        return (
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Enter code</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Enter the code you want to assign to {kvis.name}.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="code"
+                        label="Code"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleClose}>Assign</Button>
+                </DialogActions>
+            </Dialog>
+        )
+    }
+
+
     return (
         <Box data-testid="kvislistelement-test-container">
+            <RenderDialog/>
             <Card>
                 <Box display={"flex"} flexDirection={"row"} justifyContent={"space-between"}>
                     <Box p={2} display={"flex"} flexDirection={"column"} justifyContent={"space-between"}>
@@ -27,21 +71,10 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                             data-testid="kvislistelement-test-play"
                             startIcon={<PlayArrowIcon/>}
                             onClick={() => {
-
+                                handleClickOpen();
                             }}
                         >
                             Start Kvis
-                        </Button>
-                        <Button
-                            className="basic-button"
-                            variant="contained"
-                            data-testid="kvislistelement-test-edit"
-                            startIcon={<EditIcon/>}
-                            onClick={() => {
-
-                            }}
-                        >
-                            Edit Kvis
                         </Button>
                     </Box>
 
