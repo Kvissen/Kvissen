@@ -7,7 +7,6 @@ import {Question} from "../../models/Question";
 import {Answer} from "../../models/Answer";
 import {Kvis} from "../../models/Kvis";
 import {KvisRepository} from "../../data/repositories/KvisRepository";
-import {getCreatorFromToken} from "../../util/Util";
 
 export default function CreateKvisBox() {
 
