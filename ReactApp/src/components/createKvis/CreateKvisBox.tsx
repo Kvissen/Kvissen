@@ -11,18 +11,19 @@ import {KvisRepository} from "../../data/repositories/KvisRepository";
 
 export default function CreateKvisBox() {
 
-    const kvis = new Kvis(uuidv4())
+    const [kvis, setKvis] = useState<Kvis>(new Kvis("","","",0, [new Question(createInitialAnswerArray())]))
+    const [isLoading, setIsLoading] = useState(false)
 
     async function saveKvis() {
         setIsLoading(true)
         kvis.ts = new Date().getTime()
-        kvis.questions = questions
-        await KvisRepository.getInstance().addKvis(kvis);
+        console.log(kvis)
+       // await KvisRepository.getInstance().addKvis(kvis);
         setIsLoading(false)
     }
 
     function ShowDoneButton() {
-        if (questions.length > 0) {
+        if (kvis.questions.length > 0) {
             return (
                 <Box mt={2} mb={2} display="flex"
                      justifyContent="end"
@@ -45,7 +46,7 @@ export default function CreateKvisBox() {
     }
 
     function ShowQuestionName() {
-        if (questions.length > 0) {
+        if (kvis.questions.length > 0) {
             return (
                 <Box mt={2} mb={2} display="flex"
                      justifyContent="end"
@@ -56,7 +57,6 @@ export default function CreateKvisBox() {
                         data-testid="createkvisbox-test-kvisname"
                         label="Enter Kvis name"
                         fullWidth
-                        autoFocus
                         onChange={(e) => {
                             kvis.name = e.target.value;
                         }}
@@ -68,9 +68,9 @@ export default function CreateKvisBox() {
     }
 
     function addQuestion() {
-        setQuestions(prevState => {
-            return [...prevState, new Question(createInitialAnswerArray())]
-        })
+        let newQuestions = kvis.questions
+        newQuestions.push(new Question(createInitialAnswerArray()))
+        setKvis({...kvis, questions: newQuestions})
     }
 
     function createInitialAnswerArray() : Answer[] {
@@ -82,18 +82,14 @@ export default function CreateKvisBox() {
         ]
     }
 
-    const [questions, setQuestions] = useState<Question[]>([new Question(createInitialAnswerArray())]);
-    const [isLoading, setIsLoading] = useState(false)
-
-
     return (
         <div >
             <ShowQuestionName/>
             {isLoading && <CircularProgress />}
             {
-                questions.map((question, i) => {
+                kvis.questions.map((question, i) => {
                     return (
-                        <Box key={uuidv4()} mb={2} mt={2} data-testid="createkvisbox-test-container">
+                        <Box key={i} mb={2} mt={2} data-testid="createkvisbox-test-container">
                             <Card className="create-kvis-box">
                                 <h2 className="create-kvis-question-header">Question {i + 1}</h2>
                                 <TextField
