@@ -47,12 +47,10 @@ const playerScope = "player"
 
 function getSCopeFromSearchParams(searchParams: URLSearchParams) {
     let token: String | null = searchParams.get('token')
-    let scope: String = "";
+    let scope: String = "No scope";
 
     // Get scope
-    if (token === null || token.length < 10) {
-        let errormessage = "Internal error: Got a null token"
-    } else {
+    if (token !== null && token.length > 16) {
         scope = getAccessScope(token)
     }
     return scope
