@@ -45,7 +45,8 @@ class UserDao implements IUserDao{
         const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_GET_USERS
         return await this.httpClient.request({
             method: 'GET',
-            url: url
+            url: url,
+            headers: defaultJwtHeaders
         }).then(data => {
             return data as User[];
         });
