@@ -17,7 +17,8 @@ export default function CreateKvisBox() {
     async function saveKvis() {
         setIsLoading(true)
         kvis.ts = new Date().getTime()
-        kvis.creator = getCreatorFromToken(localStorage.getItem("access_token"))
+        //TODO: Set creator
+        kvis.creator = ""
         await KvisRepository.getInstance().addKvis(kvis);
         setIsLoading(false)
     }
