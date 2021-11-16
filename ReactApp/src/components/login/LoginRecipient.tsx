@@ -25,8 +25,8 @@ function LoginRecipient() {
         history.push("/landing")
     } else if (scope === playerScope) {
         // Store player token
+        localStorage.setItem('access_token', searchParams.get('token') ?? "NOT_FOUND");
         store.startQuiz()
-        localStorage.setItem('player_access_token', searchParams.get('token') ?? "NOT_FOUND");
         history.push("/play-kvis")
     } else {
         // Go to error page

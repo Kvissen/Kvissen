@@ -41,7 +41,7 @@ public class AuthService {
                 "none",
                 userId,
                 UUID.randomUUID().toString(),
-                JWT_DEFAULT_ISSUER, JWT_TTL);
+                JWT_DEFAULT_ISSUER, 2 * JWT_TTL);
         // Send back to frontend with token as search param
         return URI.create(CLIENT_JWT_PARSER_URL + "?token=" + token);
     }

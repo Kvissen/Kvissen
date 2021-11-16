@@ -1,7 +1,7 @@
 package common;
 
 /**
- * Defines type of access to the app in jwt package
+ * Defines type of access to the app as "scope" in jwt
  *
  * @author erlendtyrmi
  */

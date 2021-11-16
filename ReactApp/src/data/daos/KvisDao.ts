@@ -2,7 +2,7 @@ import {IKvisDao} from "./IKvisDao";
 import {Kvis} from "../../models/Kvis";
 import {IHttpClient} from "../infrastructure/IHttpClient";
 import HttpClient from "../infrastructure/HttpClient";
-import {defaultCreatorHeaders, defaultPlayerHeaders, playerTokenExists} from "../headers/urlHeaders";
+import {defaultJwtHeaders} from "../headers/urlHeaders";
 
 class KvisDao implements IKvisDao{
 
@@ -32,7 +32,7 @@ class KvisDao implements IKvisDao{
         return await this.httpClient.request({
             method: 'POST',
             url: url,
-            headers: defaultCreatorHeaders,
+            headers: defaultJwtHeaders,
             body: kvis
         })
     }
@@ -44,13 +44,10 @@ class KvisDao implements IKvisDao{
 
     async getKvisses(): Promise<Kvis[]> {
         const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_GET_ALL_KVIS
-        // Access with any token, prefer smallest scope
-        const headers = playerTokenExists() ? defaultPlayerHeaders : defaultCreatorHeaders
-        console.log("getKvisses: Sending headers " + headers)
         return await this.httpClient.request({
             method: 'GET',
             url: url,
-            headers: headers
+            headers: defaultJwtHeaders
         }).then(data => {
             return data as Kvis[];
         });
@@ -60,7 +57,7 @@ class KvisDao implements IKvisDao{
         const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_GET_KVIS_BY_USERID + "/" + userId
         return await this.httpClient.request({
             method: 'GET',
-            headers: defaultCreatorHeaders, // Headers that allow access to play the game
+            headers: defaultJwtHeaders, // Headers that allow access to play the game
             url: url
         }).then(data => {
             return data as Kvis[];
