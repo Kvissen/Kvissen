@@ -12,7 +12,7 @@ WORKDIR /
 ADD . .
 
 # Build and package with two threads
-RUN mvn -T 2 package
+RUN mvn package
 
 EXPOSE 8080
 
