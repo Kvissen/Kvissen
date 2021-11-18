@@ -28,15 +28,19 @@ function LoginRecipient() {
         // Store player token
         storeToken(searchParams).then(() => {
 
-            // Make sure the headers are updated
+            // Try up to a hundred times to read the updated headers
             let i = 1
             while (defaultJwtHeaders().get("Authorization") === null
             || defaultJwtHeaders().get("Authorization") === "null"
             && i < 101) {
                 i++
             }
-
-            history.push("/play-kvis")
+            if (defaultJwtHeaders().get("Authorization") === null
+                || defaultJwtHeaders().get("Authorization") === "null") {
+                history.replace("/error-page")
+            } else {
+                history.replace("/play-kvis")
+            }
         })
     } else {
         // Go to error page
