@@ -1,11 +1,11 @@
-import io.prometheus.client.exporter.MetricsServlet;
-import org.apache.catalina.Context;
-import org.apache.catalina.LifecycleException;
-import org.apache.catalina.Server;
-import org.apache.catalina.startup.Tomcat;
 import controllers.ConnectionPool;
+import io.prometheus.client.exporter.HTTPServer;
+import io.prometheus.client.hotspot.DefaultExports;
+import org.apache.catalina.LifecycleException;
+import org.apache.catalina.startup.Tomcat;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -15,8 +15,17 @@ import java.util.Optional;
  **/
 public class Main
 {
-	public static void main(String[] args) throws LifecycleException
+	public static void main(String[] args) throws LifecycleException, IOException
 	{
+		//
+		// Prometheus setup
+		//
+		DefaultExports.initialize();
+		HTTPServer prometheusServer = new HTTPServer(7373);
+		
+		//
+		// Tomcat setup
+		//
 		Tomcat tomcat = new Tomcat();
 		tomcat.setBaseDir("temp");
 		
@@ -27,17 +36,11 @@ public class Main
 		tomcat.getConnector(); //Creates a default HTTP connector
 		
 		tomcat.addWebapp("", new File("src/main/webapp").getAbsolutePath());
-		tomcat.addServlet("/metrics", "prometheus", new MetricsServlet());
 		
 		tomcat.start();
 		tomcat.getServer().await();
 		
 		// Upon exist, close the connection pool
 		ConnectionPool.close();
-	}
-	
-	public static void addPrometheus(final Tomcat tomcat)
-	{
-		tomcat.addServlet("/metrics", "prometheus", new MetricsServlet());
 	}
 }
