@@ -4,7 +4,7 @@ import {observer} from 'mobx-react';
 import {CircularProgress} from "@mui/material";
 import {useHistory, useLocation} from 'react-router-dom'
 import jwt from 'jsonwebtoken'
-import {store} from "../../stores/KvisStore";
+import {defaultJwtHeaders} from "../../data/headers/urlHeaders";
 
 // Redirect page for login to the Kvis Server
 function LoginRecipient() {
@@ -21,13 +21,23 @@ function LoginRecipient() {
 
     if (scope === creatorScope) {
         // Store creator token
-        localStorage.setItem('access_token', searchParams.get('token') ?? "NOT_FOUND");
-        history.push("/landing")
+        storeToken(searchParams).then(() => {
+            history.push("/landing")
+        })
     } else if (scope === playerScope) {
         // Store player token
-        localStorage.setItem('access_token', searchParams.get('token') ?? "NOT_FOUND");
-        store.startQuiz()
-        history.push("/play-kvis")
+        storeToken(searchParams).then(() => {
+
+            // Make sure the headers are updated
+            let i = 1
+            while (defaultJwtHeaders().get("Authorization") === null
+            || defaultJwtHeaders().get("Authorization") === "null"
+            && i < 101) {
+                i++
+            }
+
+            history.push("/play-kvis")
+        })
     } else {
         // Go to error page
         console.log("Failed to detect scope in token. Found: " + scope)
@@ -40,6 +50,10 @@ function LoginRecipient() {
             <h2 data-testid="loginrecipient-test-h2">Redirecting...</h2>
         </div>
     )
+}
+
+async function storeToken(searchParams: URLSearchParams) {
+    await localStorage.setItem('access_token', searchParams.get('token') ?? "NO_TOKEN");
 }
 
 const creatorScope = "creator"

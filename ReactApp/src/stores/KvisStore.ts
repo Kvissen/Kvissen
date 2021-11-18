@@ -13,7 +13,8 @@ class KvisStore {
         makeAutoObservable(this)
         makePersistable(this, {
             name: 'KvisLocalData',
-            properties: ["kvisCode", "result", "currentKvis", "questionIndex", "completedKvis"],
+            properties: ["kvisCode", "result", "currentKvis",
+                "questionIndex", "completedKvis", "completedResult"],
             expireIn: 1800000, // Half hour
             removeOnExpiration: true,
             storage: window.localStorage
@@ -25,27 +26,29 @@ class KvisStore {
     // Data
     kvisCode: string = ""
     result: Result = new Result()
+    completedResult: Result = new Result()
     currentKvis: Kvis = new Kvis()
     completedKvis: Kvis[] = []
     questionIndex = 0
 
     startQuiz = () => {
-        // Update result object with quiz id on start quiz
-        this.result.kvisId = this.kvisCode
-        // Clear old result
-        this.result.answerResults = []
-        this.questionIndex = 0
-        console.log("startQuiz: added id to the quiz")
+        this.result.answerResults.length = 0
+        // Debug print
+        console.log("StartQuiz was called. \nCurrentKvis: " +
+            this.currentKvis.name + "\nResults length: " +
+            this.result.answerResults.length + "\nIndex: " +
+            this.questionIndex)
 
-        // Get quiz on start
-        this.getQuiz()
-
+        // Update result object with quiz code on start quiz
+        this.result.kvisId = this.currentKvis.uuid // id is not kvisCode!
     }
 
     // Add the Kvis to completed, remove current
     setKvisCompleted() {
         this.completedKvis.push(this.currentKvis)
-        this.currentKvis = new Kvis();
+        // Refresh
+        this.currentKvis = new Kvis("0")
+        this.questionIndex = 0
     }
 
     addResult = (result: boolean) => {
@@ -55,16 +58,24 @@ class KvisStore {
 
     incrementCurrentQuestion() {
         this.questionIndex++
+        console.log(store.currentKvis)
     }
 
     async getQuiz() {
         await KvisRepository.getInstance().getKvisses().then(result => {
-            this.currentKvis = store.currentKvis = result[0];
+            if (result === null || result[0] === null) {
+                console.log("Got no result from server. Check validation and network.")
+            }
+            this.currentKvis = result[0];
+            console.log("getQuiz was called. \nCurrentKvis: " +
+                this.currentKvis.name + "\nResults length: " +
+                this.result.answerResults.length + "\nIndex: " +
+                this.questionIndex)
         })
     }
 
     startMockQuiz() {
-        // Update result object with quiz id on start quiz
+        // Update result object with quiz code on start quiz
         this.result.kvisId = this.kvisCode
         // Clear old result
         this.result.answerResults = []
