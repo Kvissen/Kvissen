@@ -45,7 +45,7 @@ function LoginRecipient() {
     } else {
         // Go to error page
         console.log("Failed to detect scope in token. Found: " + scope)
-        history.push("/error-page")
+        if (history != undefined) history.push("/error-page")
     }
 
     return (
