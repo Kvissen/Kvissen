@@ -1,6 +1,4 @@
 import controllers.ConnectionPool;
-import io.prometheus.client.exporter.HTTPServer;
-import io.prometheus.client.hotspot.DefaultExports;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
 
@@ -17,12 +15,6 @@ public class Main
 {
 	public static void main(String[] args) throws LifecycleException, IOException
 	{
-		//
-		// Prometheus setup
-		//
-		DefaultExports.initialize();
-		HTTPServer prometheusServer = new HTTPServer(7373);
-		
 		//
 		// Tomcat setup
 		//

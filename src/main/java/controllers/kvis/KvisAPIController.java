@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import common.EnvVars;
 import controllers.kvis.dao.KvisDAO;
 import controllers.kvis.dto.kvisAPI.KvisAPIDTO;
-import io.prometheus.client.Counter;
+import controllers.prometheus.Metrics;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -15,24 +15,12 @@ import java.sql.SQLException;
 @Path("kvis")
 public class KvisAPIController
 {
-	private final static Counter allCounter = Counter
-			.build()
-			.name("kvis/all")
-			.help("Total requests to the /kvis/all endpoint")
-			.register();
-	
-	private final static Counter idCounter = Counter
-			.build()
-			.name("kvis/id/{id}")
-			.help("Total requests to the /kvis/id/{id} endpoint")
-			.register();
-	
 	@Path("all")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllKvis() throws SQLException, JsonProcessingException
 	{
-		allCounter.inc();
+		Metrics.kvisAllRequestCount.inc();
 		return Response.ok(KvisDAO.getAll()).build();
 	}
 	
@@ -41,7 +29,7 @@ public class KvisAPIController
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getSingleKvis(@PathParam("kvis_id") final String id) throws SQLException, JsonProcessingException
 	{
-		idCounter.inc();
+		Metrics.kvisIdReqeustCount.inc();
 		
 		// If getSingle() throws array out of bounds exception, then there wasn't anything on that id
 		try
