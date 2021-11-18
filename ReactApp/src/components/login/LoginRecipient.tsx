@@ -30,8 +30,8 @@ function LoginRecipient() {
 
             // Try up to a hundred times to read the updated headers
             let i = 1
-            while (defaultJwtHeaders().get("Authorization") === null
-            || defaultJwtHeaders().get("Authorization") === "null"
+            while ((defaultJwtHeaders().get("Authorization") === null
+                || defaultJwtHeaders().get("Authorization") === "null")
             && i < 101) {
                 i++
             }
