@@ -14,6 +14,7 @@ ADD . .
 # Build and package with two threads
 RUN mvn package
 
+EXPOSE 7373
 EXPOSE 8080
 
 CMD java -jar target/Kvissen.jar
