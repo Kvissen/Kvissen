@@ -11,7 +11,7 @@ WORKDIR /
 # Add Sources to container
 ADD . .
 
-# Build and package with two threads
+# Build and package
 RUN mvn package
 
 EXPOSE 8080
