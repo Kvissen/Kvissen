@@ -31,6 +31,24 @@ public class Metrics
 			.help("Total requests to the /kvis/id/{id} endpoint")
 			.register();
 	
+	public final static Counter kvisUsernameRequestCount = Counter
+			.build()
+			.name("kvis_username")
+			.help("Total request to the /kvis/user/{username}")
+			.register();
+	
+	public final static Counter kvisCreateAttempts = Counter
+			.build()
+			.name("kvis_create_attempts")
+			.help("Total Kvis Creation attempts")
+			.register();
+	
+	public final static Counter kvisCreateFailed = Counter
+			.build()
+			.name("kvis_create_failed")
+			.help("Total Kvis Creation failed attempts")
+			.register();
+	
 	// Defaults
 	public final static StandardExports standardExports= new StandardExports().register();
 	public final static MemoryPoolsExports memoryPoolsExports =  new MemoryPoolsExports().register();

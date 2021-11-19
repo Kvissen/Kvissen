@@ -47,6 +47,7 @@ public class KvisAPIController
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getKvissesFromUser(@PathParam("username") final String username) throws SQLException, JsonProcessingException
 	{
+		Metrics.kvisUsernameRequestCount.inc();
 		return Response.ok(KvisDAO.getKvissesFromUser(username)).build();
 	}
 	
@@ -56,9 +57,21 @@ public class KvisAPIController
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createKvis(final KvisAPIDTO apidto) throws SQLException, JsonProcessingException
 	{
-		final KvisAPIDTO dto = KvisDAO.createKvis(apidto);
-		return Response
-				.created(URI.create(EnvVars.BASE_URL + "/api/kvis/" + dto.uuid))
-				.build();
+		Metrics.kvisCreateAttempts.inc();
+		try
+		{
+			final KvisAPIDTO dto = KvisDAO.createKvis(apidto);
+			
+			return Response
+					.created(URI.create(EnvVars.BASE_URL + "/api/kvis/" + dto.uuid))
+					.build();
+		}
+		catch (Exception e)
+		{
+			Metrics.kvisCreateFailed.inc();
+			throw e;
+		}
+		
+		
 	}
 }
