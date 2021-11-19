@@ -6,14 +6,17 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import jwt from "jsonwebtoken";
 
 export default function DropDownMenu() {
+    const history = useHistory()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
     function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
         setAnchorEl(event.currentTarget);
     }
+
     function handleClose() {
         setAnchorEl(null);
     }
@@ -44,12 +47,48 @@ export default function DropDownMenu() {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem onClick={handleClose}>Do this</MenuItem>
-                <MenuItem onClick={handleClose}>Do that</MenuItem>
-                <MenuItem onClick={handleClose} data-testid="dropdown-test-menu-login"><LoginComponent/></MenuItem>
+                {isLoggedInAs("creator") ?
+                    <MenuItem onClick={handleClose}>
+                        <Button
+                            variant="outlined"
+                            onClick={
+                                () => {
+                                    history.push("/landing")
+                                }
+                            }
+                            endIcon={<LoginIcon/>}>Log out</Button>
+                    </MenuItem> : null
+                }
+                {isLoggedInAs("creator") ?
+                    <MenuItem onClick={handleClose}>
+                        <LogoutComponent/></MenuItem> : null
+                }
+                {!isLoggedInAs("creator") ?
+                    <MenuItem onClick={handleClose} data-testid="dropdown-test-menu-login">
+                        <LoginComponent/></MenuItem> : null
+                }
             </Menu>
         </div>
     );
+}
+
+function isLoggedInAs(role: string) {
+
+    // Check null
+    const token = localStorage.getItem("access_token")
+    if (token === null || token === undefined || token === "null") return false
+
+    // Check faulty or expired
+    const decodedToken = jwt.decode(token, {complete: true})
+    if (decodedToken === undefined || decodedToken === null) return false
+
+    // if (decodedToken.payload.exp!! < new Date().getTime()) return false
+
+    // Check wrong scope
+    const {scope} = jwt.decode(token) as { scope: string; };
+    if (scope !== role) return false
+
+    return true
 }
 
 export function LoginComponent() {
@@ -59,9 +98,24 @@ export function LoginComponent() {
         <Button
             data-testid="dropdown-test-login"
             variant="outlined"
-                onClick={
-                    () => history.push("/login-redirect")
+            onClick={
+                () => history.push("/login-redirect")
+            }
+            endIcon={<LoginIcon/>}>Log in </Button>
+    )
+}
+
+export function LogoutComponent() {
+    const history = useHistory();
+    return (
+        <Button
+            variant="outlined"
+            onClick={
+                () => {
+                    history.replace("/")
+                    localStorage.removeItem("access_token")
                 }
-                endIcon={<LoginIcon/>}>Log in </Button>
+            }
+            endIcon={<LoginIcon/>}>Log out</Button>
     )
 }

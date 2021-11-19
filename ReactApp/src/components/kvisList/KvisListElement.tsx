@@ -3,8 +3,12 @@ import React from "react";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import EditIcon from '@mui/icons-material/Edit';
 import {Kvis} from "../../models/Kvis";
+import store from "../../stores/KvisStore";
+import {useHistory} from "react-router-dom";
 
 export default function KvisListElement({kvis}: { kvis: Kvis }) {
+
+    const history = useHistory()
 
     return (
         <Box data-testid="kvislistelement-test-container">
@@ -27,7 +31,9 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                             data-testid="kvislistelement-test-play"
                             startIcon={<PlayArrowIcon/>}
                             onClick={() => {
-
+                                //store.kvisCode = kvis.kvisCode
+                                window.location.href = process.env.REACT_APP_BASE_URL! +
+                                    process.env.REACT_APP_API_AUTH_PLAYER + store.kvisCode
                             }}
                         >
                             Start Kvis
