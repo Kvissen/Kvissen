@@ -56,7 +56,7 @@ export default function DropDownMenu() {
                                     history.push("/landing")
                                 }
                             }
-                            endIcon={<LoginIcon/>}>Log out</Button>
+                        >View & Edit</Button>
                     </MenuItem> : null
                 }
                 {isLoggedInAs("creator") ?
