@@ -17,7 +17,7 @@ function LoginRecipient() {
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
 
-    let scope = getSCopeFromSearchParams(searchParams)
+    let scope = getScopeFromSearchParams(searchParams)
 
     if (scope === creatorScope) {
         // Store creator token
@@ -63,7 +63,7 @@ async function storeToken(searchParams: URLSearchParams) {
 const creatorScope = "creator"
 const playerScope = "player"
 
-function getSCopeFromSearchParams(searchParams: URLSearchParams) {
+function getScopeFromSearchParams(searchParams: URLSearchParams) {
     let token: String | null = searchParams.get('token')
     let scope: String = "No scope";
 
