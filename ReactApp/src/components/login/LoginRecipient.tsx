@@ -17,7 +17,7 @@ function LoginRecipient() {
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
 
-    let scope = getSCopeFromSearchParams(searchParams)
+    let scope = getScopeFromSearchParams(searchParams)
 
     if (scope === creatorScope) {
         // Store creator token
@@ -28,13 +28,15 @@ function LoginRecipient() {
         // Store player token
         storeToken(searchParams).then(() => {
 
-            // Try up to a hundred times to read the updated headers
+            // Try up to a hundred times to read the updated headers,
+            // to avoid concurrency issues with writing to LocalStorage
             let i = 1
             while ((defaultJwtHeaders().get("Authorization") === null
                 || defaultJwtHeaders().get("Authorization") === "null")
             && i < 101) {
                 i++
             }
+            // Redirect based on result
             if (defaultJwtHeaders().get("Authorization") === null
                 || defaultJwtHeaders().get("Authorization") === "null") {
                 history.replace("/error-page")
@@ -63,7 +65,7 @@ async function storeToken(searchParams: URLSearchParams) {
 const creatorScope = "creator"
 const playerScope = "player"
 
-function getSCopeFromSearchParams(searchParams: URLSearchParams) {
+function getScopeFromSearchParams(searchParams: URLSearchParams) {
     let token: String | null = searchParams.get('token')
     let scope: String = "No scope";
 

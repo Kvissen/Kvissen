@@ -20,13 +20,12 @@ class UserDao implements IUserDao{
         return this._instance;
     }
 
-
     async createUser(user: User): Promise<boolean> {
         const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_CREATE_USER
         return await this.httpClient.request({
             method: 'POST',
             url: url,
-            headers: defaultJwtHeaders,
+            headers: defaultJwtHeaders(),
             body: user
         })
     }
@@ -46,7 +45,7 @@ class UserDao implements IUserDao{
         return await this.httpClient.request({
             method: 'GET',
             url: url,
-            headers: defaultJwtHeaders
+            headers: defaultJwtHeaders()
         }).then(data => {
             return data as User[];
         });
