@@ -4,11 +4,8 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import EditIcon from '@mui/icons-material/Edit';
 import {Kvis} from "../../models/Kvis";
 import store from "../../stores/KvisStore";
-import {useHistory} from "react-router-dom";
 
 export default function KvisListElement({kvis}: { kvis: Kvis }) {
-
-    const history = useHistory()
 
     return (
         <Box data-testid="kvislistelement-test-container">
