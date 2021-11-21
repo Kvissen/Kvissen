@@ -59,7 +59,7 @@ function LoginRecipient() {
 }
 
 async function storeToken(searchParams: URLSearchParams) {
-    await localStorage.setItem('access_token', searchParams.get('token') ?? "NO_TOKEN");
+    await localStorage.setItem('access_token', searchParams.get('token') ?? "null");
 }
 
 const creatorScope = "creator"
