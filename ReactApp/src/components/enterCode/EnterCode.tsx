@@ -20,14 +20,14 @@ function EnterCode() {
                     name="code"
                     data-testid="entercode-test-textfield"
                     autoFocus
-                    value={store.kvisId}
-                    onChange={(evt) => store.kvisId = evt.target.value}
+                    value={store.kvisCode}
+                    onChange={(evt) => store.kvisCode = evt.target.value}
                 />
 
                 <Button
                     data-testid="entercode-test-button"
-                    disabled={(store.kvisId === "")} onClick={() => {
-                    store.startQuiz();
+                    disabled={(store.kvisCode === "")} onClick={() => {
+                    window.location.href = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_AUTH_PLAYER + store.kvisCode
                 }}>
                     Start Kvis!
                 </Button>

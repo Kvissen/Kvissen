@@ -60,20 +60,7 @@ export function LoginComponent() {
             data-testid="dropdown-test-login"
             variant="outlined"
                 onClick={
-
-                    //  Normal flow: request with Kvis token succeeds
-
-                    //  if Kvis token expired or failed receives DTU login url from server:
-
-                    //  Redirect to DTU
                     () => history.push("/login-redirect")
-
-                    //  Get DTU ticket?
-
-                    //  Send DTU ticket to server
-
-                    //  Receive Kvis token and store it
-
                 }
                 endIcon={<LoginIcon/>}>Log in </Button>
     )

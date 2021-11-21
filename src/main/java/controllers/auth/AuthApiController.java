@@ -2,6 +2,7 @@ package controllers.auth;
 
 import services.auth.AuthService;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -16,6 +17,7 @@ public class AuthApiController {
 
     @Path("login")
     @GET
+    @PermitAll // Anyone can try to log in :-)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getLogin() {
         try {
@@ -27,6 +29,7 @@ public class AuthApiController {
 
     @Path("redirect")
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response redirect(@QueryParam("ticket") String ticket) {
         try {
@@ -38,6 +41,7 @@ public class AuthApiController {
 
     @Path("player-login/{quizCode}")
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response playerLogin(@PathParam("quizCode") final String quizCode) {
         try {

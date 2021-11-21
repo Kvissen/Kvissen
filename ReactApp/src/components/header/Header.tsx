@@ -39,7 +39,8 @@ function Header() {
 }
 
 function showKvisIdOrMessage() {
-    return (store.kvisId !== "") ? <p>Kvis: {store.kvisId}</p> : <p>Enter code to start Kvis!</p>
+    return (store.kvisCode !== "" && store.currentKvis.uuid !== "0") ? <div>Kvis: {store.kvisCode}</div> :
+        <div>Enter code to start Kvis!</div>
 }
 
 const HeaderObserver = observer(Header)

@@ -1,12 +1,17 @@
 package common;
 
 /**
- * Defines type of access to the app in jwt package
+ * Defines type of access to the app as "scope" in jwt
  *
  * @author erlendtyrmi
  */
-public enum AccessScope {
-    creator,
-    player,
+public class AccessScope {
+    public static final String creatorScope = "creator";
+    public static final String playerScope = "player";
 }
+
+
+
+
+
 
