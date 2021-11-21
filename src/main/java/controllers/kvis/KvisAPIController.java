@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import common.EnvVars;
 import controllers.kvis.dao.KvisDAO;
 import controllers.kvis.dto.kvisAPI.KvisAPIDTO;
+import controllers.prometheus.Metrics;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
@@ -25,6 +26,7 @@ public class KvisAPIController
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getAllKvis() throws SQLException, JsonProcessingException
 	{
+		Metrics.kvisAllRequestCount.inc();
 		return Response.ok(KvisDAO.getAll()).build();
 	}
 	
@@ -35,6 +37,8 @@ public class KvisAPIController
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getSingleKvis(@PathParam("kvis_id") final String id) throws SQLException, JsonProcessingException
 	{
+		Metrics.kvisIdReqeustCount.inc();
+		
 		// If getSingle() throws array out of bounds exception, then there wasn't anything on that id
 		try
 		{
@@ -53,6 +57,7 @@ public class KvisAPIController
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getKvissesFromUser(@PathParam("username") final String username) throws SQLException, JsonProcessingException
 	{
+		Metrics.kvisUsernameRequestCount.inc();
 		return Response.ok(KvisDAO.getKvissesFromUser(username)).build();
 	}
 
@@ -63,9 +68,21 @@ public class KvisAPIController
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createKvis(final KvisAPIDTO apidto) throws SQLException, JsonProcessingException
 	{
-		final KvisAPIDTO dto = KvisDAO.createKvis(apidto);
-		return Response
-				.created(URI.create(EnvVars.BASE_URL + "/api/kvis/" + dto.uuid))
-				.build();
+		Metrics.kvisCreateAttempts.inc();
+		try
+		{
+			final KvisAPIDTO dto = KvisDAO.createKvis(apidto);
+			
+			return Response
+					.created(URI.create(EnvVars.BASE_URL + "/api/kvis/" + dto.uuid))
+					.build();
+		}
+		catch (Exception e)
+		{
+			Metrics.kvisCreateFailed.inc();
+			throw e;
+		}
+		
+		
 	}
 }

@@ -12,7 +12,7 @@ WORKDIR /
 ADD . .
 
 # Build and package
-RUN mvn package -e
+RUN mvn package
 
 EXPOSE 8080
 
