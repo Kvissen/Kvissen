@@ -28,13 +28,15 @@ function LoginRecipient() {
         // Store player token
         storeToken(searchParams).then(() => {
 
-            // Try up to a hundred times to read the updated headers
+            // Try up to a hundred times to read the updated headers,
+            // to avoid concurrency issues with writing to LocalStorage
             let i = 1
             while ((defaultJwtHeaders().get("Authorization") === null
                 || defaultJwtHeaders().get("Authorization") === "null")
             && i < 101) {
                 i++
             }
+            // Redirect based on result
             if (defaultJwtHeaders().get("Authorization") === null
                 || defaultJwtHeaders().get("Authorization") === "null") {
                 history.replace("/error-page")
