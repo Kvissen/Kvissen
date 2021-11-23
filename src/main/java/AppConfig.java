@@ -1,9 +1,9 @@
+import org.glassfish.jersey.server.ResourceConfig;
+
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
 
 //Defines api root
 @ApplicationPath("/api")
-public class AppConfig extends Application
-{
+public class AppConfig extends ResourceConfig {
 
 }

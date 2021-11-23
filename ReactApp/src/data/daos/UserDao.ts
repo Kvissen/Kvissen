@@ -1,7 +1,7 @@
 import {IUserDao} from "./IUserDao";
 import {User} from "../../models/User";
 import HttpClient from "../infrastructure/HttpClient";
-import {defaultCreatorHeaders} from "../headers/urlHeaders";
+import {defaultJwtHeaders} from "../headers/urlHeaders";
 
 class UserDao implements IUserDao{
 
@@ -20,13 +20,12 @@ class UserDao implements IUserDao{
         return this._instance;
     }
 
-
     async createUser(user: User): Promise<boolean> {
         const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_CREATE_USER
         return await this.httpClient.request({
             method: 'POST',
             url: url,
-            headers: defaultCreatorHeaders,
+            headers: defaultJwtHeaders(),
             body: user
         })
     }
@@ -45,7 +44,8 @@ class UserDao implements IUserDao{
         const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_GET_USERS
         return await this.httpClient.request({
             method: 'GET',
-            url: url
+            url: url,
+            headers: defaultJwtHeaders()
         }).then(data => {
             return data as User[];
         });

@@ -28,9 +28,3 @@ function LoginRedirect() {
 
 const LoginRedirectObserver = observer(LoginRedirect)
 export default LoginRedirectObserver;
-
-
-
-
-
-

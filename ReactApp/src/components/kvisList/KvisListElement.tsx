@@ -8,6 +8,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
+import store from "../../stores/KvisStore";
 
 export default function KvisListElement({kvis}: { kvis: Kvis }) {
 
@@ -71,6 +72,9 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                             data-testid="kvislistelement-test-play"
                             startIcon={<PlayArrowIcon/>}
                             onClick={() => {
+                                //store.kvisCode = kvis.kvisCode
+                                window.location.href = process.env.REACT_APP_BASE_URL! +
+                                    process.env.REACT_APP_API_AUTH_PLAYER + store.kvisCode
                                 handleClickOpen();
                             }}
                         >

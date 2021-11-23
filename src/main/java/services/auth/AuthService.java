@@ -37,11 +37,11 @@ public class AuthService {
     public static URI redirect(String ticket) throws Exception {
         String userId = new TicketValidator().validate(ticket);
         String token = new JwtGenerator().generate(
-                AccessScope.creator,
+                AccessScope.creatorScope,
                 "none",
                 userId,
                 UUID.randomUUID().toString(),
-                JWT_DEFAULT_ISSUER, JWT_TTL);
+                JWT_DEFAULT_ISSUER, 2 * JWT_TTL);
         // Send back to frontend with token as search param
         return URI.create(CLIENT_JWT_PARSER_URL + "?token=" + token);
     }
@@ -66,7 +66,7 @@ public class AuthService {
     public static URI playerLogin(String quizCode) {
         String userId = "anonymous";
         String token = new JwtGenerator().generate(
-                AccessScope.player,
+                AccessScope.playerScope,
                 quizCode,
                 userId,
                 UUID.randomUUID().toString(),
