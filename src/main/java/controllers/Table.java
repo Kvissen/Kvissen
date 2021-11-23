@@ -9,6 +9,7 @@ package controllers;
 public enum Table
 {
 	KVIS("kvissen"),
+	ACTIVE_KVIS("active_kvisses"),
 	USER("users");
 	
 	/**
