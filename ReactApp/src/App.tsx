@@ -34,7 +34,7 @@ function App() {
                             <KvisSummaryObserver/>
                         </Route>
                         <GuardedRoute path="/create-kvis" component={CreateKvisObserver} auth={isAuthenticated()}/>
-                        <GuardedRoute path='/landing' component={LandingObserver} auth={isAuthenticated()} />
+                        <GuardedRoute path='/landing' component={LandingObserver} auth={isAuthenticated()}/>
                         <GuardedRoute path="/kvis-list" component={KvisListObserver} auth={isAuthenticated()}/>
                         <Route exact path="/login-redirect">
                             <LoginRedirectObserver/>

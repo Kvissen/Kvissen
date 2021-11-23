@@ -1,12 +1,15 @@
 package services.auth;
 
 import common.AccessScope;
+import controllers.user.dao.UserDAO;
+import controllers.user.dto.UserAPI;
 import io.jsonwebtoken.Claims;
 import services.auth.repo.localAuth.JwtDecoder;
 import services.auth.repo.localAuth.JwtGenerator;
 import services.auth.repo.remoteAuth.TicketValidator;
 
 import java.net.URI;
+import java.sql.SQLException;
 import java.util.UUID;
 
 import static common.EnvVars.*;
@@ -35,12 +38,14 @@ public class AuthService {
      * @throws Exception Invalid token throws Exception
      */
     public static URI redirect(String ticket) throws Exception {
-        String userId = new TicketValidator().validate(ticket);
+        String externalId = new TicketValidator().validate(ticket);
+        String userId = getCurrentUserIdOrCreateUser(externalId);
+
         String token = new JwtGenerator().generate(
                 AccessScope.creatorScope,
                 "none",
-                userId,
-                UUID.randomUUID().toString(),
+                externalId,
+                "U-" + userId,
                 JWT_DEFAULT_ISSUER, 2 * JWT_TTL);
         // Send back to frontend with token as search param
         return URI.create(CLIENT_JWT_PARSER_URL + "?token=" + token);
@@ -64,17 +69,38 @@ public class AuthService {
      * @return Anonymous token scope: player
      */
     public static URI playerLogin(String quizCode) {
-        String userId = "anonymous";
+        String externalId = "anonymous";
         String token = new JwtGenerator().generate(
                 AccessScope.playerScope,
                 quizCode,
-                userId,
-                UUID.randomUUID().toString(),
+                externalId,
+                "A-" + UUID.randomUUID(),
                 JWT_DEFAULT_ISSUER,
                 JWT_TTL
         );
         // Send back to frontend with token as search param
         return URI.create(CLIENT_JWT_PARSER_URL + "?token=" + token);
+    }
+
+    /**
+     * Identify new logins and create new users in DB as necessary.
+     *
+     * @param externalId which can be the DTU id
+     * @return a new or retrieved uuid as string
+     * @throws SQLException if users can't be retrieved
+     */
+    private static String getCurrentUserIdOrCreateUser(String externalId) throws SQLException {
+        UserAPI[] users = UserDAO.retrieveAllUsers();
+        for (UserAPI user : users) {
+            if (user.schoolId.equals(externalId)) {
+                return user.uuid;
+            }
+        }
+
+        // User does not exist: Create new and return id.
+        UserAPI newUser = new UserAPI("U-" + UUID.randomUUID(), externalId);
+        UserDAO.createUser(newUser);
+        return newUser.uuid;
     }
 }
 
