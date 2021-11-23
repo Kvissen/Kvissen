@@ -76,7 +76,7 @@ public class AuthFilter implements javax.ws.rs.container.ContainerRequestFilter 
                 RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
                 Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
                 if (rolesSet.contains(claims.get("scope"))) {
-                    System.out.println("Approved " + claims.get("user") + " as " + claims.get("scope"));
+                    System.out.println("Approved " + claims.get("external-id") + " as " + claims.get("scope"));
                 } else {
                     requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
                             .entity("You cannot access this resource").build());
