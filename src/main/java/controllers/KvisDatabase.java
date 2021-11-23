@@ -3,10 +3,7 @@ package controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import controllers.kvis.dao.IResultSetParser;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * @author Alfred Röttger Rydahl
@@ -42,5 +39,24 @@ public class KvisDatabase
 		
 		// Return
 		return result;
+	}
+	
+	/**
+	 * Utility method for visualising a ResultSet from an SQL call.
+	 *
+	 * @param resultSet ResultSet to visualize
+	 */
+	public static void printResultSet(final ResultSet resultSet) throws SQLException
+	{
+		// Retrieve column count
+		ResultSetMetaData metadata = resultSet.getMetaData();
+		int columnCount = metadata.getColumnCount();
+		
+		// Iterate over all columns
+		for (int i=1; i<=columnCount; i++)
+		{
+			String columnName = metadata.getColumnName(i);
+			System.out.println(columnName);
+		}
 	}
 }
