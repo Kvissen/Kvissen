@@ -4,25 +4,35 @@ import './CreateKvisStyleSheet.css'
 import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
 import {Question} from "../../models/Question";
-import {v4 as uuidv4} from 'uuid';
 import {Answer} from "../../models/Answer";
 import {Kvis} from "../../models/Kvis";
 import {KvisRepository} from "../../data/repositories/KvisRepository";
+import {parseJwt} from "../../util/Util";
+import {useHistory} from "react-router-dom";
 
 export default function CreateKvisBox() {
 
-    const kvis = new Kvis(uuidv4())
+    const [kvis, setKvis] = useState<Kvis>(new Kvis("","","",0, [new Question(createInitialAnswerArray())]))
+    const [isLoading, setIsLoading] = useState(false)
+
+    const history = useHistory();
 
     async function saveKvis() {
         setIsLoading(true)
         kvis.ts = new Date().getTime()
-        kvis.questions = questions
-        await KvisRepository.getInstance().addKvis(kvis);
+        kvis.creator = parseJwt(localStorage.getItem("access_token")!)["user-id"] as string
+        let url = await KvisRepository.getInstance().addKvis(kvis);
         setIsLoading(false)
+        if(url){
+            alert("Kvis created");
+            history.goBack();
+        } else {
+            alert("Could not add kvis");
+        }
     }
 
     function ShowDoneButton() {
-        if (questions.length > 0) {
+        if (kvis.questions.length > 0) {
             return (
                 <Box mt={2} mb={2} display="flex"
                      justifyContent="end"
@@ -44,33 +54,11 @@ export default function CreateKvisBox() {
         return null;
     }
 
-    function ShowQuestionName() {
-        if (questions.length > 0) {
-            return (
-                <Box mt={2} mb={2} display="flex"
-                     justifyContent="end"
-                     alignItems="end">
-                    <TextField
-                        margin="normal"
-                        required
-                        data-testid="createkvisbox-test-kvisname"
-                        label="Enter Kvis name"
-                        fullWidth
-                        autoFocus
-                        onChange={(e) => {
-                            kvis.name = e.target.value;
-                        }}
-                    />
-                </Box>
-            )
-        }
-        return null;
-    }
-
     function addQuestion() {
-        setQuestions(prevState => {
-            return [...prevState, new Question(createInitialAnswerArray())]
-        })
+        let newName = kvis.name
+        let newQuestions = kvis.questions
+        newQuestions.push(new Question(createInitialAnswerArray()))
+        setKvis({...kvis, name: newName, questions: newQuestions})
     }
 
     function createInitialAnswerArray() : Answer[] {
@@ -82,18 +70,27 @@ export default function CreateKvisBox() {
         ]
     }
 
-    const [questions, setQuestions] = useState<Question[]>([new Question(createInitialAnswerArray())]);
-    const [isLoading, setIsLoading] = useState(false)
-
-
     return (
         <div >
-            <ShowQuestionName/>
+            <Box mt={2} mb={2} display="flex"
+                 justifyContent="end"
+                 alignItems="end">
+                <TextField
+                    margin="normal"
+                    required
+                    data-testid="createkvisbox-test-kvisname"
+                    label="Enter Kvis name"
+                    fullWidth
+                    onChange={(e) => {
+                        kvis.name = e.target.value;
+                    }}
+                />
+            </Box>
             {isLoading && <CircularProgress />}
             {
-                questions.map((question, i) => {
+                kvis.questions.map((question, i) => {
                     return (
-                        <Box key={uuidv4()} mb={2} mt={2} data-testid="createkvisbox-test-container">
+                        <Box key={i} mb={2} mt={2} data-testid="createkvisbox-test-container">
                             <Card className="create-kvis-box">
                                 <h2 className="create-kvis-question-header">Question {i + 1}</h2>
                                 <TextField
