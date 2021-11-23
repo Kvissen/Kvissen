@@ -2,9 +2,12 @@ package controllers.kvis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import common.EnvVars;
+import controllers.kvis.dao.KvisActivationDAO;
 import controllers.kvis.dao.KvisDAO;
 import controllers.kvis.dto.kvisAPI.KvisAPIDTO;
+import controllers.kvis.dto.kvisAPI.KvisActivateAPIDTO;
 import controllers.prometheus.Metrics;
+import org.postgresql.util.PSQLException;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
@@ -82,7 +85,74 @@ public class KvisAPIController
 			Metrics.kvisCreateFailed.inc();
 			throw e;
 		}
+	}
+	
+	@Path("activate")
+	@POST
+	@RolesAllowed({creatorScope})
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response activateKvis(final KvisActivateAPIDTO kvisActivate) throws SQLException, JsonProcessingException
+	{
+		// Metrics
+		Metrics.kvisActivateAttempts.inc();
 		
+		try
+		{
+			final String result = KvisActivationDAO.activateKvis(kvisActivate.kvisId, kvisActivate.findId);
+			return Response
+					.ok(result)
+					.build();
+		}
+		catch (PSQLException e)
+		{
+			Metrics.kvisActivatesFailed.inc();
+			
+			if (e.getMessage().contains("duplicate key"))
+			{ return Response.status(Response.Status.CONFLICT).build(); }
+			
+			// Other SQL exception
+			throw e;
+		}
+		catch (Exception e)
+		{
+			// Failed metric
+			Metrics.kvisActivatesFailed.inc();
+			throw e;
+		}
+	}
+	
+	@Path("activate/{findId}")
+	@GET
+	@RolesAllowed({playerScope})
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response retrieveActivatedKvis(@PathParam("findId") final String findId) throws SQLException, JsonProcessingException
+	{
+		// Metrics
+		Metrics.kvisActivatedRequests.inc();
 		
+		try
+		{
+			// Retrieve the KvisID
+			final String kvisId = KvisActivationDAO.getActivatedKvis(findId);
+			if (kvisId == null)
+			{
+				// Wrong id metrics
+				Metrics.kvisActivatedRequestWrongId.inc();
+				
+				return Response.noContent().build();
+			}
+			
+			// Retrieve the corresponding Kvis
+			return Response
+					.ok(KvisDAO.getSingle(kvisId))
+					.build();
+		}
+		catch (Exception e)
+		{
+			// Failed Metrics
+			Metrics.kvisActivatedRequestFailed.inc();
+			throw e;
+		}
 	}
 }
