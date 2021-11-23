@@ -46,6 +46,14 @@ public final class KvisDAO
 		}
 	}
 	
+	/**
+	 * Retrieve a Single Kvis from its unique ID.
+	 *
+	 * @param id Unique Kvis ID
+	 * @return Single KvisAPIDTO object
+	 * @throws SQLException
+	 * @throws JsonProcessingException
+	 */
 	public static KvisAPIDTO getSingle(final String id) throws SQLException, JsonProcessingException
 	{
 		// Prepare query

@@ -2,9 +2,12 @@ package controllers.kvis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import common.EnvVars;
+import controllers.kvis.dao.KvisActivationDAO;
 import controllers.kvis.dao.KvisDAO;
 import controllers.kvis.dto.kvisAPI.KvisAPIDTO;
+import controllers.kvis.dto.kvisAPI.KvisActivateAPIDTO;
 import controllers.prometheus.Metrics;
+import org.postgresql.util.PSQLException;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
@@ -82,7 +85,62 @@ public class KvisAPIController
 			Metrics.kvisCreateFailed.inc();
 			throw e;
 		}
+	}
+	
+	@Path("activate")
+	@POST
+	@RolesAllowed({creatorScope})
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response activateKvis(final KvisActivateAPIDTO kvisActivate) throws SQLException, JsonProcessingException
+	{
+		//TODO: Add metrics
 		
+		try
+		{
+			return Response
+					.ok(KvisActivationDAO.activateKvis(kvisActivate.kvisId, kvisActivate.findId))
+					.build();
+		}
+		catch (PSQLException e)
+		{
+			if (e.getMessage().contains("duplicate key"))
+				return Response.status(Response.Status.CONFLICT).build();
+			else
+				//TODO: Add metrics
+				throw e;
+		}
+		catch (Exception e)
+		{
+			//TODO: Add metrics
+			throw e;
+		}
+	}
+	
+	@Path("activate/{findId}")
+	@GET
+	@RolesAllowed({playerScope})
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response retrieveActivatedKvis(@PathParam("findId") final String findId) throws SQLException, JsonProcessingException
+	{
+		//TODO: Add Metrics
 		
+		try
+		{
+			// Retrieve the KvisID
+			final String kvisId = KvisActivationDAO.getActivatedKvis(findId);
+			if (kvisId == null)
+				return Response.noContent().build();
+			
+			// Retrieve the corresponding Kvis
+			return Response
+					.ok(KvisDAO.getSingle(kvisId))
+					.build();
+		}
+		catch (Exception e)
+		{
+			//TODO: Add metrics
+			throw e;
+		}
 	}
 }
