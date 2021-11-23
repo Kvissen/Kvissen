@@ -17,7 +17,7 @@ export class KvisRepository implements IKvisRepository {
         return this._instance;
     }
 
-    async addKvis(kvis: Kvis): Promise<any> {
+    async addKvis(kvis: Kvis): Promise<boolean> {
         return await this.kvisDao.addKvis(kvis);
     }
 

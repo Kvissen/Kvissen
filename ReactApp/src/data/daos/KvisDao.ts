@@ -23,16 +23,14 @@ class KvisDao implements IKvisDao{
 
     // REST methods
 
-    async addKvis(kvis: Kvis): Promise<any>{
+    async addKvis(kvis: Kvis): Promise<boolean>{
         const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_CREATE_KVIS
-        let t = await this.httpClient.request({
+        return await this.httpClient.request({
             method: 'POST',
             url: url,
             headers: defaultJwtHeaders(),
             body: kvis
         })
-        console.log(t)
-        return t;
     }
 
     async deleteKvis(id: string): Promise<boolean> {

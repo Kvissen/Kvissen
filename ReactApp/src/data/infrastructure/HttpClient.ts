@@ -13,7 +13,7 @@ class HttpClient implements IHttpClient {
                 if (res.status == 201){
                     return true
                 } else {
-                    res.json()
+                    return res.json()
                 }
             })
             .catch((e) => console.log(e))

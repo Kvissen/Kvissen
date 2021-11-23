@@ -21,7 +21,6 @@ export default function CreateKvisBox() {
         setIsLoading(true)
         kvis.ts = new Date().getTime()
         kvis.creator = parseJwt(localStorage.getItem("access_token")!)["user-id"] as string
-        console.log("Adding kvis")
         let url = await KvisRepository.getInstance().addKvis(kvis);
         setIsLoading(false)
         if(url){
