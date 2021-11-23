@@ -74,7 +74,7 @@ public class AuthService {
                 AccessScope.playerScope,
                 quizCode,
                 externalId,
-                "A-" + UUID.randomUUID(),
+                UUID.randomUUID().toString(),
                 JWT_DEFAULT_ISSUER,
                 JWT_TTL
         );
@@ -98,7 +98,7 @@ public class AuthService {
         }
 
         // User does not exist: Create new and return id.
-        UserAPI newUser = new UserAPI("U-" + UUID.randomUUID(), externalId);
+        UserAPI newUser = new UserAPI(UUID.randomUUID().toString(), externalId);
         UserDAO.createUser(newUser);
         return newUser.uuid;
     }
