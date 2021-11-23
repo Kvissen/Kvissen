@@ -94,12 +94,14 @@ public class KvisAPIController
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response activateKvis(final KvisActivateAPIDTO kvisActivate) throws SQLException, JsonProcessingException
 	{
-		//TODO: Add metrics
+		// Metrics
+		Metrics.kvisActivateAttempts.inc();
 		
 		try
 		{
+			final String result = KvisActivationDAO.activateKvis(kvisActivate.kvisId, kvisActivate.findId);
 			return Response
-					.ok(KvisActivationDAO.activateKvis(kvisActivate.kvisId, kvisActivate.findId))
+					.ok(result)
 					.build();
 		}
 		catch (PSQLException e)
@@ -107,12 +109,16 @@ public class KvisAPIController
 			if (e.getMessage().contains("duplicate key"))
 				return Response.status(Response.Status.CONFLICT).build();
 			else
-				//TODO: Add metrics
+			{
+				// Failed metric
+				Metrics.kvisActivatesFailed.inc();
 				throw e;
+			}
 		}
 		catch (Exception e)
 		{
-			//TODO: Add metrics
+			// Failed metric
+			Metrics.kvisActivatesFailed.inc();
 			throw e;
 		}
 	}
@@ -123,14 +129,20 @@ public class KvisAPIController
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response retrieveActivatedKvis(@PathParam("findId") final String findId) throws SQLException, JsonProcessingException
 	{
-		//TODO: Add Metrics
+		// Metrics
+		Metrics.kvisActivatedRequests.inc();
 		
 		try
 		{
 			// Retrieve the KvisID
 			final String kvisId = KvisActivationDAO.getActivatedKvis(findId);
 			if (kvisId == null)
+			{
+				// Wrong id metrics
+				Metrics.kvisActivatedRequestWrongId.inc();
+				
 				return Response.noContent().build();
+			}
 			
 			// Retrieve the corresponding Kvis
 			return Response
@@ -139,7 +151,8 @@ public class KvisAPIController
 		}
 		catch (Exception e)
 		{
-			//TODO: Add metrics
+			// Failed Metrics
+			Metrics.kvisActivatedRequestFailed.inc();
 			throw e;
 		}
 	}
