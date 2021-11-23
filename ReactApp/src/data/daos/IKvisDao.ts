@@ -1,4 +1,5 @@
 import {Kvis} from "../../models/Kvis";
+import {KvisActivate} from "../../models/KvisActivate";
 
 export interface IKvisDao {
     addKvis(kvis: Kvis): Promise<boolean>
@@ -6,4 +7,7 @@ export interface IKvisDao {
     getKvissesForUser(userId: string): Promise<Kvis[]>
     updateKvis(id: string, newKvis: Kvis): Promise<Kvis>
     deleteKvis(id: string): Promise<boolean>
+
+    activeKvis(kvisActivate: KvisActivate): Promise<boolean>
+    getActivatedKvis(findId: string): Promise<Kvis>
 }

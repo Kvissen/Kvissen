@@ -1,14 +1,68 @@
-import {Box, Button, Card} from "@mui/material";
-import React from "react";
+import {Box, Button, Card } from "@mui/material";
+import React, {useState} from "react";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import EditIcon from '@mui/icons-material/Edit';
 import {Kvis} from "../../models/Kvis";
-import store from "../../stores/KvisStore";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import TextField from "@mui/material/TextField";
+import DialogActions from "@mui/material/DialogActions";
+import Dialog from "@mui/material/Dialog";
+import {KvisRepository} from "../../data/repositories/KvisRepository";
+import {KvisActivate} from "../../models/KvisActivate";
 
 export default function KvisListElement({kvis}: { kvis: Kvis }) {
 
+    const [open, setOpen] = useState(false);
+    let activateKvisId = "";
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    async function handleAssign() {
+        await KvisRepository.getInstance().activeKvis(new KvisActivate(kvis.uuid,activateKvisId));
+        handleClose();
+        alert("Kvis is now activated");
+    }
+
+    function RenderDialog() {
+        return (
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Enter code</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Enter the code you want to assign to {kvis.name}.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="code"
+                        label="Code"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        onChange={(e) => {
+                            activateKvisId = e.target.value;
+                        }}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={async () => handleAssign()}>Assign</Button>
+                </DialogActions>
+            </Dialog>
+        )
+    }
+
+
     return (
         <Box data-testid="kvislistelement-test-container">
+            <RenderDialog/>
             <Card>
                 <Box display={"flex"} flexDirection={"row"} justifyContent={"space-between"}>
                     <Box p={2} display={"flex"} flexDirection={"column"} justifyContent={"space-between"}>
@@ -28,23 +82,10 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                             data-testid="kvislistelement-test-play"
                             startIcon={<PlayArrowIcon/>}
                             onClick={() => {
-                                //store.kvisCode = kvis.kvisCode
-                                window.location.href = process.env.REACT_APP_BASE_URL! +
-                                    process.env.REACT_APP_API_AUTH_PLAYER + store.kvisCode
+                                handleClickOpen();
                             }}
                         >
                             Start Kvis
-                        </Button>
-                        <Button
-                            className="basic-button"
-                            variant="contained"
-                            data-testid="kvislistelement-test-edit"
-                            startIcon={<EditIcon/>}
-                            onClick={() => {
-
-                            }}
-                        >
-                            Edit Kvis
                         </Button>
                     </Box>
 

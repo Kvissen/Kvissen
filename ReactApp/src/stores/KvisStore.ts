@@ -74,6 +74,16 @@ class KvisStore {
         })
     }
 
+    async getActivatedKvis() {
+        await KvisRepository.getInstance().getActivatedKvis(this.kvisCode)
+            .then(result => {
+                if (result == null) {
+                    return;
+                }
+                this.currentKvis = result;
+            } )
+    }
+
     startMockQuiz() {
         // Update result object with quiz code on start quiz
         this.result.kvisId = this.kvisCode

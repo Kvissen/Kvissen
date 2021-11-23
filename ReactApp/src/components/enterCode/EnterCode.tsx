@@ -5,6 +5,16 @@ import {store} from "../../stores/KvisStore";
 import {observer} from "mobx-react";
 
 function EnterCode() {
+
+    async function getKvisIfExists() {
+        await store.getActivatedKvis();
+        if (store.currentKvis.uuid !== "0"){
+            window.location.href = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_AUTH_PLAYER + store.kvisCode
+        } else {
+            alert("Could not find kvis with playcode "+ store.kvisCode);
+        }
+    }
+
     return (
         <Grid container spacing={2} alignContent={"center"} className={"entercodebg"}>
             <Grid
@@ -26,8 +36,8 @@ function EnterCode() {
 
                 <Button
                     data-testid="entercode-test-button"
-                    disabled={(store.kvisCode === "")} onClick={() => {
-                    window.location.href = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_AUTH_PLAYER + store.kvisCode
+                    disabled={(store.kvisCode === "")} onClick={async () => {
+                        await getKvisIfExists()
                 }}>
                     Start Kvis!
                 </Button>
