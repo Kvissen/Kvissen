@@ -27,6 +27,8 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
 
     async function handleAssign() {
         await KvisRepository.getInstance().activeKvis(new KvisActivate(kvis.uuid,activateKvisId));
+        handleClose();
+        alert("Kvis is now activated");
     }
 
     function RenderDialog() {
