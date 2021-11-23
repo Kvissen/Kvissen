@@ -9,7 +9,13 @@ class HttpClient implements IHttpClient {
         if(requestOption?.body) option.body = JSON.stringify(requestOption.body)
 
         return fetch(requestOption.url, option)
-            .then(res => res.json())
+            .then(res => {
+                if (res.status == 201){
+                    return true
+                } else {
+                    res.json()
+                }
+            })
             .catch((e) => console.log(e))
     }
 

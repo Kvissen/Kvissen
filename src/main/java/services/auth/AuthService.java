@@ -45,7 +45,7 @@ public class AuthService {
                 AccessScope.creatorScope,
                 "none",
                 externalId,
-                "U-" + userId,
+                userId,
                 JWT_DEFAULT_ISSUER, 2 * JWT_TTL);
         // Send back to frontend with token as search param
         return URI.create(CLIENT_JWT_PARSER_URL + "?token=" + token);

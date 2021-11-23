@@ -7,19 +7,29 @@ import {Question} from "../../models/Question";
 import {Answer} from "../../models/Answer";
 import {Kvis} from "../../models/Kvis";
 import {KvisRepository} from "../../data/repositories/KvisRepository";
+import {parseJwt} from "../../util/Util";
+import {useHistory} from "react-router-dom";
 
 export default function CreateKvisBox() {
 
     const [kvis, setKvis] = useState<Kvis>(new Kvis("","","",0, [new Question(createInitialAnswerArray())]))
     const [isLoading, setIsLoading] = useState(false)
 
+    const history = useHistory();
+
     async function saveKvis() {
         setIsLoading(true)
         kvis.ts = new Date().getTime()
-        //TODO: Set creator
-        kvis.creator = ""
-        await KvisRepository.getInstance().addKvis(kvis);
+        kvis.creator = parseJwt(localStorage.getItem("access_token")!)["user-id"] as string
+        console.log("Adding kvis")
+        let url = await KvisRepository.getInstance().addKvis(kvis);
         setIsLoading(false)
+        if(url){
+            alert("Kvis created");
+            history.goBack();
+        } else {
+            alert("Could not add kvis");
+        }
     }
 
     function ShowDoneButton() {

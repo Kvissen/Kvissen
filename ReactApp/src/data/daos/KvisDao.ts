@@ -10,9 +10,6 @@ class KvisDao implements IKvisDao{
 
     private httpClient : IHttpClient
 
-    //FIXME: REMOVE THIS TEST USER
-    private testUser : string = "7b3beb72-1be3-48c7-aa10-4b5fe07fcd96"
-
     private constructor() {
         this.httpClient = new HttpClient();
     }
@@ -26,15 +23,16 @@ class KvisDao implements IKvisDao{
 
     // REST methods
 
-    async addKvis(kvis: Kvis): Promise<boolean> {
-        kvis.creator = this.testUser
+    async addKvis(kvis: Kvis): Promise<any>{
         const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_CREATE_KVIS
-        return await this.httpClient.request({
+        let t = await this.httpClient.request({
             method: 'POST',
             url: url,
             headers: defaultJwtHeaders(),
             body: kvis
         })
+        console.log(t)
+        return t;
     }
 
     async deleteKvis(id: string): Promise<boolean> {
