@@ -1,4 +1,4 @@
-import {Box, Button, Card} from "@mui/material";
+import {Box, Button, Card, CircularProgress} from "@mui/material";
 import React, {useState} from "react";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import {Kvis} from "../../models/Kvis";
@@ -10,11 +10,12 @@ import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
 import {KvisRepository} from "../../data/repositories/KvisRepository";
 import store from "../../stores/KvisStore";
+import {KvisActivate} from "../../models/KvisActivate";
 
 export default function KvisListElement({kvis}: { kvis: Kvis }) {
 
     const [open, setOpen] = useState(false);
-    const [activateKvisId, setActivateKvisId] = useState<string>("")
+    let activateKvisId = "";
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -24,9 +25,9 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
         setOpen(false);
     };
 
-    const handleAssign = () => {
-        KvisRepository.getInstance();
-    };
+    async function handleAssign() {
+        await KvisRepository.getInstance().activeKvis(new KvisActivate(kvis.uuid,activateKvisId));
+    }
 
     function RenderDialog() {
         return (
@@ -45,13 +46,13 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                         fullWidth
                         variant="standard"
                         onChange={(e) => {
-                            setActivateKvisId(e.target.value);
+                            activateKvisId = e.target.value;
                         }}
                     />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleAssign}>Assign</Button>
+                    <Button onClick={async () => handleAssign}>Assign</Button>
                 </DialogActions>
             </Dialog>
         )
@@ -80,9 +81,6 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                             data-testid="kvislistelement-test-play"
                             startIcon={<PlayArrowIcon/>}
                             onClick={() => {
-                                //store.kvisCode = kvis.kvisCode
-                                window.location.href = process.env.REACT_APP_BASE_URL! +
-                                    process.env.REACT_APP_API_AUTH_PLAYER + store.kvisCode
                                 handleClickOpen();
                             }}
                         >
