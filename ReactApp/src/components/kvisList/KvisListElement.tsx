@@ -1,4 +1,4 @@
-import {Box, Button, Card, CircularProgress} from "@mui/material";
+import {Box, Button, Card } from "@mui/material";
 import React, {useState} from "react";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import {Kvis} from "../../models/Kvis";
@@ -9,7 +9,6 @@ import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
 import {KvisRepository} from "../../data/repositories/KvisRepository";
-import store from "../../stores/KvisStore";
 import {KvisActivate} from "../../models/KvisActivate";
 
 export default function KvisListElement({kvis}: { kvis: Kvis }) {

@@ -14,7 +14,6 @@ it("should contain HTML elements", () => {
     const kvisHeader = screen.getByTestId("kvislistelement-test-kvisname-header");
     const questionHeader = screen.getByTestId("kvislistelement-test-questions-header");
     const playButton = screen.getByTestId("kvislistelement-test-play");
-    const editButton = screen.getByTestId("kvislistelement-test-edit");
 
     expect(container).toBeTruthy();
 
@@ -26,9 +25,6 @@ it("should contain HTML elements", () => {
 
     expect(playButton).toBeTruthy();
     expect(playButton.textContent).toBe("Start Kvis")
-
-    expect(editButton).toBeTruthy();
-    expect(editButton.textContent).toBe("Edit Kvis")
 })
 
 it('should assign properties correctly', () => {
