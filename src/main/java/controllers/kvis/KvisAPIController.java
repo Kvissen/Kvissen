@@ -106,14 +106,13 @@ public class KvisAPIController
 		}
 		catch (PSQLException e)
 		{
+			Metrics.kvisActivatesFailed.inc();
+			
 			if (e.getMessage().contains("duplicate key"))
-				return Response.status(Response.Status.CONFLICT).build();
-			else
-			{
-				// Failed metric
-				Metrics.kvisActivatesFailed.inc();
-				throw e;
-			}
+			{ return Response.status(Response.Status.CONFLICT).build(); }
+			
+			// Other SQL exception
+			throw e;
 		}
 		catch (Exception e)
 		{
