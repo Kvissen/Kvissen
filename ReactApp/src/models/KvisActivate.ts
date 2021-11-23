@@ -1,7 +1,7 @@
 export class KvisActivate {
     constructor(
-        kvisId: string,
-        findId: string
+        public kvisId: string,
+        public findId: string
     ) {}
 
 }

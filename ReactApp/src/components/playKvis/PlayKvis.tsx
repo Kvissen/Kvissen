@@ -13,9 +13,7 @@ function PlayKvis() {
 
     useEffect(() => {
         // Run only once (on load)
-        store.getQuiz().then(() => {
             store.startQuiz()
-        })
     }, []);
 
     function nextQuestion() {

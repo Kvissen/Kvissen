@@ -81,7 +81,7 @@ class KvisDao implements IKvisDao{
     }
 
     async getActivatedKvis(findId: string): Promise<Kvis> {
-        const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_GET_ALL_KVIS + "/" + findId
+        const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_ACTIVATE_KVIS + "/" + findId
         return await this.httpClient.request({
             method: 'GET',
             url: url,

@@ -54,7 +54,7 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={async () => handleAssign}>Assign</Button>
+                    <Button onClick={async () => handleAssign()}>Assign</Button>
                 </DialogActions>
             </Dialog>
         )
