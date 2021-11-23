@@ -2,7 +2,7 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
 
-// Redirect page for login to the Kvis Server
+// Error page for the Login components
 export default function ErrorPage() {
 
     // Require webPack to use environment vars

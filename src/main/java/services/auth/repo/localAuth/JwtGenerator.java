@@ -4,7 +4,6 @@
  */
 package services.auth.repo.localAuth;
 
-import common.AccessScope;
 import common.EnvVars;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -21,7 +20,7 @@ public class JwtGenerator {
 
     // Generates a new JWT. The ID should be generated.
     // The subject must be unique, and can be generated or possibly DTU mail.
-    public String generate(AccessScope scope, String kvisId, String userId, String id, String issuer, long ttlMillis) {
+    public String generate(String scope, String kvisCode, String externalId, String id, String issuer, long ttlMillis) {
 
         // Hashing algorithm
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -36,9 +35,10 @@ public class JwtGenerator {
 
         // Add claims
         Map<String, Object> claims = new HashMap<>();
-        claims.put("scope", scope.toString());
-        claims.put("kvis-code", kvisId);
-        claims.put("user", userId);
+        claims.put("scope", scope);
+        claims.put("kvis-code", kvisCode);
+        claims.put("external-id", externalId);
+        claims.put("user-id", id);
 
         JwtBuilder builder = Jwts.builder().setId(id)
                 .setIssuedAt(now)

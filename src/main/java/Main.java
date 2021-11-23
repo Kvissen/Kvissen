@@ -1,8 +1,9 @@
+import controllers.ConnectionPool;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
-import controllers.ConnectionPool;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -12,16 +13,21 @@ import java.util.Optional;
  **/
 public class Main
 {
-	public static void main(String[] args) throws LifecycleException
+	public static void main(String[] args) throws LifecycleException, IOException
 	{
+		//
+		// Tomcat setup
+		//
 		Tomcat tomcat = new Tomcat();
 		tomcat.setBaseDir("temp");
-		String port = Optional.ofNullable(System.getenv("PORT")).orElse("8080"); //Til Heroku //Til Heroku
+		
+		// Retrieve alternative port it env is given
+		String port = Optional.ofNullable(System.getenv("PORT")).orElse("8080");
 		
 		tomcat.setPort(Integer.parseInt(port));
 		tomcat.getConnector(); //Creates a default HTTP connector
 		
-		tomcat.addWebapp("/", new File("src/main/webapp").getAbsolutePath());
+		tomcat.addWebapp("", new File("src/main/webapp").getAbsolutePath());
 		
 		tomcat.start();
 		tomcat.getServer().await();
