@@ -49,6 +49,36 @@ public class Metrics
 			.help("Total Kvis Creation failed attempts")
 			.register();
 	
+	public final static Counter kvisActivateAttempts = Counter
+			.build()
+			.name("kvis_activate_attempts")
+			.help("Total kvis activation Attempts")
+			.register();
+	
+	public final static Counter kvisActivatesFailed = Counter
+			.build()
+			.name("kvis_activates_failed")
+			.help("Total Kvis activations failed")
+			.register();
+	
+	public final static Counter kvisActivatedRequests = Counter
+			.build()
+			.name("kvis_get_activated")
+			.help("Total Requests on /kvis/activate/{findId}")
+			.register();
+	
+	public final static Counter kvisActivatedRequestWrongId = Counter
+			.build()
+			.name("kvis_get_activated_wrong_id")
+			.help("Total Failed requests on /kvis/activate/{findId} where findId doesn't exist")
+			.register();
+	
+	public final static Counter kvisActivatedRequestFailed = Counter
+			.build()
+			.name("kvis_get_activated_failed")
+			.help("Total Failed requests on /kvis/activate/{findId} due to Exception")
+			.register();
+	
 	// Defaults
 	public final static StandardExports standardExports= new StandardExports().register();
 	public final static MemoryPoolsExports memoryPoolsExports =  new MemoryPoolsExports().register();
