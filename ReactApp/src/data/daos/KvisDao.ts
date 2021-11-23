@@ -3,6 +3,7 @@ import {Kvis} from "../../models/Kvis";
 import {IHttpClient} from "../infrastructure/IHttpClient";
 import HttpClient from "../infrastructure/HttpClient";
 import {defaultJwtHeaders} from "../headers/urlHeaders";
+import {KvisActivate} from "../../models/KvisActivate";
 
 class KvisDao implements IKvisDao{
 
@@ -67,6 +68,27 @@ class KvisDao implements IKvisDao{
     async updateKvis(id: string, newKvis: Kvis): Promise<Kvis> {
         // TODO: Implement me
         return Promise.resolve(new Kvis(""))
+    }
+
+    async activeKvis(kvisActivate: KvisActivate): Promise<boolean> {
+        const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_ACTIVATE_KVIS
+        return await this.httpClient.request({
+            method: 'POST',
+            url: url,
+            headers: defaultJwtHeaders(),
+            body: kvisActivate
+        })
+    }
+
+    async getActivatedKvis(findId: string): Promise<Kvis> {
+        const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_GET_ALL_KVIS + "/" + findId
+        return await this.httpClient.request({
+            method: 'GET',
+            url: url,
+            headers: defaultJwtHeaders()
+        }).then(data => {
+            return data as Kvis;
+        });
     }
 
 }

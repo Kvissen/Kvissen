@@ -8,11 +8,13 @@ import DialogContentText from "@mui/material/DialogContentText";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
+import {KvisRepository} from "../../data/repositories/KvisRepository";
 import store from "../../stores/KvisStore";
 
 export default function KvisListElement({kvis}: { kvis: Kvis }) {
 
     const [open, setOpen] = useState(false);
+    const [activateKvisId, setActivateKvisId] = useState<string>("")
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -22,6 +24,9 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
         setOpen(false);
     };
 
+    const handleAssign = () => {
+        KvisRepository.getInstance();
+    };
 
     function RenderDialog() {
         return (
@@ -39,11 +44,14 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                         type="text"
                         fullWidth
                         variant="standard"
+                        onChange={(e) => {
+                            setActivateKvisId(e.target.value);
+                        }}
                     />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose}>Assign</Button>
+                    <Button onClick={handleAssign}>Assign</Button>
                 </DialogActions>
             </Dialog>
         )

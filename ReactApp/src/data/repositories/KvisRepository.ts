@@ -2,6 +2,7 @@ import {IKvisRepository} from "./IKvisRepository";
 import {Kvis} from "../../models/Kvis";
 import {IKvisDao} from "../daos/IKvisDao";
 import KvisDao from "../daos/KvisDao";
+import {KvisActivate} from "../../models/KvisActivate";
 
 export class KvisRepository implements IKvisRepository {
 
@@ -35,6 +36,14 @@ export class KvisRepository implements IKvisRepository {
 
     async updateKvis(id: string, newKvis: Kvis): Promise<Kvis> {
         return await this.kvisDao.updateKvis(id,newKvis);
+    }
+
+    async activeKvis(kvisActivate: KvisActivate): Promise<boolean> {
+        return await this.kvisDao.activeKvis(kvisActivate);
+    }
+
+    async getActivatedKvis(findId: string): Promise<Kvis> {
+        return await this.kvisDao.getActivatedKvis(findId);
     }
 
 }
