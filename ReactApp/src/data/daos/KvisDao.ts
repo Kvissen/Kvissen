@@ -66,7 +66,7 @@ class KvisDao implements IKvisDao{
         return Promise.resolve(new Kvis(""))
     }
 
-    async activeKvis(kvisActivate: KvisActivate): Promise<boolean> {
+    async activateKvis(kvisActivate: KvisActivate): Promise<String> {
         const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_ACTIVATE_KVIS
         return await this.httpClient.request({
             method: 'POST',

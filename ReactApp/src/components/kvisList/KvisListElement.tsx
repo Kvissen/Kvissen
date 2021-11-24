@@ -26,10 +26,10 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
     };
 
     async function handleAssign() {
-        await KvisRepository.getInstance().activeKvis(new KvisActivate(kvis.uuid, activateKvisId)).then(
-            (success) => {
+        await KvisRepository.getInstance().activateKvis(new KvisActivate(kvis.uuid, activateKvisId)).then(
+            (result) => {
                 handleClose();
-                if (!success) {
+                if (result !== store.kvisCode) {
                     alert("The code " + store.kvisCode + " is already in use.")
                 } else {
                     alert("Kvis is now activated with code " + store.kvisCode);
