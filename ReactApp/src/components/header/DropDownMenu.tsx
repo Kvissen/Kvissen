@@ -86,9 +86,7 @@ function isLoggedInAs(role: string) {
 
     // Check wrong scope
     const {scope} = jwt.decode(token) as { scope: string; };
-    if (scope !== role) return false
-
-    return true
+    return scope === role;
 }
 
 export function LoginComponent() {
@@ -113,7 +111,7 @@ export function LogoutComponent() {
             onClick={
                 () => {
                     history.replace("/")
-                    localStorage.removeItem("access_token")
+                    localStorage.setItem("access_token", "null")
                 }
             }
             endIcon={<LoginIcon/>}>Log out</Button>

@@ -46,36 +46,56 @@ public class UserDAO
 	{
 		// Convert
 		final UserDB dbObject = UserFactory.APIToDB(userToCreate);
-		
+
 		// Create query
 		final String query = String.format("INSERT INTO %s (school_id) VALUES('%s') RETURNING *",
 				Table.USER.TableName, dbObject.schoolId);
-		
+
 		// Execute
-		try { return queryDatabase(query)[0]; }
-		catch (Exception e) {
-			System.out.println("UserDAO.createUser() failed:\n" + e.getMessage()); throw e;
+		try {
+			return queryDatabase(query)[0];
+		} catch (Exception e) {
+			System.out.println("UserDAO.createUser() failed:\n" + e.getMessage());
+			throw e;
 		}
 	}
-	
+
 	/**
-	 *
-	 *
+	 * @param schoolId is "schoolId" or external ID
+	 * @return the queried user
+	 * @throws SQLException if operation fails
+	 * @author Erlend
+	 */
+	public static UserAPI[] retrieveUser(String schoolId) throws SQLException {
+
+		// Create query
+		final String query = String.format("SELECT * FROM %s WHERE school_id LIKE '%s'",
+				Table.USER.TableName, schoolId);
+
+		// Execute query
+		try {
+			return queryDatabase(query);
+		} catch (Exception e) {
+			System.out.println("UserDAO.retrieveUser() failed:\n" + e.getMessage());
+			throw e;
+		}
+	}
+
+	/**
 	 * @param query
 	 * @return
 	 * @throws SQLException
 	 */
-	private static UserAPI[] queryDatabase(final String query) throws SQLException
-	{
+	private static UserAPI[] queryDatabase(final String query) throws SQLException {
 		// Get connection
 		Connection connection = ConnectionPool.getInstance().getConnection();
-		
+
 		// Prepare statement
 		PreparedStatement stmt = connection.prepareStatement(query);
-		
+
 		// Execute
 		ResultSet res = stmt.executeQuery();
-		
+
 		// Parse
 		final UserAPI[] users = UserFactory.DBToAPI(parseDBResponse(res));
 		

@@ -83,18 +83,17 @@ public class AuthService {
     }
 
     /**
-     * Identify new logins and create new users in DB as necessary.
+     * Identify new logins and create new users as necessary.
      *
      * @param externalId which can be the DTU id
      * @return a new or retrieved uuid as string
      * @throws SQLException if users can't be retrieved
      */
     private static String getCurrentUserIdOrCreateUser(String externalId) throws SQLException {
-        UserAPI[] users = UserDAO.retrieveAllUsers();
-        for (UserAPI user : users) {
-            if (user.schoolId.equals(externalId)) {
-                return user.uuid;
-            }
+        UserAPI[] users = UserDAO.retrieveUser(externalId);
+
+        if (users.length > 0) {
+            return users[0].uuid;
         }
 
         // User does not exist: Create new and return id.
