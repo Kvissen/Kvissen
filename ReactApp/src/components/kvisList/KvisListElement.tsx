@@ -1,4 +1,4 @@
-import {Box, Button, Card } from "@mui/material";
+import {Box, Button, Card} from "@mui/material";
 import React, {useState} from "react";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import {Kvis} from "../../models/Kvis";
@@ -10,6 +10,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
 import {KvisRepository} from "../../data/repositories/KvisRepository";
 import {KvisActivate} from "../../models/KvisActivate";
+import store from "../../stores/KvisStore";
 
 export default function KvisListElement({kvis}: { kvis: Kvis }) {
 
@@ -25,9 +26,16 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
     };
 
     async function handleAssign() {
-        await KvisRepository.getInstance().activeKvis(new KvisActivate(kvis.uuid,activateKvisId));
-        handleClose();
-        alert("Kvis is now activated");
+        await KvisRepository.getInstance().activeKvis(new KvisActivate(kvis.uuid, activateKvisId)).then(
+            (success) => {
+                handleClose();
+                if (!success) {
+                    alert("The code " + store.kvisCode + " is already in use.")
+                } else {
+                    alert("Kvis is now activated with code " + store.kvisCode);
+                }
+            }
+        )
     }
 
     function RenderDialog() {

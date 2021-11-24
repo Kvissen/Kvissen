@@ -21,7 +21,7 @@ export function KvisList() {
         if (userId === null) {
             return
         }
-        let kvisses = await KvisRepository.getInstance().getKvissesForUser(userId["user_id"])
+        let kvisses = await KvisRepository.getInstance().getKvissesForUser(userId.user_id)
         if (kvisses.length === 0) {
             setHasNoKvisses(true)
         } else {
