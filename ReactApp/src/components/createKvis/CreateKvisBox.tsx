@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Card, Button, TextField, Grid, Box, Checkbox, CircularProgress} from "@mui/material";
+import {Box, Button, Card, Checkbox, CircularProgress, Grid, TextField} from "@mui/material";
 import './CreateKvisStyleSheet.css'
 import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
@@ -20,7 +20,7 @@ export default function CreateKvisBox() {
     async function saveKvis() {
         setIsLoading(true)
         kvis.ts = new Date().getTime()
-        kvis.creator = parseJwt(localStorage.getItem("access_token")!)["user-id"] as string
+        kvis.creator = parseJwt(localStorage.getItem("access_token")!)["user_id"] as string
         let url = await KvisRepository.getInstance().addKvis(kvis);
         setIsLoading(false)
         if(url){

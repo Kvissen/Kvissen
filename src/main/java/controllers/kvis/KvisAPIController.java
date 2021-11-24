@@ -9,7 +9,6 @@ import controllers.kvis.dto.kvisAPI.KvisActivateAPIDTO;
 import controllers.prometheus.Metrics;
 import org.postgresql.util.PSQLException;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -125,7 +124,7 @@ public class KvisAPIController
 	
 	@Path("activate/{findId}")
 	@GET
-	@PermitAll
+	@RolesAllowed({creatorScope, playerScope})
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response retrieveActivatedKvis(@PathParam("findId") final String findId) throws SQLException, JsonProcessingException
 	{

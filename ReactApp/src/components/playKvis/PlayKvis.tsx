@@ -1,19 +1,22 @@
 import QuestionBox from "./QuestionBox";
-import {Box, Grid} from "@mui/material";
+import {Box, CircularProgress, Grid} from "@mui/material";
 import AnswerBox from "./AnswerBox";
 import {useHistory} from "react-router-dom";
 import {store} from "../../stores/KvisStore";
 import {observer} from "mobx-react";
 import {v4 as uuidv4} from "uuid";
-import ErrorComp from "../error/ErrorComp";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 
 function PlayKvis() {
     const history = useHistory();
 
     useEffect(() => {
         // Run only once (on load)
-            store.startQuiz()
+        store.startQuiz().then(() => {
+            if (store.currentKvis.uuid === "0") {
+                alert('Could not find Kvis "' + store.kvisCode + '"')
+            }
+        })
     }, []);
 
     function nextQuestion() {
@@ -28,8 +31,7 @@ function PlayKvis() {
 
     if (store.currentKvis === null || store.currentKvis.uuid === "0") {
         return (
-            <ErrorComp title={"No active Kvis"}
-                       message={"There was no active Kvis. Please start a new one."}/>
+            <CircularProgress data-testid="loginrecipient-test-progress"/>
         )
     } else {
 
