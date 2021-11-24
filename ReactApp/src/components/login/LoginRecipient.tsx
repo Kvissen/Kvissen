@@ -22,27 +22,14 @@ function LoginRecipient() {
     if (scope === creatorScope) {
         // Store creator token
         storeToken(searchParams).then(() => {
+            waitForWriteToLocalStorage()
             history.push("/landing")
         })
     } else if (scope === playerScope) {
         // Store player token
         storeToken(searchParams).then(() => {
-
-            // Try up to a hundred times to read the updated headers,
-            // to avoid concurrency issues with writing to LocalStorage
-            let i = 1
-            while ((defaultJwtHeaders().get("Authorization") === null
-                || defaultJwtHeaders().get("Authorization") === "null")
-            && i < 101) {
-                i++
-            }
-            // Redirect based on result
-            if (defaultJwtHeaders().get("Authorization") === null
-                || defaultJwtHeaders().get("Authorization") === "null") {
-                history.replace("/error-page")
-            } else {
-                history.replace("/play-kvis")
-            }
+            waitForWriteToLocalStorage()
+            history.replace("/play-kvis")
         })
     } else {
         // Go to error page
@@ -89,6 +76,16 @@ function getAccessScope(token: String) {
         return playerScope
     } else {
         return "0"
+    }
+}
+
+function waitForWriteToLocalStorage() {
+    // Fix for concurrency issues with token read and write to localstorage
+    let i = 1
+    while ((defaultJwtHeaders().get("Authorization") === null
+        || defaultJwtHeaders().get("Authorization") === "null")
+    && i < 101) {
+        i++
     }
 }
 
