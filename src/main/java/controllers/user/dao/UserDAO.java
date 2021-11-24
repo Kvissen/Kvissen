@@ -67,11 +67,10 @@ public class UserDAO
 	 * @author Erlend
 	 */
 	public static UserAPI[] retrieveUser(String schoolId) throws SQLException {
-		String schoolIdClean = schoolId.replaceAll("[^a-zA-Z0-9æøå]", "");
 
 		// Create query
 		final String query = String.format("SELECT * FROM %s WHERE school_id LIKE '%s'",
-				Table.USER.TableName, schoolIdClean);
+				Table.USER.TableName, schoolId);
 
 		// Execute query
 		try {
