@@ -29,42 +29,38 @@ function PlayKvis() {
         }
     }
 
-    if (store.currentKvis === null || store.currentKvis.uuid === "0") {
-        return (
-            <CircularProgress data-testid="loginrecipient-test-progress"/>
-        )
-    } else {
+    return (
+        <div className={"main-container"}>
 
-        return (
-            <div className={"main-container"}>
+            {(store.currentKvis === null || store.currentKvis.uuid === "0") ?
+                <CircularProgress data-testid="loginrecipient-test-progress"/> : null}
 
-                <Box data-testid="playkvis-test-container">
+            <Box data-testid="playkvis-test-container">
 
-                    <QuestionBox question={store.currentKvis.questions[store.questionIndex]}/>
+                <QuestionBox question={store.currentKvis.questions[store.questionIndex]}/>
 
-                    <Box position={"absolute"} bottom={40} right={10} left={10}>
-                        <Grid direction='row' container spacing={4} justifyContent={"space-between"}
-                              alignItems={"center"}>
-                            {
-                                store.currentKvis.questions[store.questionIndex].answers.map((answer) => {
-                                    return (
-                                        <Grid data-testid="playkvis-test-answerbox" key={uuidv4()} item sm={6}>
-                                            <AnswerBox
-                                                answer={answer} onAnswerSelected={(isCorrect => {
-                                                store.addResult(isCorrect)
-                                                nextQuestion();
-                                            })}/>
-                                        </Grid>
-                                    )
-                                })
-                            }
+                <Box position={"absolute"} bottom={40} right={10} left={10}>
+                    <Grid direction='row' container spacing={4} justifyContent={"space-between"}
+                          alignItems={"center"}>
+                        {
+                            store.currentKvis.questions[store.questionIndex].answers.map((answer) => {
+                                return (
+                                    <Grid data-testid="playkvis-test-answerbox" key={uuidv4()} item sm={6}>
+                                        <AnswerBox
+                                            answer={answer} onAnswerSelected={(isCorrect => {
+                                            store.addResult(isCorrect)
+                                            nextQuestion();
+                                        })}/>
+                                    </Grid>
+                                )
+                            })
+                        }
 
-                        </Grid>
-                    </Box>
+                    </Grid>
                 </Box>
-            </div>
-        )
-    }
+            </Box>
+        </div>
+    )
 }
 
 const PlayKvisObserver = observer(PlayKvis)
