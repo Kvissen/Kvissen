@@ -290,21 +290,24 @@ export default function CreateKvisBox() {
                                         </FormControl>
                                     </Grid>
                                 </Grid>
-                                <Box mt={4} mb={4} display="flex"
-                                     justifyContent="center"
-                                     alignItems="center">
-                                    <Button
-                                        data-testid="createkvisbox-test-addquestion"
-                                        className="add-new-question"
-                                        variant="contained"
-                                        startIcon={<AddIcon/>}
-                                        onClick={() => {
-                                            addQuestion();
-                                        }}
-                                    >
-                                        Add another question
-                                    </Button>
-                                </Box>
+                                { i === kvis.questions.length-1 && (
+                                    <Box mt={4} mb={4} display="flex"
+                                         justifyContent="center"
+                                         alignItems="center">
+                                        <Button
+                                            data-testid="createkvisbox-test-addquestion"
+                                            className="add-new-question"
+                                            variant="contained"
+                                            startIcon={<AddIcon/>}
+                                            onClick={() => {
+                                                addQuestion();
+                                            }}
+                                        >
+                                            Add another question
+                                        </Button>
+                                    </Box>
+                                )
+                                }
                             </Card>
                         </Box>
                     )
