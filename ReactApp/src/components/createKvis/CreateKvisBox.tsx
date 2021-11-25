@@ -1,5 +1,15 @@
 import React, {useState} from "react";
-import {Card, Button, TextField, Grid, Box, Checkbox, CircularProgress} from "@mui/material";
+import {
+    Card,
+    Button,
+    TextField,
+    Grid,
+    Box,
+    Checkbox,
+    CircularProgress,
+    FormControl,
+    FormGroup, FormControlLabel, FormHelperText
+} from "@mui/material";
 import './CreateKvisStyleSheet.css'
 import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
@@ -12,10 +22,19 @@ import {useHistory} from "react-router-dom";
 
 export default function CreateKvisBox() {
 
-    const [kvis, setKvis] = useState<Kvis>(new Kvis("","","",0, [new Question(createInitialAnswerArray())]))
+    const [kvis, setKvis] = useState<Kvis>(new Kvis("", "", "", 0, [new Question(createInitialAnswerArray())]))
     const [isLoading, setIsLoading] = useState(false)
 
+    const [errorTitle, setErrorTitle] = useState<string>("Kvis name is required")
+    const [errorQuestion, setErrorQuestion] = useState<string>("Question is required")
+    const [errorAnswer, setErrorAnswer] = useState<string>("At least one answer is required")
+    const [errorCorrect, setErrorCorrect] = useState<string>("At least one answer needs to be correct")
+
     const history = useHistory();
+
+    function isKvisReadyToBeSaved() {
+        return errorTitle === "" && errorQuestion === "" && errorAnswer === "" && errorCorrect === ""
+    }
 
     async function saveKvis() {
         setIsLoading(true)
@@ -23,7 +42,7 @@ export default function CreateKvisBox() {
         kvis.creator = parseJwt(localStorage.getItem("access_token")!)["user-id"] as string
         let url = await KvisRepository.getInstance().addKvis(kvis);
         setIsLoading(false)
-        if(url){
+        if (url) {
             alert("Kvis created");
             history.goBack();
         } else {
@@ -42,6 +61,7 @@ export default function CreateKvisBox() {
                         data-testid="createkvisbox-test-done"
                         variant="contained"
                         startIcon={<CheckIcon/>}
+                        disabled={!isKvisReadyToBeSaved()}
                         onClick={async () => {
                             saveKvis();
                         }}
@@ -61,7 +81,7 @@ export default function CreateKvisBox() {
         setKvis({...kvis, name: newName, questions: newQuestions})
     }
 
-    function createInitialAnswerArray() : Answer[] {
+    function createInitialAnswerArray(): Answer[] {
         return [
             new Answer(),
             new Answer(),
@@ -71,7 +91,7 @@ export default function CreateKvisBox() {
     }
 
     return (
-        <div >
+        <div>
             <Box mt={2} mb={2} display="flex"
                  justifyContent="end"
                  alignItems="end">
@@ -81,12 +101,17 @@ export default function CreateKvisBox() {
                     data-testid="createkvisbox-test-kvisname"
                     label="Enter Kvis name"
                     fullWidth
+                    error={errorTitle !== ""}
+                    helperText={errorTitle}
                     onChange={(e) => {
+                        setErrorTitle(
+                            (e.target.value === "") ? "Kvis name is required" : ""
+                        )
                         kvis.name = e.target.value;
                     }}
                 />
             </Box>
-            {isLoading && <CircularProgress />}
+            {isLoading && <CircularProgress/>}
             {
                 kvis.questions.map((question, i) => {
                     return (
@@ -99,11 +124,16 @@ export default function CreateKvisBox() {
                                     label="Enter question"
                                     data-testid="createkvisbox-test-question"
                                     fullWidth
+                                    error={errorQuestion !== ""}
+                                    helperText={errorQuestion}
                                     onChange={(e) => {
+                                        setErrorQuestion(
+                                            (e.target.value === "") ? "Question is required" : ""
+                                        )
                                         question.question = e.target.value;
                                     }}
                                 />
-                                <Grid direction='row' container spacing={1}>
+                                <Grid direction='row' container spacing={7}>
                                     <Grid container item sm={6}>
                                         <TextField
                                             margin="normal"
@@ -111,34 +141,77 @@ export default function CreateKvisBox() {
                                             data-testid="createkvisbox-test-answer"
                                             label="Enter Answer 1"
                                             fullWidth
+                                            error={errorAnswer !== ""}
+                                            helperText={errorAnswer}
                                             onChange={(e) => {
+                                                setErrorAnswer(
+                                                    (e.target.value === "") ? "At least one answer is required" : ""
+                                                )
                                                 question.answers[0].answer = e.target.value
                                             }}
                                         />
-                                        <p>Correct</p>
-                                        <Checkbox
-                                            data-testid="createkvisbox-test-checkbox"
-                                            onChange={(e) => {
-                                            question.answers[0].isCorrect = e.target.checked
-                                        }}/>
+                                        <FormControl
+                                            required
+                                            error={errorCorrect !== ""}
+                                            variant="standard"
+                                        >
+                                            <FormGroup>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            data-testid="createkvisbox-test-checkbox"
+                                                            onChange={(e) => {
+                                                                setErrorCorrect(
+                                                                    (!e.target.checked) ? "At least one answer needs to be correct" : ""
+                                                                )
+                                                                question.answers[0].isCorrect = e.target.checked
+                                                            }}/>
+                                                    }
+                                                    label="Correct"
+                                                />
+                                            </FormGroup>
+                                            <FormHelperText>{errorCorrect}</FormHelperText>
+                                        </FormControl>
+
                                     </Grid>
                                     <Grid container item sm={6}>
                                         <TextField
-                                            margin="normal"
                                             required
+                                            margin="normal"
                                             data-testid="createkvisbox-test-answer"
                                             label="Enter Answer 2"
                                             fullWidth
+                                            error={errorAnswer !== ""}
+                                            helperText={errorAnswer}
                                             onChange={(e) => {
+                                                setErrorAnswer(
+                                                    (e.target.value === "") ? "At least one answer is required" : ""
+                                                )
                                                 question.answers[1].answer = e.target.value
                                             }}
                                         />
-                                        <p>Correct</p>
-                                        <Checkbox
-                                            data-testid="createkvisbox-test-checkbox"
-                                            onChange={(e) => {
-                                            question.answers[1].isCorrect = e.target.checked
-                                        }}/>
+                                        <FormControl
+                                            required
+                                            error={errorCorrect !== ""}
+                                            variant="standard"
+                                        >
+                                            <FormGroup>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            data-testid="createkvisbox-test-checkbox"
+                                                            onChange={(e) => {
+                                                                setErrorCorrect(
+                                                                    (!e.target.checked) ? "At least one answer needs to be correct" : ""
+                                                                )
+                                                                question.answers[1].isCorrect = e.target.checked
+                                                            }}/>
+                                                    }
+                                                    label="Correct"
+                                                />
+                                            </FormGroup>
+                                            <FormHelperText>{errorCorrect}</FormHelperText>
+                                        </FormControl>
                                     </Grid>
                                     <Grid container item sm={6}>
                                         <TextField
@@ -146,16 +219,37 @@ export default function CreateKvisBox() {
                                             label="Enter Answer 3"
                                             data-testid="createkvisbox-test-answer"
                                             fullWidth
+                                            error={errorAnswer !== ""}
+                                            helperText={errorAnswer}
                                             onChange={(e) => {
+                                                setErrorAnswer(
+                                                    (e.target.value === "") ? "At least one answer is required" : ""
+                                                )
                                                 question.answers[2].answer = e.target.value
                                             }}
                                         />
-                                        <p>Correct</p>
-                                        <Checkbox
-                                            data-testid="createkvisbox-test-checkbox"
-                                            onChange={(e) => {
-                                            question.answers[2].isCorrect = e.target.checked
-                                        }}/>
+                                        <FormControl
+                                            required
+                                            error={errorCorrect !== ""}
+                                            variant="standard"
+                                        >
+                                            <FormGroup>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            data-testid="createkvisbox-test-checkbox"
+                                                            onChange={(e) => {
+                                                                setErrorCorrect(
+                                                                    (!e.target.checked) ? "At least one answer needs to be correct" : ""
+                                                                )
+                                                                question.answers[2].isCorrect = e.target.checked
+                                                            }}/>
+                                                    }
+                                                    label="Correct"
+                                                />
+                                            </FormGroup>
+                                            <FormHelperText>{errorCorrect}</FormHelperText>
+                                        </FormControl>
                                     </Grid>
                                     <Grid container item sm={6}>
                                         <TextField
@@ -163,16 +257,37 @@ export default function CreateKvisBox() {
                                             label="Enter Answer 4"
                                             data-testid="createkvisbox-test-answer"
                                             fullWidth
+                                            error={errorAnswer !== ""}
+                                            helperText={errorAnswer}
                                             onChange={(e) => {
+                                                setErrorAnswer(
+                                                    (e.target.value === "") ? "At least one answer is required" : ""
+                                                )
                                                 question.answers[3].answer = e.target.value
                                             }}
                                         />
-                                        <p>Correct</p>
-                                        <Checkbox
-                                            data-testid="createkvisbox-test-checkbox"
-                                            onChange={(e) => {
-                                            question.answers[3].isCorrect = e.target.checked
-                                        }}/>
+                                        <FormControl
+                                            required
+                                            error={errorCorrect !== ""}
+                                            variant="standard"
+                                        >
+                                            <FormGroup>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            data-testid="createkvisbox-test-checkbox"
+                                                            onChange={(e) => {
+                                                                setErrorCorrect(
+                                                                    (!e.target.checked) ? "At least one answer needs to be correct" : ""
+                                                                )
+                                                                question.answers[3].isCorrect = e.target.checked
+                                                            }}/>
+                                                    }
+                                                    label="Correct"
+                                                />
+                                            </FormGroup>
+                                            <FormHelperText>{errorCorrect}</FormHelperText>
+                                        </FormControl>
                                     </Grid>
                                 </Grid>
                                 <Box mt={4} mb={4} display="flex"
