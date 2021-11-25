@@ -33,7 +33,7 @@ function PlayKvis() {
         <div className={"main-container"}>
 
             {(store.currentKvis === null || store.currentKvis.uuid === "0") ?
-                <CircularProgress data-testid="loginrecipient-test-progress"/> : null}
+                <CircularProgress/> : null}
 
             <Box data-testid="playkvis-test-container">
 
