@@ -8,6 +8,7 @@ export interface IKvisDao {
     updateKvis(id: string, newKvis: Kvis): Promise<Kvis>
     deleteKvis(id: string): Promise<boolean>
 
-    activeKvis(kvisActivate: KvisActivate): Promise<boolean>
+    activateKvis(kvisActivate: KvisActivate): Promise<String>
+
     getActivatedKvis(findId: string): Promise<Kvis>
 }

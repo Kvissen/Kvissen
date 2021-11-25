@@ -1,4 +1,4 @@
-import {Box, Button, Card } from "@mui/material";
+import {Box, Button, Card} from "@mui/material";
 import React, {useState} from "react";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import {Kvis} from "../../models/Kvis";
@@ -10,11 +10,11 @@ import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
 import {KvisRepository} from "../../data/repositories/KvisRepository";
 import {KvisActivate} from "../../models/KvisActivate";
+import store from "../../stores/KvisStore";
 
 export default function KvisListElement({kvis}: { kvis: Kvis }) {
 
     const [open, setOpen] = useState(false);
-    let activateKvisId = "";
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -25,9 +25,22 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
     };
 
     async function handleAssign() {
-        await KvisRepository.getInstance().activeKvis(new KvisActivate(kvis.uuid,activateKvisId));
-        handleClose();
-        alert("Kvis is now activated");
+        KvisRepository.getInstance().activateKvis(new KvisActivate(kvis.uuid, store.kvisCode))
+            .then((response) => {
+                    console.log("handleAssign: result: " + response + " " + store.kvisCode)
+                    handleClose();
+                    if (response === store.kvisCode) {
+                        alert("Kvis is now activated with code " + store.kvisCode);
+                    } else if (response === "in use") {
+                        alert("The code " + store.kvisCode + " is already in use.")
+                    } else {
+                        alert("Error")
+                    }
+                }
+            ).catch(() => {
+            handleClose()
+            alert("Could not activate Kvis as " + store.kvisCode)
+        })
     }
 
     function RenderDialog() {
@@ -47,7 +60,7 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                         fullWidth
                         variant="standard"
                         onChange={(e) => {
-                            activateKvisId = e.target.value;
+                            store.kvisCode = e.target.value;
                         }}
                     />
                 </DialogContent>
@@ -72,7 +85,8 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                         </div>
                         <div>
                             <h3 data-testid="kvislistelement-test-questions-header">Questions</h3>
-                            <p style={{margin: 0}} data-testid="kvislistelement-test-questions">{kvis.questions?.length} Questions</p>
+                            <p style={{margin: 0}}
+                               data-testid="kvislistelement-test-questions">{kvis.questions?.length} Questions</p>
                         </div>
                     </Box>
                     <Box p={2} display={"flex"} flexDirection={"column"} justifyContent={"space-between"}>

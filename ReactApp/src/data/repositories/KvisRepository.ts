@@ -35,11 +35,11 @@ export class KvisRepository implements IKvisRepository {
     }
 
     async updateKvis(id: string, newKvis: Kvis): Promise<Kvis> {
-        return await this.kvisDao.updateKvis(id,newKvis);
+        return await this.kvisDao.updateKvis(id, newKvis);
     }
 
-    async activeKvis(kvisActivate: KvisActivate): Promise<boolean> {
-        return await this.kvisDao.activeKvis(kvisActivate);
+    async activateKvis(kvisActivate: KvisActivate): Promise<String> {
+        return await this.kvisDao.activateKvis(kvisActivate);
     }
 
     async getActivatedKvis(findId: string): Promise<Kvis> {
