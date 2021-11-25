@@ -12,16 +12,16 @@ import java.sql.Timestamp;
 public class KvisActivatedAPIDTO
 {
 	public final String kvisId;
-	public final String interaction_code;
-	public final Timestamp activated_time;
+	public final String findId;
+	public final Timestamp activatedTime;
 	
 	@JsonCreator
 	public KvisActivatedAPIDTO(@JsonProperty("kvisId") final String kvisId,
-							   @JsonProperty("findId") final String interaction_code,
-							   @JsonProperty("activatedTimestamp") final Timestamp activated_time)
+							   @JsonProperty("findId") final String interactionCode,
+							   @JsonProperty("activatedTime") final Timestamp activatedTime)
 	{
 		this.kvisId = kvisId;
-		this.interaction_code = interaction_code;
-		this.activated_time = activated_time;
+		this.findId = interactionCode;
+		this.activatedTime = activatedTime;
 	}
 }
