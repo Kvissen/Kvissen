@@ -89,6 +89,21 @@ public class KvisAPIController
 	}
 	
 	@Path("activate")
+	@GET
+	//@RolesAllowed({creatorScope, playerScope})
+	@PermitAll
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllActive() throws SQLException, JsonProcessingException
+	{
+		// Metrics
+		Metrics.kvisGetActivated.inc();
+		
+		return Response
+				.ok(KvisActivationDAO.getAllActiveKvisses())
+				.build();
+	}
+	
+	@Path("activate")
 	@POST
 	@RolesAllowed({creatorScope})
 	@Produces(MediaType.APPLICATION_JSON)

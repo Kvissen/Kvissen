@@ -3,9 +3,11 @@ package controllers.kvis.dao;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import controllers.KvisDatabase;
 import controllers.Table;
+import controllers.kvis.dto.kvisAPI.KvisActivatedAPIDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * @author Alfred Röttger Rydahl
@@ -13,6 +15,34 @@ import java.sql.SQLException;
  **/
 public class KvisActivationDAO
 {
+	public static KvisActivatedAPIDTO[] getAllActiveKvisses() throws SQLException, JsonProcessingException
+	{
+		// Query String
+		final String query = String.format("SELECT * FROM %s", Table.ACTIVE_KVIS.TableName);
+		
+		// Execute and parse
+		return KvisDatabase.queryDatabase(
+				query,
+				new IResultSetParser<KvisActivatedAPIDTO[]>()
+				{
+					@Override
+					public KvisActivatedAPIDTO[] parse(ResultSet resultSet) throws SQLException, JsonProcessingException
+					{
+						ArrayList<KvisActivatedAPIDTO> list = new ArrayList<>(2);
+						while(resultSet.next())
+						{
+							list.add(new KvisActivatedAPIDTO(
+									resultSet.getString("kvis_id"),
+									resultSet.getString("interaction_code"),
+									resultSet.getTimestamp("activated_time")
+							));
+						}
+						return list.toArray(new KvisActivatedAPIDTO[0]);
+					}
+				}
+		);
+	}
+	
 	/**
 	 *
 	 *
