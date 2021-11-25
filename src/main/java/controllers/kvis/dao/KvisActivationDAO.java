@@ -47,6 +47,22 @@ public class KvisActivationDAO
 	}
 	
 	/**
+	 * Moves the given Kvis out of the group of active kvisses.
+	 *
+	 * @param id Kvis ID
+	 * @throws SQLException
+	 * @throws JsonProcessingException
+	 */
+	public static void deactivateKvis(final String id) throws SQLException, JsonProcessingException
+	{
+		// Query String
+		final String query = String.format("SELECT * FROM deactivate_kvis('%s*)", id);
+		
+		// Execute
+		KvisDatabase.queryDatabase(query, resultSet -> null);
+	}
+	
+	/**
 	 * Retrieve the Kvis unique ID from a find id.
 	 *
 	 * Return null if none was found.

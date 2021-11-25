@@ -110,7 +110,7 @@ public class KvisAPIController
 			Metrics.kvisActivatesFailed.inc();
 			
 			if (e.getMessage().contains("duplicate key"))
-			{ return Response.status(Response.Status.CONFLICT).build(); }
+				return Response.status(Response.Status.CONFLICT).build();
 			
 			// Other SQL exception
 			throw e;
@@ -153,6 +153,31 @@ public class KvisAPIController
 		{
 			// Failed Metrics
 			Metrics.kvisActivatedRequestFailed.inc();
+			throw e;
+		}
+	}
+	
+	@Path("deactivate/{kvis_id}")
+	@GET
+	@PermitAll
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deactivateKvis(@PathParam("kvis_id") final String kvis_id) throws SQLException, JsonProcessingException
+	{
+		// Metrics
+		Metrics.kvisDeactivationRequests.inc();
+		
+		try
+		{
+			// Deactivate
+			KvisActivationDAO.deactivateKvis(kvis_id);
+			
+			return Response.accepted().build();
+		}
+		catch (Exception e)
+		{
+			// Record failure metric
+			Metrics.kvisDeactivationRequestsFailed.inc();
+			
 			throw e;
 		}
 	}
