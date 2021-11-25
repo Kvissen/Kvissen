@@ -90,8 +90,7 @@ public class KvisAPIController
 	
 	@Path("activate")
 	@GET
-	//@RolesAllowed({creatorScope, playerScope})
-	@PermitAll
+	@RolesAllowed({creatorScope, playerScope})
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllActive() throws SQLException, JsonProcessingException
 	{
