@@ -102,15 +102,18 @@ public class KvisAPIController
 		{
 			final String result = KvisActivationDAO.activateKvis(kvisActivate.kvisId, kvisActivate.findId);
 			return Response
-					.ok(result)
+					.status(200)
+					.entity("\"" + result + "\"")
 					.build();
 		}
 		catch (PSQLException e)
 		{
 			Metrics.kvisActivatesFailed.inc();
-			
+
 			if (e.getMessage().contains("duplicate key"))
-				return Response.status(Response.Status.CONFLICT).build();
+				return Response.status(Response.Status.CONFLICT)
+						.entity("\"in use\"")
+						.build();
 			
 			// Other SQL exception
 			throw e;
