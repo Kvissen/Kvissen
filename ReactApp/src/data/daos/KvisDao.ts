@@ -73,6 +73,8 @@ class KvisDao implements IKvisDao{
             url: url,
             headers: defaultJwtHeaders(),
             body: kvisActivate
+        }).then(data => {
+            return data
         })
     }
 
