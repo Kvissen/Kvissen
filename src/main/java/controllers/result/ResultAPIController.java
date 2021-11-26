@@ -26,7 +26,8 @@ public class ResultAPIController
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getResultsId(@PathParam("kvisId") final String id) throws SQLException, JsonProcessingException
 	{
-		//TODO: Metrics
+		// Metrics
+		Metrics.kvisResultGetRequests.inc();
 		
 		// Serve request
 		try
@@ -37,7 +38,8 @@ public class ResultAPIController
 		}
 		catch (Exception e)
 		{
-			//TODO: Metrics
+			// Metrics
+			Metrics.kvisResultGetRequestsFailures.inc();
 			
 			throw e;
 		}
