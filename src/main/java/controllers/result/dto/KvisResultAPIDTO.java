@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.sql.Timestamp;
+import java.util.StringJoiner;
 
 /**
  * @author Alfred Röttger Rydahl
@@ -31,6 +32,21 @@ public class KvisResultAPIDTO
 		this.score 			= score;
 		this.correctAnswers = correctAnswers;
 		this.wrongAnswers 	= wrongAnswers;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return new StringJoiner(", ", KvisResultAPIDTO.class.getSimpleName() + "[", "]")
+				.add("id='" + id + "'")
+				.add("kvisId='" + kvisId + "'")
+				.add("name='" + name + "'")
+				.add("kvisStarted=" + kvisStarted)
+				.add("kvisEnded=" + kvisEnded)
+				.add("score=" + score)
+				.add("correctAnswers=" + correctAnswers)
+				.add("wrongAnswers=" + wrongAnswers)
+				.toString();
 	}
 	
 	@JsonPOJOBuilder(withPrefix = "set")

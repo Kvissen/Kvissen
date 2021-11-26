@@ -80,9 +80,10 @@ public class KvisResultDAO
 		// Create query
 		final String query = String.format(
 				"INSERT INTO %s " +
-				"(id, kvis_id, name, score, correct_answers, wrong_answers, kvis_started, kvis_ended) " +
+				"(kvis_id, name, score, correct_answers, wrong_answers, kvis_started, kvis_ended) " +
 				"VALUES " +
-				"(DEFAULT, '%s', %s, %s, %s, %s, %s, %s)",
+				"('%s', '%s', %s, %s, %s, '%s', '%s')" +
+				"RETURNING *",
 				Table.RESULT.TableName,
 				kvisResult.kvisId,
 				kvisResult.name,

@@ -89,6 +89,8 @@ public class ResultAPIController
 			// Metrics
 			Metrics.kvisResultCreationFailures.inc();
 			
+			System.err.println("Error occured with this object:\n" + apidto.toString());
+			
 			throw e;
 		}
 	}
