@@ -51,7 +51,7 @@ public class ResultAPIController
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getSpecificResult(@PathParam("kvisResultId") final String id) throws SQLException, JsonProcessingException
 	{
-		//TODO: Metrics
+		//TODO: Maybe add metrics, but probably not necessary?
 		
 		// Serve Request
 		try
@@ -62,7 +62,7 @@ public class ResultAPIController
 		}
 		catch (Exception e)
 		{
-			//TODO: Metrics
+			//TODO: Maybe add metrics, but probably not necessary?
 			throw e;
 		}
 	}
