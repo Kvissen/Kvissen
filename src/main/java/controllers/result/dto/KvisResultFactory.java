@@ -35,7 +35,7 @@ public class KvisResultFactory
 							.setId(resultSet.getString("id"))
 							.setKvisId(resultSet.getString("kvis_id"))
 							.setName(resultSet.getString("name"))
-							.setKvisEnded(resultSet.getTimestamp("kvis_started"))
+							.setKvisStarted(resultSet.getTimestamp("kvis_started"))
 							.setKvisEnded(resultSet.getTimestamp("kvis_ended"))
 							.setScore(resultSet.getInt("score"))
 							.setCorrectAnswers(resultSet.getInt("correct_answers"))
