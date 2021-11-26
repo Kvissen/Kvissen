@@ -13,9 +13,10 @@ import {KvisRepository} from "../../data/repositories/KvisRepository";
 import {KvisActivate} from "../../models/KvisActivate";
 import store from "../../stores/KvisStore";
 
-export default function KvisListElement({kvis, isActivated}: { kvis: Kvis, isActivated: boolean }) {
+export default function KvisListElement({kvis}: { kvis: Kvis}) {
 
     const [open, setOpen] = useState(false);
+    const [activatedKvisses, setActivatedKvisses] = useState<KvisActivate[]>([]);
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -23,6 +24,21 @@ export default function KvisListElement({kvis, isActivated}: { kvis: Kvis, isAct
     const handleClose = () => {
         setOpen(false);
     };
+
+    useEffect(() => {
+        fetchActivatedKvisses();
+    },[])
+
+    async function fetchActivatedKvisses() {
+       let activates = await KvisRepository.getInstance().getActivatedKvisses();
+       setActivatedKvisses(activates)
+    }
+
+    function isActivated() : boolean {
+        if (activatedKvisses.length > 0) return activatedKvisses.find(entity => entity.kvisId === kvis.uuid) !== undefined
+        else return false;
+
+}
 
     async function handleAssign() {
         await KvisRepository.getInstance().activateKvis(new KvisActivate(kvis.uuid, store.kvisCode))
@@ -121,7 +137,7 @@ export default function KvisListElement({kvis, isActivated}: { kvis: Kvis, isAct
                             Start Kvis
                         </Button>
                         {
-                            isActivated && <DeactivateKvisLayout/>
+                            isActivated() && <DeactivateKvisLayout/>
                         }
                     </Box>
 

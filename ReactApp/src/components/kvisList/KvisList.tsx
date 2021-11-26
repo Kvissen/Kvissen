@@ -12,7 +12,6 @@ export function KvisList() {
     const [isLoading, setIsLoading] = useState(true)
     const [kvisses, setKvisses] = useState<Kvis[]>([]);
     const [hasNoKvisses, setHasNoKvisses] = useState(false);
-    const [activatedKvisses, setActivatedKvisses] = useState<KvisActivate[]>([])
 
     useEffect(() => {
         fetchKvisses();
@@ -23,21 +22,16 @@ export function KvisList() {
         if (userId === null) {
             return
         }
-        let kvisActivates = await KvisRepository.getInstance().getActivatedKvisses();
         let kvisses = await KvisRepository.getInstance().getKvissesForUser(userId.user_id)
         if (kvisses.length === 0) {
             setHasNoKvisses(true)
         } else {
             setKvisses(kvisses)
         }
-        setActivatedKvisses(kvisActivates)
         setIsLoading(false)
     }
 
-    function isActivated(kvis : Kvis) : boolean {
-       if (activatedKvisses.length > 0) return activatedKvisses.find(entity => entity.kvisId === kvis.uuid) !== undefined
-       else return false;
-    }
+
 
        return (
         <div className="margin-container">
@@ -52,7 +46,7 @@ export function KvisList() {
                     kvisses.map((kvis) => {
                         return (
                             <Grid item sm={6} key={kvis.uuid}>
-                                <KvisListElement data-testid="kvislist-test-item" kvis={kvis} isActivated={isActivated(kvis)}/>
+                                <KvisListElement data-testid="kvislist-test-item" kvis={kvis} />
                             </Grid>
                         )
                     })
