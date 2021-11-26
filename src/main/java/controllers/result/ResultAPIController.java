@@ -2,6 +2,7 @@ package controllers.result;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import common.EnvVars;
+import controllers.prometheus.Metrics;
 import controllers.result.dao.KvisResultDAO;
 import controllers.result.dto.KvisResultAPIDTO;
 
@@ -70,7 +71,8 @@ public class ResultAPIController
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createResult(final KvisResultAPIDTO apidto) throws SQLException, JsonProcessingException
 	{
-		//TODO: Metrics
+		// Metrics
+		Metrics.kvisResultCreationAttempts.inc();
 		
 		// Serve Request
 		try
@@ -82,7 +84,9 @@ public class ResultAPIController
 		}
 		catch (Exception e)
 		{
-			//TODO: Metrics
+			// Metrics
+			Metrics.kvisResultCreationFailures.inc();
+			
 			throw e;
 		}
 	}

@@ -97,6 +97,18 @@ public class Metrics
 			.help("Total amount of calls to kvis deactivation that has failed")
 			.register();
 	
+	public final static Counter kvisResultCreationAttempts = Counter
+			.build()
+			.name("kvis_result_creation_attempts")
+			.help("Total amount of calls to kvis result creation endpoint")
+			.register();
+	
+	public final static Counter kvisResultCreationFailures = Counter
+			.build()
+			.name("kvis_result_creation_failures")
+			.help("Total amount of failed call to kvis result creation endpoint")
+			.register();
+	
 	// Defaults
 	public final static StandardExports standardExports= new StandardExports().register();
 	public final static MemoryPoolsExports memoryPoolsExports =  new MemoryPoolsExports().register();
