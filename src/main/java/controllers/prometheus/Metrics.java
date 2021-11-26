@@ -49,6 +49,12 @@ public class Metrics
 			.help("Total Kvis Creation failed attempts")
 			.register();
 	
+	public final static Counter kvisGetActivated = Counter
+			.build()
+			.name("kvis_get_activated")
+			.help("Total amount of request to the GET endpoint for active Kvisses")
+			.register();
+	
 	public final static Counter kvisActivateAttempts = Counter
 			.build()
 			.name("kvis_activate_attempts")
