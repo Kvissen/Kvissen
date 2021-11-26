@@ -5,6 +5,7 @@ import common.EnvVars;
 import controllers.result.dao.KvisResultDAO;
 import controllers.result.dto.KvisResultAPIDTO;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -20,6 +21,7 @@ public class ResultAPIController
 {
 	@Path("{kvisId}")
 	@GET
+	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getResultsId(@PathParam("kvisId") final String id) throws SQLException, JsonProcessingException
 	{
@@ -42,6 +44,7 @@ public class ResultAPIController
 	
 	@Path("specific/{kvisResultId}")
 	@GET
+	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getSpecificResult(@PathParam("kvisResultId") final String id) throws SQLException, JsonProcessingException
 	{
@@ -63,6 +66,7 @@ public class ResultAPIController
 	
 	@Path("create")
 	@POST
+	@PermitAll
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createResult(final KvisResultAPIDTO apidto) throws SQLException, JsonProcessingException
 	{

@@ -116,8 +116,7 @@ public class KvisAPIController
 		{
 			final String result = KvisActivationDAO.activateKvis(kvisActivate.kvisId, kvisActivate.findId);
 			return Response
-					.status(200)
-					.entity("\"" + result + "\"")
+					.ok(result)
 					.build();
 		}
 		catch (PSQLException e)
