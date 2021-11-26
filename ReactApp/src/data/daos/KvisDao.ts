@@ -89,5 +89,29 @@ class KvisDao implements IKvisDao{
         });
     }
 
+    async getActivatedKvisses(): Promise<KvisActivate[]> {
+        const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_ACTIVATE_KVIS
+        return await this.httpClient.request({
+            method: 'GET',
+            url: url,
+            headers: defaultJwtHeaders()
+        }).then(data => {
+            return data as KvisActivate[];
+        });
+    }
+
+    async deactivateKvis(id: string): Promise<boolean> {
+        const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_ACTIVATE_KVIS
+        return await this.httpClient.request({
+            method: 'DELETE',
+            url: url,
+            headers: defaultJwtHeaders()
+        }).then(data => {
+            return data;
+        });
+    }
+
+
+
 }
 export default KvisDao
