@@ -1,6 +1,7 @@
 import {Box, Button, Card} from "@mui/material";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import StopIcon from '@mui/icons-material/Stop';
 import {Kvis} from "../../models/Kvis";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -12,10 +13,9 @@ import {KvisRepository} from "../../data/repositories/KvisRepository";
 import {KvisActivate} from "../../models/KvisActivate";
 import store from "../../stores/KvisStore";
 
-export default function KvisListElement({kvis}: { kvis: Kvis }) {
+export default function KvisListElement({kvis, isActivated}: { kvis: Kvis, isActivated: boolean }) {
 
     const [open, setOpen] = useState(false);
-
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -25,7 +25,7 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
     };
 
     async function handleAssign() {
-        KvisRepository.getInstance().activateKvis(new KvisActivate(kvis.uuid, store.kvisCode))
+        await KvisRepository.getInstance().activateKvis(new KvisActivate(kvis.uuid, store.kvisCode))
             .then((response) => {
                     console.log("handleAssign: result: " + response + " " + store.kvisCode)
                     handleClose();
@@ -41,6 +41,25 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
             handleClose()
             alert("Could not activate Kvis as " + store.kvisCode)
         })
+    }
+
+    async function deactivateKvis() {
+    }
+
+    function DeactivateKvisLayout() {
+        return (
+            <Button
+                className="basic-button"
+                variant="contained"
+                data-testid="kvislistelement-test-play"
+                startIcon={<StopIcon/>}
+                onClick={async () => {
+                    await deactivateKvis();
+                }}
+            >
+                Stop Kvis
+            </Button>
+        )
     }
 
     function RenderDialog() {
@@ -101,6 +120,9 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                         >
                             Start Kvis
                         </Button>
+                        {
+                            isActivated && <DeactivateKvisLayout/>
+                        }
                     </Box>
 
                 </Box>
