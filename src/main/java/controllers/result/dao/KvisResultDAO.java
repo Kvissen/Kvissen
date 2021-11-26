@@ -60,7 +60,7 @@ public class KvisResultDAO
 	public static KvisResultAPIDTO[] getKvisResults(final String kvisId) throws SQLException, JsonProcessingException
 	{
 		// Create query
-		final String query = String.format("SELECT * FROM %s WHERE kvis_id='%s'", Table.RESULT, kvisId);
+		final String query = String.format("SELECT * FROM %s WHERE kvis_id='%s'", Table.RESULT.TableName, kvisId);
 		
 		// Execute
 		return getFromDatabase(query);
