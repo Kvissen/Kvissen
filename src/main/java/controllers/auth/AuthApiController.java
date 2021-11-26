@@ -1,5 +1,6 @@
 package controllers.auth;
 
+import controllers.prometheus.Metrics;
 import services.auth.AuthService;
 
 import javax.annotation.security.PermitAll;
@@ -20,9 +21,11 @@ public class AuthApiController {
     @PermitAll // Anyone can try to log in :-)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getLogin() {
+        Metrics.loginAttemptCounter.inc();
         try {
             return Response.seeOther(AuthService.login()).build();
         } catch (Exception e) {
+            Metrics.loginFailedCounter.inc();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
