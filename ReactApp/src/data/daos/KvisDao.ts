@@ -69,7 +69,7 @@ class KvisDao implements IKvisDao{
     async activateKvis(kvisActivate: KvisActivate): Promise<String> {
         const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_ACTIVATE_KVIS
         return await this.httpClient.request({
-            method: 'POST',
+            method: 'PUT',
             url: url,
             headers: defaultJwtHeaders(),
             body: kvisActivate
@@ -88,6 +88,30 @@ class KvisDao implements IKvisDao{
             return data as Kvis;
         });
     }
+
+    async getActivatedKvisses(): Promise<KvisActivate[]> {
+        const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_ACTIVATE_KVIS
+        return await this.httpClient.request({
+            method: 'GET',
+            url: url,
+            headers: defaultJwtHeaders()
+        }).then(data => {
+            return data
+        });
+    }
+
+    async deactivateKvis(id: string): Promise<boolean> {
+        const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_DEACTIVATE_KVIS + "/" + id;
+        return await this.httpClient.request({
+            method: 'PUT',
+            url: url,
+            headers: defaultJwtHeaders()
+        }).then(data => {
+            return data;
+        });
+    }
+
+
 
 }
 export default KvisDao

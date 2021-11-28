@@ -1,6 +1,7 @@
 import {Box, Button, Card} from "@mui/material";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import StopIcon from '@mui/icons-material/Stop';
 import {Kvis} from "../../models/Kvis";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -15,7 +16,7 @@ import store from "../../stores/KvisStore";
 export default function KvisListElement({kvis}: { kvis: Kvis }) {
 
     const [open, setOpen] = useState(false);
-
+    const [activatedKvisses, setActivatedKvisses] = useState<KvisActivate[]>([]);
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -24,23 +25,75 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
         setOpen(false);
     };
 
+    useEffect(() => {
+        fetchActivatedKvisses();
+    },[])
+
+    async function fetchActivatedKvisses() {
+       let activates = await KvisRepository.getInstance().getActivatedKvisses();
+       setActivatedKvisses(activates)
+    }
+
+    function isActivated() : boolean {
+        if (activatedKvisses.length > 0) return activatedKvisses.find(entity => entity.kvisId === kvis.uuid) !== undefined
+        else return false;
+
+}
+
     async function handleAssign() {
-        KvisRepository.getInstance().activateKvis(new KvisActivate(kvis.uuid, store.kvisCode))
+        await KvisRepository.getInstance().activateKvis(new KvisActivate(kvis.uuid, store.kvisCode))
             .then((response) => {
                     console.log("handleAssign: result: " + response + " " + store.kvisCode)
-                    handleClose();
                     if (response === store.kvisCode) {
+                        let newActivated = activatedKvisses
+                        newActivated.push(new KvisActivate(kvis.uuid,store.kvisCode))
+                        setActivatedKvisses(newActivated)
                         alert("Kvis is now activated with code " + store.kvisCode);
                     } else if (response === "in use") {
                         alert("The code " + store.kvisCode + " is already in use.")
                     } else {
                         alert("Error")
                     }
+                handleClose();
                 }
             ).catch(() => {
             handleClose()
             alert("Could not activate Kvis as " + store.kvisCode)
         })
+    }
+
+    async function deactivateKvis() {
+        await KvisRepository.getInstance().deactivateKvis(kvis.uuid)
+            .then(result => {
+                if (result) {
+                    activatedKvisses.forEach((e, i) => {
+                        if (e.kvisId === kvis.uuid) {
+                            alert("Kvis deactivated")
+                            let newActivated = activatedKvisses.slice(i, 1);
+                            setActivatedKvisses(newActivated)
+                        }
+                    })
+
+                }
+            })
+
+
+    }
+
+    function DeactivateKvisLayout() {
+        return (
+            <Button
+                className="basic-button"
+                variant="contained"
+                data-testid="kvislistelement-test-deactivate"
+                startIcon={<StopIcon/>}
+                onClick={async () => {
+                    await deactivateKvis();
+                }}
+            >
+                Stop Kvis
+            </Button>
+        )
     }
 
     function RenderDialog() {
@@ -101,6 +154,9 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                         >
                             Start Kvis
                         </Button>
+                        {
+                            isActivated() && <DeactivateKvisLayout/>
+                        }
                     </Box>
 
                 </Box>

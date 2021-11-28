@@ -86,7 +86,7 @@ public class KvisActivationDAO
 	public static void deactivateKvis(final String id) throws SQLException, JsonProcessingException
 	{
 		// Query String
-		final String query = String.format("SELECT * FROM deactivate_kvis('%s*)", id);
+		final String query = String.format("SELECT * FROM deactivate_kvis('%s')", id);
 		
 		// Execute
 		KvisDatabase.queryDatabase(query, resultSet -> null);

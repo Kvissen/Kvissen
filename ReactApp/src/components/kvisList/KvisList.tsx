@@ -29,6 +29,9 @@ export function KvisList() {
         }
         setIsLoading(false)
     }
+
+
+
        return (
         <div className="margin-container">
             {isLoading && <CircularProgress />}
@@ -42,7 +45,7 @@ export function KvisList() {
                     kvisses.map((kvis) => {
                         return (
                             <Grid item sm={6} key={kvis.uuid}>
-                                <KvisListElement data-testid="kvislist-test-item" kvis={kvis}/>
+                                <KvisListElement data-testid="kvislist-test-item" kvis={kvis} />
                             </Grid>
                         )
                     })

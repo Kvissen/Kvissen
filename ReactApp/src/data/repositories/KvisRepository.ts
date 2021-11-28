@@ -46,4 +46,14 @@ export class KvisRepository implements IKvisRepository {
         return await this.kvisDao.getActivatedKvis(findId);
     }
 
+    async getActivatedKvisses(): Promise<KvisActivate[]> {
+        return await this.kvisDao.getActivatedKvisses();
+    }
+
+    async deactivateKvis(id: string): Promise<boolean> {
+        return await this.kvisDao.deactivateKvis(id);
+    }
+
+
+
 }

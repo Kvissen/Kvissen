@@ -9,6 +9,7 @@ export interface IKvisRepository {
     deleteKvis(id: string): Promise<boolean>
 
     activateKvis(kvisActivate: KvisActivate): Promise<String>
-
     getActivatedKvis(findId: string): Promise<Kvis>
+    getActivatedKvisses(): Promise<KvisActivate[]>
+    deactivateKvis(id: string): Promise<boolean>
 }
