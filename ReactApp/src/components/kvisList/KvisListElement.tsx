@@ -85,7 +85,7 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
             <Button
                 className="basic-button"
                 variant="contained"
-                data-testid="kvislistelement-test-play"
+                data-testid="kvislistelement-test-deactivate"
                 startIcon={<StopIcon/>}
                 onClick={async () => {
                     await deactivateKvis();

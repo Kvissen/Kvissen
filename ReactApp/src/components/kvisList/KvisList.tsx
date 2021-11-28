@@ -5,7 +5,6 @@ import {Kvis} from "../../models/Kvis";
 import {useEffect, useState} from "react";
 import {KvisRepository} from "../../data/repositories/KvisRepository";
 import jwt from "jsonwebtoken";
-import {KvisActivate} from "../../models/KvisActivate";
 
 export function KvisList() {
 
