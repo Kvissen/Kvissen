@@ -17,11 +17,11 @@ export function KvisList() {
     },[])
 
     async function fetchKvisses() {
-        let userId = jwt.decode(localStorage.getItem("access_token")!) as { "user-id": string; }
+        let userId = jwt.decode(localStorage.getItem("access_token")!) as { "user_id": string; }
         if (userId === null) {
             return
         }
-        let kvisses = await KvisRepository.getInstance().getKvissesForUser(userId["user-id"])
+        let kvisses = await KvisRepository.getInstance().getKvissesForUser(userId.user_id)
         if (kvisses.length === 0) {
             setHasNoKvisses(true)
         } else {

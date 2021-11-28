@@ -49,6 +49,12 @@ public class Metrics
 			.help("Total Kvis Creation failed attempts")
 			.register();
 	
+	public final static Counter kvisGetActivated = Counter
+			.build()
+			.name("kvis_get_activated")
+			.help("Total amount of request to the GET endpoint for active Kvisses")
+			.register();
+	
 	public final static Counter kvisActivateAttempts = Counter
 			.build()
 			.name("kvis_activate_attempts")
@@ -57,7 +63,7 @@ public class Metrics
 	
 	public final static Counter kvisActivatesFailed = Counter
 			.build()
-			.name("kvis_activates_failed")
+			.name("kvis_activate_failed")
 			.help("Total Kvis activations failed")
 			.register();
 	
@@ -77,6 +83,18 @@ public class Metrics
 			.build()
 			.name("kvis_get_activated_failed")
 			.help("Total Failed requests on /kvis/activate/{findId} due to Exception")
+			.register();
+	
+	public final static Counter kvisDeactivationRequests = Counter
+			.build()
+			.name("kvis_deactivation_requests")
+			.help("Total amount of calls to kvis deactivation")
+			.register();
+	
+	public final static Counter kvisDeactivationRequestsFailed = Counter
+			.build()
+			.name("kvis_deactivation_requests_failed")
+			.help("Total amount of calls to kvis deactivation that has failed")
 			.register();
 	
 	// Defaults

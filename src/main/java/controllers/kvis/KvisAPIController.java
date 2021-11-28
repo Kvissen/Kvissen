@@ -9,7 +9,6 @@ import controllers.kvis.dto.kvisAPI.KvisActivateAPIDTO;
 import controllers.prometheus.Metrics;
 import org.postgresql.util.PSQLException;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -89,7 +88,21 @@ public class KvisAPIController
 	}
 	
 	@Path("activate")
-	@POST
+	@GET
+	@RolesAllowed({creatorScope, playerScope})
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllActive() throws SQLException, JsonProcessingException
+	{
+		// Metrics
+		Metrics.kvisGetActivated.inc();
+		
+		return Response
+				.ok(KvisActivationDAO.getAllActiveKvisses())
+				.build();
+	}
+	
+	@Path("activate")
+	@PUT
 	@RolesAllowed({creatorScope})
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -102,15 +115,18 @@ public class KvisAPIController
 		{
 			final String result = KvisActivationDAO.activateKvis(kvisActivate.kvisId, kvisActivate.findId);
 			return Response
-					.ok(result)
+					.status(200)
+					.entity("\"" + result + "\"")
 					.build();
 		}
 		catch (PSQLException e)
 		{
 			Metrics.kvisActivatesFailed.inc();
-			
+
 			if (e.getMessage().contains("duplicate key"))
-			{ return Response.status(Response.Status.CONFLICT).build(); }
+				return Response.status(Response.Status.CONFLICT)
+						.entity("\"in use\"")
+						.build();
 			
 			// Other SQL exception
 			throw e;
@@ -125,7 +141,7 @@ public class KvisAPIController
 	
 	@Path("activate/{findId}")
 	@GET
-	@PermitAll
+	@RolesAllowed({creatorScope, playerScope})
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response retrieveActivatedKvis(@PathParam("findId") final String findId) throws SQLException, JsonProcessingException
 	{
@@ -153,6 +169,31 @@ public class KvisAPIController
 		{
 			// Failed Metrics
 			Metrics.kvisActivatedRequestFailed.inc();
+			throw e;
+		}
+	}
+	
+	@Path("deactivate/{kvis_id}")
+	@PUT
+	@RolesAllowed({creatorScope})
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deactivateKvis(@PathParam("kvis_id") final String kvis_id) throws SQLException, JsonProcessingException
+	{
+		// Metrics
+		Metrics.kvisDeactivationRequests.inc();
+		
+		try
+		{
+			// Deactivate
+			KvisActivationDAO.deactivateKvis(kvis_id);
+			
+			return Response.accepted().build();
+		}
+		catch (Exception e)
+		{
+			// Record failure metric
+			Metrics.kvisDeactivationRequestsFailed.inc();
+			
 			throw e;
 		}
 	}

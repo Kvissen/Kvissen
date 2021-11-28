@@ -14,7 +14,7 @@ class KvisStore {
         makePersistable(this, {
             name: 'KvisLocalData',
             properties: ["kvisCode", "result", "currentKvis",
-                "questionIndex", "completedKvis", "completedResult"],
+                "questionIndex", "completedKvis", "completedResult", "currentUser"],
             expireIn: 1800000, // Half hour
             removeOnExpiration: true,
             storage: window.localStorage
@@ -30,19 +30,23 @@ class KvisStore {
     currentKvis: Kvis = new Kvis()
     completedKvis: Kvis[] = []
     questionIndex = 0
+    currentUser = "Unknown"
 
-    startQuiz = () => {
+    startQuiz = async () => {
         this.result.answerResults.length = 0
-        // Debug print
-        console.log("StartQuiz was called. \nCurrentKvis: " +
-            this.currentKvis.name + "\nResults length: " +
-            this.result.answerResults.length + "\nIndex: " +
-            this.questionIndex)
+        this.currentKvis = new Kvis()
+        await this.getActivatedKvis().then(() => {
 
-        // Update result object with quiz code on start quiz
-        this.result.kvisId = this.currentKvis.uuid // id is not kvisCode!
+            // Debug print
+            console.log("StartQuiz was called. \nCurrentKvis: " +
+                this.currentKvis.name + "\nResults length: " +
+                this.result.answerResults.length + "\nIndex: " +
+                this.questionIndex)
+
+            // Update result object with quiz code on start quiz
+            this.result.kvisId = this.currentKvis.uuid // id is not kvisCode!
+        })
     }
-
     // Add the Kvis to completed, remove current
     setKvisCompleted() {
         this.completedKvis.push(this.currentKvis)
@@ -61,18 +65,19 @@ class KvisStore {
         console.log(store.currentKvis)
     }
 
-    async getQuiz() {
-        await KvisRepository.getInstance().getKvisses().then(result => {
-            if (result === null || result[0] === null) {
-                console.log("Got no result from server. Check validation and network.")
-            }
-            this.currentKvis = result[0];
-            console.log("getQuiz was called. \nCurrentKvis: " +
-                this.currentKvis.name + "\nResults length: " +
-                this.result.answerResults.length + "\nIndex: " +
-                this.questionIndex)
-        })
-    }
+    // Marked for deletion, pass test first
+    // async getQuiz() {
+    //     await KvisRepository.getInstance().getKvisses().then(result => {
+    //         if (result === null || result[0] === null) {
+    //             console.log("Got no result from server. Check validation and network.")
+    //         }
+    //         this.currentKvis = result[0];
+    //         console.log("getQuiz was called. \nCurrentKvis: " +
+    //             this.currentKvis.name + "\nResults length: " +
+    //             this.result.answerResults.length + "\nIndex: " +
+    //             this.questionIndex)
+    //     })
+    // }
 
     async getActivatedKvis() {
         await KvisRepository.getInstance().getActivatedKvis(this.kvisCode)
@@ -81,7 +86,7 @@ class KvisStore {
                     return;
                 }
                 this.currentKvis = result;
-            } )
+            })
     }
 
     startMockQuiz() {

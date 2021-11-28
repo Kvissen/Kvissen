@@ -5,6 +5,7 @@ import {CircularProgress} from "@mui/material";
 import {useHistory, useLocation} from 'react-router-dom'
 import jwt from 'jsonwebtoken'
 import {defaultJwtHeaders} from "../../data/headers/urlHeaders";
+import store from "../../stores/KvisStore";
 
 // Redirect page for login to the Kvis Server
 function LoginRecipient() {
@@ -22,13 +23,19 @@ function LoginRecipient() {
     if (scope === creatorScope) {
         // Store creator token
         storeToken(searchParams).then(() => {
-            waitForWriteToLocalStorage()
+            // Save the external user id for UI
+            storeUserExternalId(searchParams)
+            // Make sure token is saved
+            confirmWriteToLocalStorage()
+            // Go to edit page
             history.push("/landing")
         })
     } else if (scope === playerScope) {
         // Store player token
         storeToken(searchParams).then(() => {
-            waitForWriteToLocalStorage()
+            // Make sure token is saved
+            confirmWriteToLocalStorage()
+            // Go to play kvis page
             history.replace("/play-kvis")
         })
     } else {
@@ -63,6 +70,19 @@ function getScopeFromSearchParams(searchParams: URLSearchParams) {
     return scope
 }
 
+
+function storeUserExternalId(searchParams: URLSearchParams) {
+    let token: String | null = searchParams.get('token')
+
+    // Get id and store in MobX
+    if (token !== null && token.length > 16) {
+        const {external_id} = jwt.decode(token.toString()) as {
+            external_id: string;
+        };
+        store.currentUser = external_id
+    }
+}
+
 function getAccessScope(token: String) {
     const {scope} = jwt.decode(token.toString()) as {
         scope: string;
@@ -79,7 +99,7 @@ function getAccessScope(token: String) {
     }
 }
 
-function waitForWriteToLocalStorage() {
+function confirmWriteToLocalStorage() {
     // Fix for concurrency issues with token read and write to localstorage
     let i = 1
     while ((defaultJwtHeaders().get("Authorization") === null
