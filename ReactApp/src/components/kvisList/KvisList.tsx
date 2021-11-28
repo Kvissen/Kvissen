@@ -12,10 +12,16 @@ export function KvisList() {
     const [isLoading, setIsLoading] = useState(true)
     const [kvisses, setKvisses] = useState<Kvis[]>([]);
     const [hasNoKvisses, setHasNoKvisses] = useState(false);
+    const [rerender, setRerender] = useState(false);
 
     useEffect(() => {
         fetchKvisses();
     },[])
+
+    function render(render: boolean) {
+        setRerender(render);
+        console.log("Render")
+    }
 
     async function fetchKvisses() {
         let userId = jwt.decode(localStorage.getItem("access_token")!) as { "user_id": string; }
@@ -46,7 +52,7 @@ export function KvisList() {
                     kvisses.map((kvis) => {
                         return (
                             <Grid item sm={6} key={kvis.uuid}>
-                                <KvisListElement data-testid="kvislist-test-item" kvis={kvis} />
+                                <KvisListElement data-testid="kvislist-test-item" kvis={kvis} rerender={(value) => render(value)} />
                             </Grid>
                         )
                     })

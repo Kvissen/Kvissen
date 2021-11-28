@@ -101,7 +101,7 @@ class KvisDao implements IKvisDao{
     }
 
     async deactivateKvis(id: string): Promise<boolean> {
-        const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_ACTIVATE_KVIS
+        const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_DEACTIVATE_KVIS + "/" + id;
         return await this.httpClient.request({
             method: 'PUT',
             url: url,
