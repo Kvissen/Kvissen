@@ -13,7 +13,7 @@ import {KvisRepository} from "../../data/repositories/KvisRepository";
 import {KvisActivate} from "../../models/KvisActivate";
 import store from "../../stores/KvisStore";
 
-export default function KvisListElement({kvis, rerender}: { kvis: Kvis, rerender: (value: boolean) => void}) {
+export default function KvisListElement({kvis}: { kvis: Kvis }) {
 
     const [open, setOpen] = useState(false);
     const [activatedKvisses, setActivatedKvisses] = useState<KvisActivate[]>([]);
@@ -35,7 +35,6 @@ export default function KvisListElement({kvis, rerender}: { kvis: Kvis, rerender
     }
 
     function isActivated() : boolean {
-        console.log("isActivated")
         if (activatedKvisses.length > 0) return activatedKvisses.find(entity => entity.kvisId === kvis.uuid) !== undefined
         else return false;
 
@@ -45,18 +44,17 @@ export default function KvisListElement({kvis, rerender}: { kvis: Kvis, rerender
         await KvisRepository.getInstance().activateKvis(new KvisActivate(kvis.uuid, store.kvisCode))
             .then((response) => {
                     console.log("handleAssign: result: " + response + " " + store.kvisCode)
-                    handleClose();
                     if (response === store.kvisCode) {
                         let newActivated = activatedKvisses
                         newActivated.push(new KvisActivate(kvis.uuid,store.kvisCode))
                         setActivatedKvisses(newActivated)
                         alert("Kvis is now activated with code " + store.kvisCode);
-                        rerender(true);
                     } else if (response === "in use") {
                         alert("The code " + store.kvisCode + " is already in use.")
                     } else {
                         alert("Error")
                     }
+                handleClose();
                 }
             ).catch(() => {
             handleClose()
@@ -67,16 +65,16 @@ export default function KvisListElement({kvis, rerender}: { kvis: Kvis, rerender
     async function deactivateKvis() {
         await KvisRepository.getInstance().deactivateKvis(kvis.uuid)
             .then(result => {
-                activatedKvisses.forEach((e, i) => {
-                    if (e.kvisId === kvis.uuid){
-                        let newActivated = activatedKvisses
-                        newActivated.slice(i,1);
-                        setActivatedKvisses(newActivated)
-                        console.log("Removed")
-                        rerender(false);
-                    }
-                })
-                alert("Kvis deactivatedx")
+                if (result) {
+                    activatedKvisses.forEach((e, i) => {
+                        if (e.kvisId === kvis.uuid) {
+                            alert("Kvis deactivated")
+                            let newActivated = activatedKvisses.slice(i, 1);
+                            setActivatedKvisses(newActivated)
+                        }
+                    })
+
+                }
             })
 
 
