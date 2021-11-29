@@ -22,7 +22,7 @@ public class KvisAPIDTO
 	public final Timestamp ts;
 	public final Question[] questions;
 	
-	private KvisAPIDTO(String uuid, String name, String creator, Timestamp ts, Question[] questions)
+	private KvisAPIDTO(final String uuid, final String name, final String creator, final Timestamp ts, final Question[] questions)
 	{
 		this.uuid = uuid;
 		this.name = name;
@@ -40,32 +40,32 @@ public class KvisAPIDTO
 		private Timestamp ts;
 		private Question[] questions;
 		
-		public KvisAPIDTOBuilder setUuid(String uuid)
+		public KvisAPIDTOBuilder setUuid(final String uuid)
 		{
 			this.uuid = uuid;
 			return this;
 		}
 		
-		public KvisAPIDTOBuilder setName(String name)
+		public KvisAPIDTOBuilder setName(final String name)
 		{
 			this.name = name;
 			return this;
 		}
 		
-		public KvisAPIDTOBuilder setCreator(String creator)
+		public KvisAPIDTOBuilder setCreator(final String creator)
 		{
 			this.creator = creator;
 			return this;
 		}
 		
 		@JsonProperty("ts")
-		public KvisAPIDTOBuilder setTimestamp(Timestamp ts)
+		public KvisAPIDTOBuilder setTimestamp(final Timestamp ts)
 		{
 			this.ts = ts;
 			return this;
 		}
 		
-		public KvisAPIDTOBuilder setQuestions(Question[] questions)
+		public KvisAPIDTOBuilder setQuestions(final Question[] questions)
 		{
 			this.questions = questions;
 			return this;

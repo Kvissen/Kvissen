@@ -10,7 +10,8 @@ public enum Table
 {
 	KVIS("kvissen"),
 	ACTIVE_KVIS("active_kvisses"),
-	USER("users");
+	USER("users"),
+	RESULT("kvis_result");
 	
 	/**
 	 * The name of the table to be used with SQL statements.
