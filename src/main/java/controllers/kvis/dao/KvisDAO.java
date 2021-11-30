@@ -70,7 +70,43 @@ public final class KvisDAO
 		}))[0]; }
 		catch (Exception e)
 		{
-			System.out.println("KvisDAO.getSingle() failed:\n" + e.getMessage()); throw e;
+			System.err.println("KvisDAO.getSingle() failed:\n" + e.getMessage()); throw e;
+		}
+	}
+	
+	/**
+	 * This function delete the given Kvis from the Database. This is function is idempotent, which
+	 * means, calling this function more than once with the same argument results in the same state.
+	 *
+	 * @param id The Unique ID of the Kvis to be Deleted
+	 * @throws SQLException
+	 * @throws JsonProcessingException
+	 */
+	public static void deleteKvis(final String id) throws SQLException, JsonProcessingException
+	{
+		// Prepare query
+		final String query = String.format(
+				"DELETE FROM %s WHERE kvis_id='%s'",
+				Table.KVIS.TableName,
+				id
+		);
+		
+		// Execute, but parsing is not necessary
+		try
+		{
+			KvisDatabase.queryDatabase(query, new IResultSetParser<Object>()
+			{
+				@Override
+				public Object parse(ResultSet resultSet) throws SQLException, JsonProcessingException
+				{
+					return null;
+				}
+			});
+		}
+		catch (Exception e)
+		{
+			System.err.printf("Delete Kvis error with ID: %s%n", id);
+			throw e;
 		}
 	}
 	
