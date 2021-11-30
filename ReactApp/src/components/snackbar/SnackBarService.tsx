@@ -29,6 +29,7 @@ export const ConfirmationServiceProvider = ({ children }) => {
     };
 
     return (
+        // Ref: https://codesandbox.io/s/neat-dialogs-3h5ou?from-embed=&file=/src/ConfirmationService.tsx:1198-1234
         <>
             <ConfirmationServiceContext.Provider
                 value={openConfirmation}
