@@ -5,19 +5,10 @@ import {useHistory} from "react-router-dom";
 import {store} from "../../stores/KvisStore";
 import {observer} from "mobx-react";
 import {v4 as uuidv4} from "uuid";
-import React, {useEffect} from "react";
+import React from "react";
 
 function PlayKvis() {
     const history = useHistory();
-
-    useEffect(() => {
-        // Run only once (on load)
-        store.startQuiz().then(() => {
-            if (store.currentKvis.uuid === "0") {
-                alert('Could not find Kvis "' + store.kvisCode + '"')
-            }
-        })
-    }, []);
 
     function nextQuestion() {
         if (store.questionIndex < store.currentKvis.questions.length - 1) {
@@ -55,7 +46,6 @@ function PlayKvis() {
                                 )
                             })
                         }
-
                     </Grid>
                 </Box>
             </Box>
