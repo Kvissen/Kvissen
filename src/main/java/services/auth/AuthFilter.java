@@ -41,7 +41,7 @@ public class AuthFilter implements javax.ws.rs.container.ContainerRequestFilter 
             //Access denied for all
             if (method.isAnnotationPresent(DenyAll.class)) {
                 requestContext.abortWith(Response.status(Response.Status.FORBIDDEN)
-                        .entity("Access blocked for all users !!").build());
+                        .entity("\"Access blocked for all users!!\"").build());
                 return;
             }
 
@@ -52,7 +52,7 @@ public class AuthFilter implements javax.ws.rs.container.ContainerRequestFilter 
             // Block if no auth
             if (authorization == null || authorization.isEmpty()) {
                 requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-                        .entity("You cannot access this resource").build());
+                        .entity("\"You cannot access this resource\"").build());
                 return;
             }
 
@@ -61,13 +61,12 @@ public class AuthFilter implements javax.ws.rs.container.ContainerRequestFilter 
             Claims claims;
             try {
                 token = authorization.get(0);
-                System.out.println("Received token? " + token);
                 claims = AuthService.validate(authorization.get(0));
             } catch (Exception e) {
                 System.out.println("Failed to validate token.");
                 e.printStackTrace();
                 requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-                        .entity("You cannot access this resource").build());
+                        .entity("\"You cannot access this resource\"").build());
                 return;
             }
 
@@ -75,11 +74,9 @@ public class AuthFilter implements javax.ws.rs.container.ContainerRequestFilter 
             if (method.isAnnotationPresent(RolesAllowed.class)) {
                 RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
                 Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
-                if (rolesSet.contains(claims.get("scope"))) {
-                    System.out.println("Approved " + claims.get("external-id") + " as " + claims.get("scope"));
-                } else {
+                if (!rolesSet.contains(claims.get("scope"))) {
                     requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-                            .entity("You cannot access this resource").build());
+                            .entity("\"You cannot access this resource\"").build());
                 }
             }
         }
