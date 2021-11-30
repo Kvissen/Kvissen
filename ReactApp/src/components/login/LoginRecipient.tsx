@@ -29,6 +29,8 @@ function LoginRecipient() {
             confirmWriteToLocalStorage()
             // Go to edit page
             history.push("/landing")
+            // Reload to ensure token storage
+            window.location.reload()
         })
     } else if (scope === playerScope) {
         // Store player token

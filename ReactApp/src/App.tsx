@@ -13,7 +13,7 @@ import ErrorPage from "./components/error/ErrorPage";
 import PlayKvisObserver from "./components/playKvis/PlayKvis";
 import KvisSummaryObserver from "./components/playKvisSummary/KvisSummary";
 import GuardedRoute from "./util/GuardedRoute";
-import {isAuthenticated} from "./util/Util";
+import {isLoggedInAs} from "./util/Util";
 
 function App() {
     return (
@@ -33,9 +33,9 @@ function App() {
                         <Route exact path="/summary-kvis">
                             <KvisSummaryObserver/>
                         </Route>
-                        <GuardedRoute path="/create-kvis" component={CreateKvisObserver} auth={isAuthenticated()}/>
-                        <GuardedRoute path='/landing' component={LandingObserver} auth={isAuthenticated()}/>
-                        <GuardedRoute path="/kvis-list" component={KvisListObserver} auth={isAuthenticated()}/>
+                        <GuardedRoute path="/create-kvis" component={CreateKvisObserver} auth={isLoggedInAs("creator")}/>
+                        <GuardedRoute path='/landing' component={LandingObserver} auth={isLoggedInAs("creator")}/>
+                        <GuardedRoute path="/kvis-list" component={KvisListObserver} auth={isLoggedInAs("creator")}/>
                         <Route exact path="/login-redirect">
                             <LoginRedirectObserver/>
                         </Route>
