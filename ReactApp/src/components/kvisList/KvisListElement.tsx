@@ -38,7 +38,16 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
         if (activatedKvisses.length > 0) return activatedKvisses.find(entity => entity.kvisId === kvis.uuid) !== undefined
         else return false;
 
-}
+    }
+
+    function getKvisCode() : string {
+        let activateKvis = activatedKvisses.find(entity => entity.kvisId === kvis.uuid)
+        if (activateKvis === undefined) {
+            return "Kvis not activated"
+        }
+        return activateKvis.findId;
+    }
+
 
     async function handleAssign() {
         await KvisRepository.getInstance().activateKvis(new KvisActivate(kvis.uuid, store.kvisCode))
@@ -137,9 +146,14 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                             <p data-testid="kvislistelement-test-kvisname">{kvis.name}</p>
                         </div>
                         <div>
-                            <h3 data-testid="kvislistelement-test-questions-header">Questions</h3>
-                            <p style={{margin: 0}}
+                            <h3 style={{margin: 0}} data-testid="kvislistelement-test-questions-header">Questions</h3>
+                            <p
                                data-testid="kvislistelement-test-questions">{kvis.questions?.length} Questions</p>
+                        </div>
+                        <div>
+                            <h3 data-testid="kvislistelement-test-findid-header">Kvis code</h3>
+                            <p style={{margin: 0}}
+                                data-testid="kvislistelement-test-findid">{getKvisCode()}</p>
                         </div>
                     </Box>
                     <Box p={2} display={"flex"} flexDirection={"column"} justifyContent={"space-between"}>
@@ -147,6 +161,7 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                             className="basic-button"
                             variant="contained"
                             data-testid="kvislistelement-test-play"
+                            disabled={isActivated()}
                             startIcon={<PlayArrowIcon/>}
                             onClick={() => {
                                 handleClickOpen();
