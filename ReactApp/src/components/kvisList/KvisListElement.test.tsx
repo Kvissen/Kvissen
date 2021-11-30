@@ -36,5 +36,4 @@ it('should assign properties correctly', () => {
 
     expect(questions).toBeTruthy();
     expect(questions.textContent).toBe(mockKvis.questions.length + " Questions")
-    expect(questions).toHaveStyle({margin: 0})
 });
