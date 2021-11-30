@@ -86,7 +86,7 @@ public final class KvisDAO
 	{
 		// Prepare query
 		final String query = String.format(
-				"DELETE FROM %s WHERE kvis_id='%s'",
+				"DELETE FROM %s WHERE kvis_id='%s' RETURNING *",
 				Table.KVIS.TableName,
 				id
 		);
