@@ -75,20 +75,6 @@ public class KvisResultAPIDTO
 			);
 		}
 		
-		public KvisResultAPIDTO buildWithScore(final int score)
-		{
-			return new KvisResultAPIDTO(
-					this.id,
-					this.kvisId,
-					this.name,
-					this.kvisStarted,
-					this.kvisEnded,
-					score,
-					this.correctAnswers,
-					this.wrongAnswers
-			);
-		}
-		
 		public Builder deepCopy(final KvisResultAPIDTO kvisResult)
 		{
 			this.id 			= kvisResult.id;
