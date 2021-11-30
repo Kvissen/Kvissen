@@ -35,8 +35,17 @@ function LoginRecipient() {
         storeToken(searchParams).then(() => {
             // Make sure token is saved
             confirmWriteToLocalStorage()
-            // Go to play kvis page
-            history.replace("/play-kvis")
+            // Fetch the Kvis
+            store.startQuiz().then(() => {
+                if (store.currentKvis.uuid === "0") {
+                    // Go back
+                    alert('Could not find Kvis "' + store.kvisCode + '"')
+                    history.replace("/")
+                } else {
+                    // Go to play kvis page
+                    history.replace("/play-kvis")
+                }
+            })
         })
     } else {
         // Go to error page
