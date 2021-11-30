@@ -153,7 +153,7 @@ public final class KvisDAO
 		try {
 			// Prepare query
 			final String query = String.format(
-					"INSERT INTO %s (name, created, user_id, kvis) VALUES('%s', '%s','%s', '%s') RETURNING *",
+					"INSERT INTO %s (name, created, user_id, kvis) VALUES(\"%s\", \"%s\",\"%s\", \"%s\") RETURNING *",
 					Table.KVIS.TableName,
 					dbdto.name,
 					dbdto.ts,
