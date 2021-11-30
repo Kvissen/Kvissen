@@ -1,19 +1,18 @@
 import * as React from "react";
 import {GlobalSnackbar, SnackbarOptions} from "./GlobalSnackbar";
-import {Snackbar} from "@mui/material";
 
-const ConfirmationServiceContext = React.createContext<
+const SnackbarServiceContext = React.createContext<
     (options: SnackbarOptions) => Promise<void>
     >(Promise.reject);
 
-export const useConfirmation = () =>
-    React.useContext(ConfirmationServiceContext);
+export const useSnackbar = () =>
+    React.useContext(SnackbarServiceContext);
 
 // @ts-ignore
-export const ConfirmationServiceProvider = ({ children }) => {
+export const SnackbarServiceProvider = ({ children }) => {
     const [
-        confirmationState,
-        setConfirmationState
+        snackbarState,
+        setSnackbarState
     ] = React.useState<SnackbarOptions | null>(null);
 
     const awaitingPromiseRef = React.useRef<{
@@ -21,25 +20,29 @@ export const ConfirmationServiceProvider = ({ children }) => {
         reject: () => void;
     }>();
 
-    const openConfirmation = (options: SnackbarOptions) => {
-        setConfirmationState(options);
+    const handleClose = () => {
+        setSnackbarState(null);
+    };
+
+    const openSnackbar = (options: SnackbarOptions) => {
+        setSnackbarState(options);
         return new Promise<void>((resolve, reject) => {
             awaitingPromiseRef.current = { resolve, reject };
         });
     };
 
     return (
-        // Ref: https://codesandbox.io/s/neat-dialogs-3h5ou?from-embed=&file=/src/ConfirmationService.tsx:1198-1234
         <>
-            <ConfirmationServiceContext.Provider
-                value={openConfirmation}
+            <SnackbarServiceContext.Provider
+                value={openSnackbar}
                 children={children}
             />
 
             <GlobalSnackbar
-                open={Boolean(confirmationState)}
-                variant={confirmationState?.variant!}
-                message={confirmationState?.message!}
+                open={Boolean(snackbarState)}
+                severity={snackbarState?.severity!}
+                message={snackbarState?.message!}
+                onClose={handleClose}
                 />
 
         </>

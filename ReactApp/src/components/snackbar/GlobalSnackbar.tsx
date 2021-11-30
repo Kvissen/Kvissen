@@ -1,55 +1,32 @@
 import * as React from "react";
-import {
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogContentText,
-    DialogActions,
-    Button
-} from "@mui/material";
+import {Alert, Snackbar} from "@mui/material";
 
 export interface SnackbarOptions {
-    variant: "danger" | "success";
+    severity: "error" | "success" | "info" | "warning";
     message: string;
 }
 
 interface SnackbarProps extends SnackbarOptions {
     open: boolean;
+    onClose: () => void;
 }
 
-export const GlobalSnackbar: React.FC<SnackbarProps> = ({
+export const GlobalSnackbar: React.FC<SnackbarProps>
+    = ({
            open,
-           variant,
-            message
+           severity,
+           message,
+           onClose
        }) => {
     return (
-        <div></div>
-        /*
-        <Dialog open={open}>
-            <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
-            <DialogContent>
-                <DialogContentText>{description}</DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                {variant === "danger" && (
-                    <>
-                        <Button color="primary" onClick={onSubmit}>
-                            Yes, I agree
-                        </Button>
-                        <Button color="primary" onClick={onClose} autoFocus>
-                            CANCEL
-                        </Button>
-                    </>
-                )}
-
-                {variant === "success" && (
-                    <Button color="primary" onClick={onSubmit}>
-                        OK
-                    </Button>
-                )}
-            </DialogActions>
-        </Dialog>
-
-         */
+        <Snackbar
+            open={open}
+            autoHideDuration={6000}
+            anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+            onClose={onClose}>
+            <Alert sx={{width: '100%'}} severity={severity} variant={"filled"}>
+                {message}
+            </Alert>
+        </Snackbar>
     );
 };

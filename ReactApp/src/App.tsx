@@ -14,42 +14,47 @@ import PlayKvisObserver from "./components/playKvis/PlayKvis";
 import KvisSummaryObserver from "./components/playKvisSummary/KvisSummary";
 import GuardedRoute from "./util/GuardedRoute";
 import {isLoggedInAs} from "./util/Util";
+import {SnackbarServiceProvider} from "./components/snackbar/SnackBarService";
 
 function App() {
     return (
-        <HashRouter>
-            <Grid container spacing={2} id={"maingrid"}>
-                <Grid item xs={12}>
-                    <Header/>
+        <SnackbarServiceProvider>
+            <HashRouter>
+                <Grid container spacing={2} id={"maingrid"}>
+                    <Grid item xs={12}>
+                        <Header/>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Switch>
+                            <Route exact path="/">
+                                <EnterCodeObserver/>
+                            </Route>
+                            <Route exact path="/play-kvis">
+                                <PlayKvisObserver/>
+                            </Route>
+                            <Route exact path="/summary-kvis">
+                                <KvisSummaryObserver/>
+                            </Route>
+                            <GuardedRoute path="/create-kvis" component={CreateKvisObserver}
+                                          auth={isLoggedInAs("creator")}/>
+                            <GuardedRoute path='/landing' component={LandingObserver} auth={isLoggedInAs("creator")}/>
+                            <GuardedRoute path="/kvis-list" component={KvisListObserver}
+                                          auth={isLoggedInAs("creator")}/>
+                            <Route exact path="/login-redirect">
+                                <LoginRedirectObserver/>
+                            </Route>
+                            <Route exact path="/login-recipient">
+                                <LoginRecipientObserver/>
+                            </Route>
+                            <Route exact path="/error-page">
+                                <ErrorPage/>
+                            </Route>
+                            <Route render={() => <h1>404</h1>}/>
+                        </Switch>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                    <Switch>
-                        <Route exact path="/">
-                            <EnterCodeObserver/>
-                        </Route>
-                        <Route exact path="/play-kvis">
-                            <PlayKvisObserver/>
-                        </Route>
-                        <Route exact path="/summary-kvis">
-                            <KvisSummaryObserver/>
-                        </Route>
-                        <GuardedRoute path="/create-kvis" component={CreateKvisObserver} auth={isLoggedInAs("creator")}/>
-                        <GuardedRoute path='/landing' component={LandingObserver} auth={isLoggedInAs("creator")}/>
-                        <GuardedRoute path="/kvis-list" component={KvisListObserver} auth={isLoggedInAs("creator")}/>
-                        <Route exact path="/login-redirect">
-                            <LoginRedirectObserver/>
-                        </Route>
-                        <Route exact path="/login-recipient">
-                            <LoginRecipientObserver/>
-                        </Route>
-                        <Route exact path="/error-page">
-                            <ErrorPage/>
-                        </Route>
-                        <Route render={() => <h1>404</h1>}/>
-                    </Switch>
-                </Grid>
-            </Grid>
-        </HashRouter>
+            </HashRouter>
+        </SnackbarServiceProvider>
     )
 }
 
