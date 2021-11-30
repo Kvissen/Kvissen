@@ -34,6 +34,7 @@ class KvisStore {
 
     startQuiz = async () => {
         this.result.answerResults.length = 0
+        this.questionIndex = 0
         this.currentKvis = new Kvis()
         await this.getActivatedKvis().then(() => {
 
