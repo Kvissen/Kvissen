@@ -5,6 +5,7 @@ import common.EnvVars;
 import controllers.prometheus.Metrics;
 import controllers.result.dao.KvisResultDAO;
 import controllers.result.dto.KvisResultAPIDTO;
+import controllers.result.model.ScoreCalculator;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.*;
@@ -79,7 +80,19 @@ public class ResultAPIController
 		// Serve Request
 		try
 		{
-			final KvisResultAPIDTO created = KvisResultDAO.createKvisResult(apidto);
+			// Calculate result
+			final KvisResultAPIDTO object = new KvisResultAPIDTO.Builder()
+					.deepCopy(apidto)
+					.setScore(ScoreCalculator.calculate(
+							apidto.correctAnswers,
+							apidto.correctAnswers + apidto.wrongAnswers)
+					)
+					.build();
+			
+			// Put in DB
+			final KvisResultAPIDTO created = KvisResultDAO.createKvisResult(object);
+			
+			// Response
 			return Response
 					.created(URI.create(EnvVars.BASE_URL + "/api/kvis_result/specific/" + created.id))
 					.build();
