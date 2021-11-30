@@ -97,9 +97,8 @@ public class AuthService {
         }
 
         // User does not exist: Create new and return id.
-        UserAPI newUser = new UserAPI(UUID.randomUUID().toString(), externalId);
-        UserDAO.createUser(newUser);
-        return newUser.uuid;
+        UserAPI user = UserDAO.createUser(new UserAPI(null, externalId));
+        return user.uuid;
     }
 }
 
