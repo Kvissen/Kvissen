@@ -41,7 +41,6 @@ export function KvisList() {
                         if (newKvisses.length === 0) {
                             setHasNoKvisses(true);
                         }
-                        console.log(newKvisses);
                         setKvisses(newKvisses)
                     }
                     setIsLoading(false)
