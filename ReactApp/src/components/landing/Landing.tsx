@@ -4,15 +4,25 @@ import AddIcon from "@mui/icons-material/Add";
 import React from "react";
 import ViewListIcon from '@mui/icons-material/ViewList';
 import {useHistory} from "react-router-dom";
+import jwt from "jsonwebtoken";
 
 export function Landing() {
 
-    const name = "Christian"
     const history = useHistory();
+
+    function getNameOfUser() : string {
+        let token = localStorage.getItem("access_token")
+        if (token !== null) {
+            let string =  jwt.decode(token) as {"external_id" : string}
+            return string.external_id;
+        }
+        return ""
+    }
+
     return (
         <div className="margin-container">
             <Box display={"flex"} justifyContent={"center"} alignItems={"center"} flexDirection={"column"}>
-                <h1 data-testid="landing-test-header-h1">Welcome {name} to the Kvis</h1>
+                <h1 data-testid="landing-test-header-h1">Welcome {getNameOfUser()} to the Kvis</h1>
                 <h3 data-testid="landing-test-header-h3">You have the following options</h3>
             </Box>
 

@@ -1,5 +1,14 @@
+import jwt from "jsonwebtoken";
+
 export function isAuthenticated() : boolean {
-    return localStorage.getItem("access_token") !== null;
+    let token = localStorage.getItem("access_token")
+    if (token !== null){
+        let scope = jwt.decode(token) as { scope: string; };
+        if (scope.scope == "creator") {
+            return true
+        }
+    }
+    return false;
 }
 
 export function parseJwt(token: string) {
