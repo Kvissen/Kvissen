@@ -1,15 +1,22 @@
 import jwt from "jsonwebtoken";
 
-export function isAuthenticated() : boolean {
-    let token = localStorage.getItem("access_token")
-    if (token !== null){
-        let scope = jwt.decode(token) as { scope: string; };
-        if (scope.scope == "creator") {
-            return true
-        }
-    }
-    return false;
+export function isLoggedInAs(role: string) {
+
+    // Check null
+    const token = localStorage.getItem("access_token")
+    if (token === null || token === undefined || token === "null") return false
+
+    // Check faulty or expired
+    const decodedToken = jwt.decode(token, {complete: true})
+    if (decodedToken === undefined || decodedToken === null) return false
+
+    // if (decodedToken.payload.exp!! < new Date().getTime()) return false
+
+    // Check wrong scope
+    const {scope} = jwt.decode(token) as { scope: string; };
+    return scope === role;
 }
+
 
 export function parseJwt(token: string) {
     var base64Url = token.split('.')[1];

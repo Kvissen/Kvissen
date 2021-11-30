@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import jwt from "jsonwebtoken";
+import {isLoggedInAs} from "../../util/Util";
 
 export default function DropDownMenu() {
     const history = useHistory()
@@ -70,23 +71,6 @@ export default function DropDownMenu() {
             </Menu>
         </div>
     );
-}
-
-function isLoggedInAs(role: string) {
-
-    // Check null
-    const token = localStorage.getItem("access_token")
-    if (token === null || token === undefined || token === "null") return false
-
-    // Check faulty or expired
-    const decodedToken = jwt.decode(token, {complete: true})
-    if (decodedToken === undefined || decodedToken === null) return false
-
-    // if (decodedToken.payload.exp!! < new Date().getTime()) return false
-
-    // Check wrong scope
-    const {scope} = jwt.decode(token) as { scope: string; };
-    return scope === role;
 }
 
 export function LoginComponent() {
