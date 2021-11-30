@@ -8,6 +8,6 @@ public class ScoreCalculator
 {
 	public static int calculate(final int correct, final int total)
 	{
-		return correct * 100 / total;
+		return (int) Math.round((double)correct * 100.0 / (double)total);
 	}
 }
