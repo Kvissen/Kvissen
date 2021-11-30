@@ -10,7 +10,7 @@ class HttpClient implements IHttpClient {
 
         return fetch(requestOption.url, option)
             .then(res => {
-                if (res.status === 201 || res.status === 202){
+                if (res.status === 201 || res.status === 202 || res.status === 204) {
                     return true
                 } else {
                     return res.json()

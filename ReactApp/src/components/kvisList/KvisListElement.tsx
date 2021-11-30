@@ -1,5 +1,5 @@
 import {Box, Button, Card} from "@mui/material";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import {Kvis} from "../../models/Kvis";
@@ -9,11 +9,12 @@ import DialogContentText from "@mui/material/DialogContentText";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
+import DeleteIcon from '@mui/icons-material/Delete';
 import {KvisRepository} from "../../data/repositories/KvisRepository";
 import {KvisActivate} from "../../models/KvisActivate";
 import store from "../../stores/KvisStore";
 
-export default function KvisListElement({kvis}: { kvis: Kvis }) {
+export default function KvisListElement({kvis, onDelete}: { kvis: Kvis, onDelete: (id: string) => (void) }) {
 
     const [open, setOpen] = useState(false);
     const [activatedKvisses, setActivatedKvisses] = useState<KvisActivate[]>([]);
@@ -89,20 +90,13 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
 
     }
 
-    function DeactivateKvisLayout() {
-        return (
-            <Button
-                className="basic-button"
-                variant="contained"
-                data-testid="kvislistelement-test-deactivate"
-                startIcon={<StopIcon/>}
-                onClick={async () => {
-                    await deactivateKvis();
-                }}
-            >
-                Stop Kvis
-            </Button>
-        )
+    async function deleteKvis() {
+        await KvisRepository.getInstance().deleteKvis(kvis.uuid)
+            .then(result => {
+                if (result) {
+                    onDelete(kvis.uuid);
+                }
+            })
     }
 
     function RenderDialog() {
@@ -160,6 +154,18 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                         <Button
                             className="basic-button"
                             variant="contained"
+                            color="error"
+                            data-testid="kvislistelement-test-delete"
+                            startIcon={<DeleteIcon/>}
+                            onClick={async () => {
+                                await deleteKvis();
+                            }}
+                        >
+                            Delete Kvis
+                        </Button>
+                        <Button
+                            className="basic-button"
+                            variant="contained"
                             data-testid="kvislistelement-test-play"
                             disabled={isActivated()}
                             startIcon={<PlayArrowIcon/>}
@@ -169,9 +175,18 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                         >
                             Start Kvis
                         </Button>
-                        {
-                            isActivated() && <DeactivateKvisLayout/>
-                        }
+                        <Button
+                            className="basic-button"
+                            variant="contained"
+                            data-testid="kvislistelement-test-deactivate"
+                            disabled={!isActivated()}
+                            startIcon={<StopIcon/>}
+                            onClick={async () => {
+                                await deactivateKvis();
+                            }}
+                        >
+                            Stop Kvis
+                        </Button>
                     </Box>
 
                 </Box>

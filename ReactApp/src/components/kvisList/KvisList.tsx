@@ -14,7 +14,7 @@ export function KvisList() {
 
     useEffect(() => {
         fetchKvisses();
-    },[])
+    }, [])
 
     async function fetchKvisses() {
         let userId = jwt.decode(localStorage.getItem("access_token")!) as { "user_id": string; }
@@ -30,11 +30,18 @@ export function KvisList() {
         setIsLoading(false)
     }
 
+    function onDeleteKvis(id : string) {
+        kvisses.forEach((e, i) => {
+            if (e.uuid === id) {
+                let newKvisses = kvisses.slice(i, 1);
+                setKvisses(newKvisses)
+            }
+        })
+    }
 
-
-       return (
+    return (
         <div className="margin-container">
-            {isLoading && <CircularProgress />}
+            {isLoading && <CircularProgress/>}
             {
                 hasNoKvisses && <h1> You have no Kvisses. Go create some</h1>
             }
@@ -45,7 +52,7 @@ export function KvisList() {
                     kvisses.map((kvis) => {
                         return (
                             <Grid item sm={6} key={kvis.uuid}>
-                                <KvisListElement data-testid="kvislist-test-item" kvis={kvis} />
+                                <KvisListElement data-testid="kvislist-test-item" kvis={kvis} onDelete={(id) => {onDeleteKvis(id)}}/>
                             </Grid>
                         )
                     })

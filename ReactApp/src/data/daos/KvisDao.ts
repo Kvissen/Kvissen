@@ -35,8 +35,14 @@ class KvisDao implements IKvisDao{
     }
 
     async deleteKvis(id: string): Promise<boolean> {
-        // TODO: Implement me
-        return Promise.resolve(false)
+        const url = process.env.REACT_APP_BASE_URL! + process.env.REACT_APP_API_DELETE_KVIS + "/" + id
+        return await this.httpClient.request({
+            method: 'DELETE',
+            headers: defaultJwtHeaders(), // Headers that allow access to play the game
+            url: url
+        }).then(data => {
+            return data
+        });
     }
 
     async getKvisses(): Promise<Kvis[]> {
