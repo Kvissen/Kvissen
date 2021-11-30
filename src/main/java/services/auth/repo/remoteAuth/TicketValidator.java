@@ -26,7 +26,6 @@ public class TicketValidator {
 
         if (body != null && body.toLowerCase().contains("yes")) {
             id = body.substring(4);
-            System.out.println("Logged in with DTU: " + id);
 
         } else if (body != null && body.toLowerCase().contains("no")) {
             throw new NotAuthorizedException("Login rejected by issuer");
