@@ -75,6 +75,34 @@ public class KvisResultAPIDTO
 			);
 		}
 		
+		public KvisResultAPIDTO buildWithScore(final int score)
+		{
+			return new KvisResultAPIDTO(
+					this.id,
+					this.kvisId,
+					this.name,
+					this.kvisStarted,
+					this.kvisEnded,
+					score,
+					this.correctAnswers,
+					this.wrongAnswers
+			);
+		}
+		
+		public Builder deepCopy(final KvisResultAPIDTO kvisResult)
+		{
+			this.id 			= kvisResult.id;
+			this.kvisId 		= kvisResult.kvisId;
+			this.name 			= kvisResult.name;
+			this.kvisStarted 	= kvisResult.kvisStarted;
+			this.kvisEnded 		= kvisResult.kvisEnded;
+			this.score 			= kvisResult.score;
+			this.correctAnswers = kvisResult.correctAnswers;
+			this.wrongAnswers 	= kvisResult.wrongAnswers;
+			
+			return this;
+		}
+		
 		public Builder setId(String id)
 		{
 			this.id = id;
