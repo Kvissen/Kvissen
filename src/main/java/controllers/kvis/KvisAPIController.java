@@ -93,22 +93,14 @@ public class KvisAPIController
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteKvis(@PathParam("id") final String id) throws SQLException, JsonProcessingException
 	{
-		//TODO: Add metrics
+		// Add metrics
+		Metrics.kvisDeleteAttempts.inc();
 		
-		try
-		{
-			// Do delete
-			KvisDAO.deleteKvis(id);
-			
-			// Send Response
-			return Response.noContent().build();
-		}
-		catch (Exception e)
-		{
-			//TODO: Add metrics
-			
-			throw e;
-		}
+		// Do delete
+		KvisDAO.deleteKvis(id);
+		
+		// Send Response
+		return Response.noContent().build();
 	}
 	
 	@Path("activate")

@@ -37,6 +37,12 @@ public class Metrics
 			.help("Total request to the /kvis/user/{username}")
 			.register();
 	
+	public final static Counter kvisDeleteAttempts = Counter
+			.build()
+			.name("kvis_delete_attempts")
+			.help("Total amount of calls to the kvis/delete endpoint")
+			.register();
+	
 	public final static Counter kvisCreateAttempts = Counter
 			.build()
 			.name("kvis_create_attempts")
