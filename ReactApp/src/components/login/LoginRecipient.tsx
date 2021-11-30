@@ -6,6 +6,7 @@ import {useHistory, useLocation} from 'react-router-dom'
 import jwt from 'jsonwebtoken'
 import {defaultJwtHeaders} from "../../data/headers/urlHeaders";
 import store from "../../stores/KvisStore";
+import {useSnackbar} from "../snackbar/SnackBarService";
 
 // Redirect page for login to the Kvis Server
 function LoginRecipient() {
@@ -17,6 +18,7 @@ function LoginRecipient() {
     // Get path search param
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
+    const snackbar = useSnackbar()
 
     let scope = getScopeFromSearchParams(searchParams)
 
@@ -41,7 +43,10 @@ function LoginRecipient() {
             store.startQuiz().then(() => {
                 if (store.currentKvis.uuid === "0") {
                     // Go back
-                    alert('Could not find Kvis "' + store.kvisCode + '"')
+                    snackbar({
+                        severity : "error",
+                        message: 'Could not find Kvis "' + store.kvisCode + '"'
+                    })
                     history.replace("/")
                 } else {
                     // Go to play kvis page
