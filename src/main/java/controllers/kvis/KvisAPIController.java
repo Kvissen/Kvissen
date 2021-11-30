@@ -87,6 +87,30 @@ public class KvisAPIController
 		}
 	}
 	
+	@Path("delete/{id}")
+	@DELETE
+	@RolesAllowed({creatorScope})
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteKvis(@PathParam("id") final String id) throws SQLException, JsonProcessingException
+	{
+		//TODO: Add metrics
+		
+		try
+		{
+			// Do delete
+			KvisDAO.deleteKvis(id);
+			
+			// Send Response
+			return Response.noContent().build();
+		}
+		catch (Exception e)
+		{
+			//TODO: Add metrics
+			
+			throw e;
+		}
+	}
+	
 	@Path("activate")
 	@GET
 	@RolesAllowed({creatorScope, playerScope})
