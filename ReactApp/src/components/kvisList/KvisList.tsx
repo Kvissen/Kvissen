@@ -30,14 +30,29 @@ export function KvisList() {
         setIsLoading(false)
     }
 
-    function onDeleteKvis(id : string) {
-        kvisses.forEach((e, i) => {
-            if (e.uuid === id) {
-                let newKvisses = kvisses.slice(i, 1);
-                setKvisses(newKvisses)
-            }
-        })
+    async function onDeleteKvis(id: string) {
+        setIsLoading(true)
+        let kvis = kvisses.find(entity => entity.uuid === id);
+        if (kvis !== undefined) {
+            await KvisRepository.getInstance().deleteKvis(kvis.uuid)
+                .then(result => {
+                    if (result) {
+                        let newKvisses = kvisses.filter(e => e.uuid !== kvis!.uuid)
+                        if (newKvisses.length === 0) {
+                            setHasNoKvisses(true);
+                        }
+                        console.log(newKvisses);
+                        setKvisses(newKvisses)
+                    }
+                    setIsLoading(false)
+                })
+                .catch(res => {
+                    setIsLoading(false)
+                })
+        }
+
     }
+
 
     return (
         <div className="margin-container">
@@ -52,7 +67,9 @@ export function KvisList() {
                     kvisses.map((kvis) => {
                         return (
                             <Grid item sm={6} key={kvis.uuid}>
-                                <KvisListElement data-testid="kvislist-test-item" kvis={kvis} onDelete={(id) => {onDeleteKvis(id)}}/>
+                                <KvisListElement data-testid="kvislist-test-item" kvis={kvis} onDelete={async (id) => {
+                                    onDeleteKvis(id)
+                                }}/>
                             </Grid>
                         )
                     })

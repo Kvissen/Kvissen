@@ -1,5 +1,5 @@
 import {Box, Button, Card} from "@mui/material";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import {Kvis} from "../../models/Kvis";
@@ -91,12 +91,7 @@ export default function KvisListElement({kvis, onDelete}: { kvis: Kvis, onDelete
     }
 
     async function deleteKvis() {
-        await KvisRepository.getInstance().deleteKvis(kvis.uuid)
-            .then(result => {
-                if (result) {
-                    onDelete(kvis.uuid);
-                }
-            })
+        onDelete(kvis.uuid)
     }
 
     function RenderDialog() {
