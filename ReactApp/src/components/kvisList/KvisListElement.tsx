@@ -147,6 +147,7 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                             className="basic-button"
                             variant="contained"
                             data-testid="kvislistelement-test-play"
+                            disabled={isActivated()}
                             startIcon={<PlayArrowIcon/>}
                             onClick={() => {
                                 handleClickOpen();
