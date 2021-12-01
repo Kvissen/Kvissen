@@ -93,8 +93,8 @@ class KvisStore {
 
         // Note: Undefined means 'use default value' here
         const result = new ResultDTO(
+            undefined,
             this.result.kvisId,
-            this.currentKvis.uuid.toString(),
             undefined,
             this.result.startTime,
             undefined,

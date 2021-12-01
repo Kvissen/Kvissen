@@ -1,3 +1,4 @@
+// Erlend
 import {IHttpClient} from "../infrastructure/IHttpClient";
 import HttpClient from "../infrastructure/HttpClient";
 import {defaultJwtHeaders} from "../headers/urlHeaders";
@@ -35,7 +36,7 @@ class ResultDao implements IResultDao {
             body: kvisResult
         }).then((result) => {
             // Debug log
-            console.log("ResultDao.addResults: " + result)
+            console.log("ResultDao.addResults got this url from server: " + result)
 
             return this.httpClient.request({
                 method: 'GET',

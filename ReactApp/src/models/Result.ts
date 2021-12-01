@@ -1,3 +1,4 @@
+// Erlend
 // Data class for result of a quiz as stored locally in MobX
 
 export class Result {
@@ -10,7 +11,7 @@ export class Result {
 }
 
 export class ResultDTO {
-    constructor(public id: String = "Not Set",
+    constructor(public id: String = "no uuid set",
                 public kvisId: String,
                 public name: String | null = "No Name",
                 public kvisStarted: number,
