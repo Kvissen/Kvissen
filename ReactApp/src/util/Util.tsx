@@ -29,14 +29,14 @@ export function parseJwt(token: string) {
     return JSON.parse(jsonPayload);
 }
 
-export function successSnackbar(snackbar : (options: SnackbarOptions) => Promise<void>, successMessage: string){
+export function showSuccessSnackbar(snackbar : (options: SnackbarOptions) => Promise<void>, successMessage: string){
     snackbar({
         severity: "success",
         message: successMessage
     });
 }
 
-export function errorSnackbar(snackbar : (options: SnackbarOptions) => Promise<void>, errorMessage: string){
+export function showErrorSnackbar(snackbar : (options: SnackbarOptions) => Promise<void>, errorMessage: string){
     snackbar({
         severity: "error",
         message: errorMessage
