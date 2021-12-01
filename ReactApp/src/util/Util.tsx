@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import {SnackbarOptions} from "../components/snackbar/GlobalSnackbar";
 
 export function isLoggedInAs(role: string) {
 
@@ -26,4 +27,18 @@ export function parseJwt(token: string) {
     }).join(''));
 
     return JSON.parse(jsonPayload);
-};
+}
+
+export function successSnackbar(snackbar : (options: SnackbarOptions) => Promise<void>, successMessage: string){
+    snackbar({
+        severity: "success",
+        message: successMessage
+    });
+}
+
+export function errorSnackbar(snackbar : (options: SnackbarOptions) => Promise<void>, errorMessage: string){
+    snackbar({
+        severity: "error",
+        message: errorMessage
+    });
+}
