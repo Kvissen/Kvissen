@@ -17,8 +17,9 @@ import {Question} from "../../models/Question";
 import {Answer} from "../../models/Answer";
 import {Kvis} from "../../models/Kvis";
 import {KvisRepository} from "../../data/repositories/KvisRepository";
-import {parseJwt} from "../../util/Util";
+import {parseJwt, showErrorSnackbar, showSuccessSnackbar} from "../../util/Util";
 import {useHistory} from "react-router-dom";
+import {useSnackbar} from "../snackbar/SnackBarService";
 
 export default function CreateKvisBox() {
 
@@ -31,6 +32,7 @@ export default function CreateKvisBox() {
     const [errorCorrect, setErrorCorrect] = useState<string>("At least one answer needs to be correct")
 
     const history = useHistory();
+    const snackbar = useSnackbar();
 
     function isKvisReadyToBeSaved() {
         return errorTitle === "" && errorQuestion === "" && errorAnswer === "" && errorCorrect === ""
@@ -43,10 +45,10 @@ export default function CreateKvisBox() {
         let url = await KvisRepository.getInstance().addKvis(kvis);
         setIsLoading(false)
         if (url) {
-            alert("Kvis created");
+            showSuccessSnackbar(snackbar, "Kvis created")
             history.goBack();
         } else {
-            alert("Could not add kvis");
+            showErrorSnackbar(snackbar, "Unable to create kvis")
         }
     }
 

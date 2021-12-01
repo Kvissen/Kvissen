@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken'
 import {defaultJwtHeaders} from "../../data/headers/urlHeaders";
 import store from "../../stores/KvisStore";
 import {useSnackbar} from "../snackbar/SnackBarService";
+import {showErrorSnackbar} from "../../util/Util";
 
 // Redirect page for login to the Kvis Server
 function LoginRecipient() {
@@ -43,10 +44,7 @@ function LoginRecipient() {
             store.startQuiz().then(() => {
                 if (store.currentKvis.uuid === "0") {
                     // Go back
-                    snackbar({
-                        severity : "error",
-                        message: 'Could not find Kvis "' + store.kvisCode + '"'
-                    })
+                    showErrorSnackbar(snackbar,'Could not find Kvis "' + store.kvisCode + '"')
                     history.replace("/")
                 } else {
                     // Go to play kvis page
