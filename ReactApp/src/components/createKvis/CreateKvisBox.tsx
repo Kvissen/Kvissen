@@ -45,8 +45,8 @@ export default function CreateKvisBox() {
         let url = await KvisRepository.getInstance().addKvis(kvis);
         setIsLoading(false)
         if (url) {
-            showSuccessSnackbar(snackbar, "Kvis created")
             history.goBack();
+            showSuccessSnackbar(snackbar, "Kvis created")
         } else {
             showErrorSnackbar(snackbar, "Unable to create kvis")
         }
