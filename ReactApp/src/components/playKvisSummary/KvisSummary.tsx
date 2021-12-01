@@ -4,7 +4,7 @@ import ScorePieChart from "./ScorePieChart";
 
 export function KvisSummary() {
 
-    // TODO: Test this method and use data from server
+    // Submit results to the database
     store.submitResults()
 
     return (

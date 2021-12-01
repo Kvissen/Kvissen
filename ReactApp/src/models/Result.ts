@@ -3,19 +3,20 @@
 export class Result {
     constructor(
         public kvisId: string = "not set",
+        public startTime: number = new Date().getTime(),
         public answerResults: boolean[] = []
     ) {
     }
 }
 
 export class ResultDTO {
-    constructor(id: String = "Not Set",
-                kvisId: String,
-                name: String | null = "No Name",
-                kvisStarted: number,
-                kvisEnded: number = new Date().getDate(),
-                score: number = -1,
-                correctAnswers: number,
-                wrongAnswers: number) {
+    constructor(public id: String = "Not Set",
+                public kvisId: String,
+                public name: String | null = "No Name",
+                public kvisStarted: number,
+                public kvisEnded: number = new Date().getTime(),
+                public score: number = -1,
+                public correctAnswers: number,
+                public wrongAnswers: number) {
     }
 }

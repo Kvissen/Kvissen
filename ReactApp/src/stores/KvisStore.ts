@@ -15,7 +15,7 @@ class KvisStore {
         makePersistable(this, {
             name: 'KvisLocalData',
             properties: ["kvisCode", "result", "currentKvis",
-                "questionIndex", "completedKvis", "completedResult", "currentUser"],
+                "questionIndex", "completedKvis", "currentUser"],
             expireIn: 1800000, // Half an hour
             removeOnExpiration: true,
             storage: window.localStorage
@@ -27,21 +27,20 @@ class KvisStore {
     // Data
     kvisCode: string = ""
     result: Result = new Result()
-    completedResult: Result = new Result()
     currentKvis: Kvis = new Kvis()
     completedKvis: Kvis[] = []
     questionIndex = 0
     currentUser = "Unknown"
 
     startQuiz = async () => {
-        this.result.answerResults.length = 0
+        this.result = new Result(undefined, undefined, [])
         this.questionIndex = 0
         this.currentKvis = new Kvis()
-        await this.getActivatedKvis().then(() => {
-
-            // Update result object with quiz code on start quiz
-            this.result.kvisId = this.currentKvis.uuid // id is not kvisCode!
-        })
+        await this.getActivatedKvis().then(
+            () => {
+                // Update result object with quiz code on start quiz
+                this.result.kvisId = this.currentKvis.uuid // id is not kvisCode!
+            })
     }
 
     // Add the Kvis to completed, remove current
@@ -84,7 +83,7 @@ class KvisStore {
         var right = 0
         var wrong = 0
 
-        store.result.answerResults.forEach((result) => {
+        this.result.answerResults.forEach((result) => {
             if (result) {
                 right++
             } else {
@@ -94,15 +93,19 @@ class KvisStore {
 
         // Note: Undefined means 'use default value' here
         const result = new ResultDTO(
-            undefined,
+            this.result.kvisId,
             this.currentKvis.uuid.toString(),
             undefined,
-            0,
+            this.result.startTime,
             undefined,
             undefined,
             right,
             wrong
         )
+
+        console.log("submitResults: I'm sending ")
+        console.log(result)
+
         ResultDao.getInstance().addResults(result).then(
             (response) => {
                 console.log("KvisStore.submitResults: " + response)
