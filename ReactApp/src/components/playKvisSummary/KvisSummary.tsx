@@ -4,6 +4,9 @@ import ScorePieChart from "./ScorePieChart";
 
 export function KvisSummary() {
 
+    // Submit results to the database
+    store.submitResults()
+
     return (
         <div className={"main-container"}>
             <h1 data-testid="summary-test-h1">You have conquered this Kvis!</h1>
