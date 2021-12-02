@@ -12,11 +12,14 @@ import Dialog from "@mui/material/Dialog";
 import {KvisRepository} from "../../data/repositories/KvisRepository";
 import {KvisActivate} from "../../models/KvisActivate";
 import store from "../../stores/KvisStore";
+import {useSnackbar} from "../snackbar/SnackBarService";
+import {showErrorSnackbar, showSuccessSnackbar} from "../../util/Util";
 
 export default function KvisListElement({kvis}: { kvis: Kvis }) {
 
     const [open, setOpen] = useState(false);
     const [activatedKvisses, setActivatedKvisses] = useState<KvisActivate[]>([]);
+    const snackbar = useSnackbar();
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -57,17 +60,23 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                         let newActivated = activatedKvisses
                         newActivated.push(new KvisActivate(kvis.uuid,store.kvisCode))
                         setActivatedKvisses(newActivated)
-                        alert("Kvis is now activated with code " + store.kvisCode);
+                        showSuccessSnackbar(snackbar, "Kvis is now activated with code " + store.kvisCode)
                     } else if (response === "in use") {
-                        alert("The code " + store.kvisCode + " is already in use.")
+                        showErrorSnackbar(
+                            snackbar,
+                            "The code " + store.kvisCode + " is already in use.")
                     } else {
-                        alert("Error")
+                        showErrorSnackbar(
+                            snackbar,
+                            "Unknown error")
                     }
                 handleClose();
                 }
             ).catch(() => {
             handleClose()
-            alert("Could not activate Kvis as " + store.kvisCode)
+                showErrorSnackbar(
+                    snackbar,
+                    "Could not activate Kvis as " + store.kvisCode);
         })
     }
 
@@ -77,9 +86,9 @@ export default function KvisListElement({kvis}: { kvis: Kvis }) {
                 if (result) {
                     activatedKvisses.forEach((e, i) => {
                         if (e.kvisId === kvis.uuid) {
-                            alert("Kvis deactivated")
                             let newActivated = activatedKvisses.slice(i, 1);
                             setActivatedKvisses(newActivated)
+                            showSuccessSnackbar(snackbar, "Kvis is now deactivated");
                         }
                     })
 
