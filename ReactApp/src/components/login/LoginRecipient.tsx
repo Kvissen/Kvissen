@@ -42,7 +42,7 @@ function LoginRecipient() {
             confirmWriteToLocalStorage()
             // Fetch the Kvis
             store.startQuiz().then(() => {
-                if (store.currentKvis.uuid === "0") {
+                if (store.currentKvis.uuid === "0" || store.currentKvis.uuid === undefined) {
                     // Go back
                     showErrorSnackbar(snackbar,'Could not find Kvis "' + store.kvisCode + '"')
                     history.replace("/")
