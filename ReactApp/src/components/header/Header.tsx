@@ -2,7 +2,7 @@
 import React from 'react';
 import {Link, Stack, Typography} from "@mui/material"
 import Grid from '@mui/material/Grid';
-import logo from '../../ImageAssets/kvislogo.png';
+import logo from '../../ImageAssets/christmaslogo.png';
 import Box from '@mui/material/Box';
 import {observer} from 'mobx-react';
 
